@@ -20,6 +20,9 @@ const pause = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve,
 
 export interface ServerDoc {
   status: number;
+  /** Final URL after any redirects the server issued. */
+  url: string;
+  redirected: boolean;
   html: string;
   doc: Document;
   /** querySelector that throws a readable error when the element is missing. */
@@ -31,7 +34,12 @@ export interface ServerDoc {
   title(): string;
 }
 
-function wrapDoc(doc: Document, html: string, status: number, context: string): ServerDoc {
+function wrapDoc(
+  doc: Document,
+  html: string,
+  res: { status: number; url: string; redirected: boolean },
+  context: string,
+): ServerDoc {
   const get = (selector: string) => {
     const el = doc.querySelector(selector);
     if (!el) {
@@ -42,7 +50,9 @@ function wrapDoc(doc: Document, html: string, status: number, context: string): 
     return el;
   };
   return {
-    status,
+    status: res.status,
+    url: res.url,
+    redirected: res.redirected,
     html,
     doc,
     get,
@@ -58,7 +68,7 @@ export async function fetchDoc(path: string, init?: RequestInit): Promise<Server
   const res = await fetch(path, { cache: 'no-store', ...init });
   const html = await res.text();
   const doc = new DOMParser().parseFromString(html, 'text/html');
-  return wrapDoc(doc, html, res.status, path);
+  return wrapDoc(doc, html, res, path);
 }
 
 export interface JsonResponse {
@@ -248,7 +258,7 @@ export async function openPage(path: string, opts?: { timeout?: number }): Promi
  * ---------------------------------------------------------------- */
 
 export interface Helpers {
-  ok(condition: unknown, message: string): asserts condition;
+  ok(condition: unknown, message: string): void;
   pause(ms: number): Promise<void>;
   /** Fetch a route and inspect its server-rendered HTML (pre-hydration). */
   fetchDoc(path: string, init?: RequestInit): Promise<ServerDoc>;
