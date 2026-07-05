@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { levels } from '@/levels';
 import { isUnlocked, useProgress } from '@/shell/progress';
 import LevelPage from '@/shell/LevelPage';
+import { Button } from '@/components/ui/button';
 
 export default function LevelRoute({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -13,13 +14,13 @@ export default function LevelRoute({ params }: { params: Promise<{ id: string }>
 
   if (!level) {
     return (
-      <main>
-        <p className="checks-idle">No incident with that id — it may have been renumbered.</p>
-        <p>
-          <Link className="btn" href="/">
-            ← Back to the map
-          </Link>
+      <main className="space-y-4 pt-10">
+        <p className="text-muted-foreground">
+          No incident with that id — it may have been renumbered.
         </p>
+        <Button variant="outline" asChild className="font-mono text-xs uppercase tracking-[0.07em]">
+          <Link href="/">← Back to the map</Link>
+        </Button>
       </main>
     );
   }
@@ -29,15 +30,13 @@ export default function LevelRoute({ params }: { params: Promise<{ id: string }>
 
   if (!isUnlocked(level, loaded)) {
     return (
-      <main>
-        <p className="checks-idle">
+      <main className="space-y-4 pt-10">
+        <p className="text-muted-foreground">
           This incident is still locked — resolve the previous one first.
         </p>
-        <p>
-          <Link className="btn" href="/">
-            ← Back to the map
-          </Link>
-        </p>
+        <Button variant="outline" asChild className="font-mono text-xs uppercase tracking-[0.07em]">
+          <Link href="/">← Back to the map</Link>
+        </Button>
       </main>
     );
   }
