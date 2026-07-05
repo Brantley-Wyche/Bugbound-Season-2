@@ -16,6 +16,8 @@ Season 1's checks mounted components client-side. That can't exercise a server. 
 
 So when a check says the server never sent your data, it's because it fetched the route and looked.
 
+The design system evolved with the player, too: Season 1's shell was hand-rolled CSS; Season 2's is built on **Tailwind CSS v4 + shadcn/ui** — same restrained incident-console identity, now composed from a production-grade component system.
+
 ## How it works
 
 | Part | What it does |
@@ -63,7 +65,8 @@ Open http://localhost:3000, start Level 01, and keep your editor open next to th
 
 ## Tech notes
 
-- **Next.js 16 (App Router, Turbopack) + React 19 + TypeScript + plain CSS.** No test framework: the harness (`src/shell/harness.ts`) uses `fetch` + `DOMParser` for server output and a hidden same-origin iframe with native-setter events for live-page checks.
+- **Next.js 16 (App Router, Turbopack) + React 19 + TypeScript + Tailwind CSS v4 + shadcn/ui.** No test framework: the harness (`src/shell/harness.ts`) uses `fetch` + `DOMParser` for server output and a hidden same-origin iframe with native-setter events for live-page checks.
+- The game shell uses the design system; the lab (`/lab` routes, the "product under test") deliberately keeps its own small stylesheet, so level code stays framework-light and editable without knowing Tailwind.
 - A shell-owned lab layout (`src/app/lab/layout.tsx`) captures `console.error` *before* React hydrates, so checks can assert on hydration health.
 - **`reactStrictMode` is off, deliberately** — StrictMode double-invokes renders and effects in dev, which would make honest checks lie.
 - The game is played against `next dev`. That's intentional: dev-server behavior (HMR, per-request rendering, the error overlay) is part of what's being taught.
