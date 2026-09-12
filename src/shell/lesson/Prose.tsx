@@ -16,7 +16,7 @@ function renderInline(text: string) {
 
 export default function Prose({ paragraphs }: { paragraphs: string[] }) {
   return (
-    <div className="space-y-3 text-[15px] leading-relaxed text-[#c3cfdc]">
+    <div className="concept-prose">
       {paragraphs.map((p, i) => (
         <p key={i}>{renderInline(p)}</p>
       ))}

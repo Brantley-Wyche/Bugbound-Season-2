@@ -1,6 +1,6 @@
 import type { LevelManifest } from '@/shell/types';
 
-const uniqueHeadline = () => `Checks desk test story ${Date.now().toString(36)}`;
+const uniqueHeadline = () => `Checks desk test story ${crypto.randomUUID()}`;
 
 const manifest: LevelManifest = {
   id: '07-yesterdays-news',
@@ -17,7 +17,7 @@ const manifest: LevelManifest = {
     'The newsroom’s own wire page is stuck in the past. Editors publish a story, the publish call succeeds, the API even returns the new story — but the front page keeps showing the same old list. Refreshing doesn’t help. Restarting the dev server does, briefly, which has everyone extra confused.',
   lesson: [
     'Serving data in Next.js means living with caches — plural. The framework has official ones (the **Data Cache** stores server-side `fetch` results by URL; `unstable_cache`/`"use cache"` do the same for arbitrary reads; the client keeps a Router Cache of visited pages), and codebases add unofficial ones on top: memoized reads, module-level lookups, “compute once, reuse forever” shortcuts. Every one of them trades freshness for speed. A page can re-render on every request and *still* serve old data, because rendering isn’t reading — the render just asks a cache, and the cache answers from memory.',
-    'Whatever the cache, the contract is the same: every cached read needs an answer to “when is this wrong, and who tells it so?” Next.js gives you the vocabulary — `cache: "no-store"` for always-live, `next: { revalidate: 60 }` for time-based expiry, and tags (`next: { tags: ["wire"] }` on the read, `revalidateTag("wire")` after the write) for surgical invalidation the moment data changes. `revalidatePath` does the same per-URL. The write side owns the responsibility: whoever mutates the data must bust the caches that hold it.',
+    'Whatever the cache, the contract is the same: every cached read needs an answer to “when is this wrong, and who tells it so?” Next.js gives you the vocabulary — `cache: "no-store"` for always-live reads, `next: { revalidate: 60 }` for time-based expiry, and tags such as `next: { tags: ["wire"] }`. After a write, `revalidateTag("wire", "max")` marks tagged data stale: a later request can receive old data while revalidation runs. In a Server Action, `updateTag("wire")` provides immediate expiry for read-your-own-writes; Route Handlers can use `revalidateTag("wire", { expire: 0 })` when stale data is unacceptable. `revalidatePath` targets page or layout paths. These APIs affect framework caches, not arbitrary module-level variables.',
     'The debugging instinct to build: when data is stale, locate *which* cache is serving it. “Restarting the server fixes it” points at server-side memory; “only my browser is stale” points at client caches. Then find the read path — follow the data from the component backwards — and ask what its caching policy is, and whether anything ever tells that cache the world has changed. A cache with no invalidation story isn’t an optimization, it’s a time capsule.',
   ],
   checks: [

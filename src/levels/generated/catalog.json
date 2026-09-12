@@ -1,0 +1,106 @@
+[
+  {
+    "id": "01-vanishing-venue",
+    "number": 1,
+    "title": "The Vanishing Venue",
+    "concept": "File-based Routing",
+    "severity": "Low",
+    "symptom": "Attendees clicking \"Venue\" in the conference site nav get a 404. The venue screen was written weeks ago — the code is sitting right there in the repo — but the page simply does not exist as far as the router is concerned. Home and Schedule work fine."
+  },
+  {
+    "id": "02-forgetful-cart",
+    "number": 2,
+    "title": "The Forgetful Cart",
+    "concept": "next/link & Client Navigation",
+    "severity": "Low",
+    "symptom": "Customers add beans to their cart, browse over to the Mugs page, and the cart badge is back to zero. Support has reproduced it: any move between store pages wipes the cart. Adding items works fine as long as you never navigate."
+  },
+  {
+    "id": "03-dead-on-arrival",
+    "number": 3,
+    "title": "Dead on Arrival",
+    "concept": "The \"use client\" Boundary",
+    "severity": "Medium",
+    "symptom": "The support FAQ page went down with the last deploy — it doesn’t render at all anymore, just an error screen. The page worked fine last week; it broke the moment product asked for “a little analytics” on the accordion."
+  },
+  {
+    "id": "04-invisible-storefront",
+    "number": 4,
+    "title": "The Invisible Storefront",
+    "concept": "Server-side Data Fetching",
+    "severity": "Medium",
+    "symptom": "The SEO team is furious: search crawlers and link previews see an empty gear shop — “Loading products…” and nothing else. In a browser it looks fine, though the products do blink in a beat after the page arrives. View-source confirms it: not a single product in the HTML."
+  },
+  {
+    "id": "05-shape-shifter",
+    "number": 5,
+    "title": "The Shape-Shifter",
+    "concept": "Hydration",
+    "severity": "Medium",
+    "symptom": "QA filed this one with a screen recording: the lounge welcome card visibly changes a split second after the page loads — the visitor number flips to a different number, the time shifts. The browser console is full of angry red React errors on every load."
+  },
+  {
+    "id": "06-lost-in-the-params",
+    "number": 6,
+    "title": "Lost in the Params",
+    "concept": "Dynamic Routes & Async Params",
+    "severity": "Medium",
+    "symptom": "Every single field note shows “Note not found” — even ones you can see listed on the index page, even slugs copied straight from the data file into the URL bar. The index works; every detail page insists its note doesn’t exist."
+  },
+  {
+    "id": "07-yesterdays-news",
+    "number": 7,
+    "title": "Yesterday’s News",
+    "concept": "The Data Cache",
+    "severity": "High",
+    "symptom": "The newsroom’s own wire page is stuck in the past. Editors publish a story, the publish call succeeds, the API even returns the new story — but the front page keeps showing the same old list. Refreshing doesn’t help. Restarting the dev server does, briefly, which has everyone extra confused."
+  },
+  {
+    "id": "08-silent-guestbook",
+    "number": 8,
+    "title": "The Silent Guestbook",
+    "concept": "Server Actions & Revalidation",
+    "severity": "High",
+    "symptom": "Guests sign the café guestbook, hit Sign, and… nothing. The page just sits there. The note IS saved — reload the page and there it is — but nothing appears at the moment of signing. Guests are signing two or three times, so the book is filling with duplicates."
+  },
+  {
+    "id": "09-slow-lane",
+    "number": 9,
+    "title": "The Slow Lane",
+    "concept": "Streaming & Parallel Data",
+    "severity": "High",
+    "symptom": "The Trip Desk page takes well over two seconds to arrive. Ops checked the three upstream services it depends on — flights, hotels, weather — and each one answers in ~700ms, comfortably inside its SLA. Somehow three fast services add up to one slow page, and product wants it under 1.5 seconds."
+  },
+  {
+    "id": "10-mute-endpoint",
+    "number": 10,
+    "title": "The Mute Endpoint",
+    "concept": "Route Handlers",
+    "severity": "High",
+    "symptom": "The feedback page loads, but the tally shows “Stats unavailable — the endpoint answered with an error.” The buttons that submit feedback work (the POST endpoint logs successes), yet reading the numbers back never works. The network tab shows the stats request failing with a 4xx."
+  },
+  {
+    "id": "11-untitled-document",
+    "number": 11,
+    "title": "Untitled Document",
+    "concept": "Metadata & SEO",
+    "severity": "High",
+    "symptom": "Marketing is unhappy: the Northwind landing page’s browser tab shows the site-wide default title instead of the product’s name, and link previews on social are generic too. The engineer who touched it last swears the title and description are “right there in the page file” — and honestly, looking at the file, the content really is there."
+  },
+  {
+    "id": "12-the-bouncer",
+    "number": 12,
+    "title": "The Bouncer",
+    "concept": "Proxy (Middleware)",
+    "severity": "High",
+    "symptom": "The Tasting Room beta is gated: join on the signup page, get waved through the door. Except nobody gets waved through. Users click “Join the beta,” the join call succeeds, the cookie is visibly set in devtools — and the door still bounces them straight back to signup. Every time. Even people who joined days ago."
+  },
+  {
+    "id": "13-launch-day",
+    "number": 13,
+    "title": "Launch Day",
+    "concept": "Capstone — Everything at Once",
+    "severity": "Critical",
+    "symptom": "It’s launch day and the store page is DOWN — the route errors instead of rendering. And the pre-launch QA report was already ugly before the crash: placing an order never moved the stock number on screen (it only showed up after a manual refresh), and the console lit up red on every single load. Marketing is refreshing the page every ten seconds. Good luck."
+  }
+]

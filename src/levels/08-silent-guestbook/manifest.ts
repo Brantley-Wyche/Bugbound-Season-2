@@ -1,6 +1,6 @@
 import type { LevelManifest } from '@/shell/types';
 
-const uniqueMessage = () => `The checks were here ${Date.now().toString(36)}`;
+const uniqueMessage = () => `The checks were here ${crypto.randomUUID()}`;
 
 const manifest: LevelManifest = {
   id: '08-silent-guestbook',
@@ -14,7 +14,7 @@ const manifest: LevelManifest = {
     'Guests sign the café guestbook, hit Sign, and… nothing. The page just sits there. The note IS saved — reload the page and there it is — but nothing appears at the moment of signing. Guests are signing two or three times, so the book is filling with duplicates.',
   lesson: [
     'Server Actions are functions marked `"use server"` that the client can invoke like a remote procedure call — wire one to `<form action={...}>` and Next.js handles the POST, runs your function on the server, and even works before hydration. They are the App Router’s built-in mutation path: no API route, no fetch wrapper, typed end to end.',
-    'But an action that changes data has *two* jobs, and the second one is easy to forget: after mutating, it must tell Next.js which cached views of the world are now wrong. That’s `revalidatePath("/guestbook")` (or `revalidateTag` if your reads are tagged). When an action revalidates, the same round-trip that ran the mutation streams back the freshly rendered page, and React swaps it in — the list updates the instant the action completes.',
+    'But an action that changes data has *two* jobs, and the second one is easy to forget: after mutating, it must tell Next.js which cached views of the world are now wrong. `revalidatePath("/guestbook")` can refresh the affected page in the action response. For tagged reads, `updateTag` expires data immediately in a Server Action; `revalidateTag` with the "max" profile instead allows stale content while a later request revalidates. Choose the freshness policy deliberately: saving a note and showing that note are distinct parts of the interaction.',
     'Skip revalidation and the mutation still happens — it’s just invisible. Router and server caches keep serving the pre-mutation render until something else forces a refresh, which is why “it shows up after reload” is the signature symptom. Write it as a habit, mutate → revalidate, the same reflex as commit → push: technically two steps, practically one thought.',
   ],
   checks: [
@@ -33,12 +33,10 @@ const manifest: LevelManifest = {
         const page = await h.open('/lab/08-silent-guestbook');
         await page.type('[data-testid="message-input"]', message);
         await page.click('[data-testid="sign"]');
-        await h.pause(1200);
-        const res = await h.fetchDoc('/lab/08-silent-guestbook');
-        h.ok(
-          res.html.includes(message),
-          'Signed the book, but even a fresh request afterwards doesn’t contain the note — the action isn’t persisting it.',
-        );
+        await h.poll(async () => {
+          const res = await h.fetchDoc('/lab/08-silent-guestbook');
+          return res.html.includes(message);
+        }, { message: 'Signed the book, but even a fresh request afterwards doesn’t contain the note — the action isn’t persisting it.' });
       },
     },
     {

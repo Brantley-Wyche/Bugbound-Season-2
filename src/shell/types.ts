@@ -1,4 +1,4 @@
-import type { Helpers } from './harness';
+import type { Helpers } from './checks/harness';
 
 export type Severity = 'Low' | 'Medium' | 'High' | 'Critical';
 
