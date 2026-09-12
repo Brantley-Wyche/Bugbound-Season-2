@@ -1,0 +1,75 @@
+{
+  "evidence": [
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "incidentGap": 8,
+      "centerOffset": 0,
+      "emptyFeedbackHeight": 0,
+      "sourceToEvidenceGap": 0,
+      "sourceBottomBorder": "0px",
+      "evidenceTopBorder": "1px",
+      "referenceLuminance": 0.021353622991243156,
+      "bodyContrast": 12.602366593274485,
+      "labelContrast": 7.18156137392324,
+      "codeContrast": 6.703858838903512
+    },
+    {
+      "width": 1166,
+      "scrollWidth": 1166,
+      "incidentGap": 8,
+      "centerOffset": 0,
+      "emptyFeedbackHeight": 0,
+      "sourceToEvidenceGap": 0,
+      "sourceBottomBorder": "0px",
+      "evidenceTopBorder": "1px",
+      "referenceLuminance": 0.021353622991243156,
+      "bodyContrast": 12.602366593274485,
+      "labelContrast": 7.18156137392324,
+      "codeContrast": 6.703858838903512
+    },
+    {
+      "width": 1024,
+      "scrollWidth": 1024,
+      "incidentGap": 8,
+      "centerOffset": 0,
+      "emptyFeedbackHeight": 0,
+      "sourceToEvidenceGap": 0,
+      "sourceBottomBorder": "0px",
+      "evidenceTopBorder": "1px",
+      "referenceLuminance": 0.021353622991243156,
+      "bodyContrast": 12.602366593274485,
+      "labelContrast": 7.18156137392324,
+      "codeContrast": 6.703858838903512
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "incidentGap": 8,
+      "centerOffset": 0.0078125,
+      "emptyFeedbackHeight": 0,
+      "sourceToEvidenceGap": 0,
+      "sourceBottomBorder": "0px",
+      "evidenceTopBorder": "1px",
+      "referenceLuminance": 0.021353622991243156,
+      "bodyContrast": 12.602366593274485,
+      "labelContrast": 7.18156137392324,
+      "codeContrast": 6.703858838903512
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "incidentGap": 8,
+      "centerOffset": 0.0078125,
+      "emptyFeedbackHeight": 0,
+      "sourceToEvidenceGap": 0,
+      "sourceBottomBorder": "0px",
+      "evidenceTopBorder": "1px",
+      "referenceLuminance": 0.021353622991243156,
+      "bodyContrast": 12.602366593274485,
+      "labelContrast": 7.18156137392324,
+      "codeContrast": 6.703858838903512
+    }
+  ],
+  "errors": []
+}

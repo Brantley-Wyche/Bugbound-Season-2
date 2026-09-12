@@ -2,50 +2,65 @@
 
 import { use } from 'react';
 import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import { levels } from '@/levels';
-import { isUnlocked, useProgress } from '@/shell/progress';
-import LevelPage from '@/shell/LevelPage';
+import { useProgress } from '@/shell/progress/ProgressProvider';
+import { isUnlocked } from '@/levels/progression';
+import LoadedLevel from '@/shell/lesson/LoadedLevel';
 import { Button } from '@/components/ui/button';
 
-export default function LevelRoute({ params }: { params: Promise<{ id: string }> }) {
+export default function LevelRoute({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = use(params);
-  const { completed: loaded, markComplete } = useProgress();
+  const { completed: loaded, saved, markComplete, version } = useProgress();
   const level = levels.find((l) => l.id === id);
 
   if (!level) {
     return (
-      <main className="space-y-4 pt-10">
+      <main id="main-content" tabIndex={-1} className="route-message">
+        <h1 className="text-2xl font-semibold">Incident not found</h1>
         <p className="text-muted-foreground">
           No incident with that id — it may have been renumbered.
         </p>
-        <Button variant="outline" asChild className="font-mono text-xs uppercase tracking-[0.07em]">
-          <Link href="/">← Back to the map</Link>
+        <Button variant="outline" render={<Link href="/" />}>
+          <ArrowLeft aria-hidden="true" /> Incident register
         </Button>
       </main>
     );
   }
 
   // Progress not loaded yet — render nothing gate-dependent to avoid a flash.
-  if (loaded === null) return <main />;
+  if (loaded === null)
+    return (
+      <main id="main-content" tabIndex={-1} className="pt-10">
+        <p role="status">Loading progress...</p>
+      </main>
+    );
 
   if (!isUnlocked(level, loaded)) {
     return (
-      <main className="space-y-4 pt-10">
+      <main id="main-content" tabIndex={-1} className="route-message">
+        <h1 className="text-2xl font-semibold">Incident locked</h1>
         <p className="text-muted-foreground">
           This incident is still locked — resolve the previous one first.
         </p>
-        <Button variant="outline" asChild className="font-mono text-xs uppercase tracking-[0.07em]">
-          <Link href="/">← Back to the map</Link>
+        <Button variant="outline" render={<Link href="/" />}>
+          <ArrowLeft aria-hidden="true" /> Incident register
         </Button>
       </main>
     );
   }
 
   return (
-    <LevelPage
-      level={level}
+    <LoadedLevel
+      key={`${level.id}:${version}`}
+      id={level.id}
       isComplete={loaded.has(level.id)}
-      onComplete={() => markComplete(level.id)}
+      isSaved={saved.has(level.id)}
+      onComplete={(token) => markComplete(level.id, token)}
     />
   );
 }

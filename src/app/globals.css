@@ -1,14 +1,14 @@
 /* ============================================================
-   Bugbound Season 2 — global styles
-   Season 1 was hand-rolled CSS; Season 2 runs on Tailwind v4 +
-   shadcn/ui as a signal of the project's evolution. The identity
-   is unchanged: restrained incident console (status pages,
-   PagerDuty, Grafana), dark only. Green stays reserved for
-   pass/resolved states; blue is the Season 2 brand accent.
+   Shared defaults and preserved lab styles.
+   The Investigation Desk overrides these defaults in
+   src/shell/workspace/workspace.css. The fictional lab product keeps
+   its original console palette and type scale independently.
    ============================================================ */
 
 @import 'tailwindcss';
 @import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
@@ -54,7 +54,7 @@
 :root {
   --radius: 0.55rem;
 
-  /* incident-console dark — the only theme this app has */
+  /* Original lab-product palette; the game shell overrides it. */
   --background: #0a0d12;
   --foreground: #dbe4ee;
   --card: #0f141b;
@@ -135,46 +135,6 @@
   }
 }
 
-/* ---------- Status dot (shared shell primitive) ---------- */
-
-.status-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--muted-foreground);
-  vertical-align: middle;
-}
-.status-dot.ok { background: var(--ok); }
-.status-dot.warn { background: var(--warn); }
-.status-dot.err { background: var(--err); }
-.status-dot.live { animation: pulse-dot 2.2s ease-in-out infinite; }
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-/* ---------- Uptime-strip progress: one segment per level ---------- */
-
-.uptime-strip {
-  display: flex;
-  gap: 3px;
-}
-
-.uptime-strip .seg {
-  width: 9px;
-  height: 18px;
-  border-radius: 2px;
-  background: var(--panel-2);
-  border: 1px solid var(--border);
-  transition: background 0.4s, border-color 0.4s;
-}
-
-.uptime-strip .seg.done {
-  background: var(--ok);
-  border-color: var(--ok);
-}
 
 /* ============================================================
    Lab environment — the "product under test"
@@ -346,4 +306,8 @@
   color: var(--faint);
   font-size: 13px;
   padding: 14px;
+}
+
+.dark {
+  --destructive-foreground: var(--color-red-400);
 }

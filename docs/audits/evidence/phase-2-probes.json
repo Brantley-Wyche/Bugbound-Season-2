@@ -1,0 +1,203 @@
+{
+  "curriculum": {
+    "manifests": 13,
+    "checks": 44,
+    "hintTiers": 39,
+    "structureValid": true,
+    "hintsDecoded": false
+  },
+  "fixtureRepeatability": {
+    "initialStock": 40,
+    "attemptedOrders": 41,
+    "successfulOrders": 40,
+    "finalStock": 0,
+    "isolatedFromDevServer": true
+  },
+  "historicalCounter": {
+    "checkReturnedSuccess": true,
+    "simulatedClicks": 1,
+    "currentRunPersistedOrders": 0,
+    "historicalOrders": 1
+  },
+  "readiness": {
+    "beacon": false,
+    "capture": false,
+    "result": {
+      "name": "Synthetic hydration health",
+      "pass": true
+    },
+    "framesAfterRun": 0
+  },
+  "navigationTimeout": {
+    "returnedInsteadOfThrowing": true,
+    "elapsed": 290,
+    "path": "blank"
+  },
+  "registerCurriculumBundle": {
+    "manifestModulesFound": 13,
+    "mode": "webpack development; not production byte sizing"
+  },
+  "allLessonShells": {
+    "layouts": [
+      {
+        "incident": 1,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 2,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 3,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 4,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 5,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 6,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 7,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 8,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 9,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 10,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 11,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 12,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 13,
+        "width": 1166,
+        "documentWidth": 1166,
+        "closedHints": 3
+      },
+      {
+        "incident": 1,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      },
+      {
+        "incident": 2,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      },
+      {
+        "incident": 3,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      },
+      {
+        "incident": 4,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      },
+      {
+        "incident": 5,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      },
+      {
+        "incident": 6,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      },
+      {
+        "incident": 7,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      },
+      {
+        "incident": 8,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      },
+      {
+        "incident": 9,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      },
+      {
+        "incident": 10,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      },
+      {
+        "incident": 11,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      },
+      {
+        "incident": 12,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      },
+      {
+        "incident": 13,
+        "width": 390,
+        "documentWidth": 390,
+        "closedHints": 3
+      }
+    ],
+    "shellErrors": [],
+    "previewsStubbed": true,
+    "storageIsolated": true
+  }
+}

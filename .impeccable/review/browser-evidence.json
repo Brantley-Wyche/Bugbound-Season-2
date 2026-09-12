@@ -1,0 +1,99 @@
+{
+  "evidence": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "noticeVisible": false,
+      "referenceVisible": true,
+      "openHints": 0,
+      "overflowingButtons": [],
+      "undersizedControls": []
+    },
+    {
+      "name": "user-1265",
+      "width": 1265,
+      "height": 720,
+      "viewport": 1265,
+      "documentWidth": 1265,
+      "noticeVisible": false,
+      "referenceVisible": true,
+      "openHints": 0,
+      "overflowingButtons": [],
+      "undersizedControls": []
+    },
+    {
+      "name": "tablet",
+      "width": 1024,
+      "height": 900,
+      "viewport": 1024,
+      "documentWidth": 1024,
+      "noticeVisible": true,
+      "referenceVisible": true,
+      "openHints": 0,
+      "overflowingButtons": [],
+      "undersizedControls": []
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "viewport": 390,
+      "documentWidth": 390,
+      "noticeVisible": true,
+      "referenceVisible": true,
+      "openHints": 0,
+      "overflowingButtons": [],
+      "undersizedControls": []
+    },
+    {
+      "name": "mobile-320",
+      "width": 320,
+      "height": 740,
+      "viewport": 320,
+      "documentWidth": 320,
+      "noticeVisible": true,
+      "referenceVisible": true,
+      "openHints": 0,
+      "overflowingButtons": [],
+      "undersizedControls": []
+    },
+    {
+      "name": "register-desktop",
+      "width": 1440,
+      "height": 1000,
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "noticeVisible": false,
+      "referenceVisible": null,
+      "openHints": 0,
+      "overflowingButtons": [],
+      "undersizedControls": []
+    },
+    {
+      "name": "register-mobile",
+      "width": 390,
+      "height": 844,
+      "viewport": 390,
+      "documentWidth": 390,
+      "noticeVisible": true,
+      "referenceVisible": null,
+      "openHints": 0,
+      "overflowingButtons": [],
+      "undersizedControls": []
+    }
+  ],
+  "errors": [],
+  "interactions": [
+    "sheet and focus return",
+    "reset dismissal and safe initial focus",
+    "copy feedback",
+    "hints disclosure",
+    "cancel cleanup",
+    "real check run with expected failures",
+    "locked route",
+    "unknown route"
+  ]
+}

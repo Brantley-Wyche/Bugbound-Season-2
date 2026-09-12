@@ -1,0 +1,89 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font-size",
+        "value": "15.5px",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-09-06T00:44:35.045Z",
+        "reason": "Agent triage: original lab body size; user required preserving intentional exercises and their independent lab styling. DESIGN.md describes the Investigation Desk, which overrides shared defaults."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "10.5px",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-09-06T00:44:37.534Z",
+        "reason": "Agent triage: original lab banner and tag size; user required preserving intentional exercises and their independent lab styling. DESIGN.md describes the Investigation Desk, which overrides shared defaults."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "25px",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-09-06T00:44:39.987Z",
+        "reason": "Agent triage: original lab stat size; user required preserving intentional exercises and their independent lab styling. DESIGN.md describes the Investigation Desk, which overrides shared defaults."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "15px",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-09-06T00:44:42.507Z",
+        "reason": "Agent triage: original lab heading size; user required preserving intentional exercises and their independent lab styling. DESIGN.md describes the Investigation Desk, which overrides shared defaults."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#9ecbff",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-09-06T00:44:45.112Z",
+        "reason": "Agent triage: original lab inline code color; user required preserving intentional exercises and their independent lab styling. DESIGN.md describes the Investigation Desk, which overrides shared defaults."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(88, 166, 255, 0.28)",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-09-06T00:44:47.517Z",
+        "reason": "Agent triage: original lab selection color; user required preserving intentional exercises and their independent lab styling. DESIGN.md describes the Investigation Desk, which overrides shared defaults."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(88, 166, 255, 0.3)",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-09-06T00:44:49.976Z",
+        "reason": "Agent triage: original lab tag border; user required preserving intentional exercises and their independent lab styling. DESIGN.md describes the Investigation Desk, which overrides shared defaults."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(63, 185, 80, 0.3)",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-09-06T00:44:52.350Z",
+        "reason": "Agent triage: original lab success tag border; user required preserving intentional exercises and their independent lab styling. DESIGN.md describes the Investigation Desk, which overrides shared defaults."
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(210, 153, 34, 0.3)",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-09-06T00:44:54.832Z",
+        "reason": "Agent triage: original lab warning tag border; user required preserving intentional exercises and their independent lab styling. DESIGN.md describes the Investigation Desk, which overrides shared defaults."
+      }
+    ]
+  }
+}

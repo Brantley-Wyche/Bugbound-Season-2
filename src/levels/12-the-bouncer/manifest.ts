@@ -39,6 +39,7 @@ const manifest: LevelManifest = {
     {
       name: 'Members who joined get in',
       run: async (h) => {
+        h.cleanupRequest('/lab/12-the-bouncer/api/leave', { method: 'POST' });
         const join = await h.fetchJSON('/lab/12-the-bouncer/api/join', { method: 'POST' });
         h.ok(join.status === 200, `Joining the beta returned ${join.status}.`);
         const res = await h.fetchDoc('/lab/12-the-bouncer/beta');
@@ -46,17 +47,16 @@ const manifest: LevelManifest = {
           !res.url.includes('/signup') && !!res.query('[data-testid="beta-dash"]'),
           'Joined the beta, then knocked on the Tasting Room door — and got bounced back to signup anyway.',
         );
-        await h.fetchJSON('/lab/12-the-bouncer/api/leave', { method: 'POST' });
       },
     },
     {
       name: 'The whole flow works in the browser',
       run: async (h) => {
+        h.cleanupRequest('/lab/12-the-bouncer/api/leave', { method: 'POST' });
         await h.fetchJSON('/lab/12-the-bouncer/api/leave', { method: 'POST' });
         const page = await h.open('/lab/12-the-bouncer/signup');
         await page.click('[data-testid="join-beta"]');
         await page.waitFor(() => !!page.query('[data-testid="beta-dash"]'), { timeout: 7000 });
-        await h.fetchJSON('/lab/12-the-bouncer/api/leave', { method: 'POST' });
       },
     },
   ],

@@ -3,19 +3,34 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --hostname 127.0.0.1",
+    "dev:review": "next dev --webpack --hostname 127.0.0.1 --port 3002",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lint:shell": "eslint src/shell \"src/app/(game)\" src/app/api/practice src/components src/lib src/app/layout.tsx tests scripts src/levels/index.ts src/levels/progression.ts src/levels/generated/loaders.ts",
+    "typecheck:shell": "tsc -p tsconfig.shell.json --noEmit --incremental false",
+    "test:shell": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/*.test.mjs",
+    "test:browser": "node tests/browser/workspace.mjs",
+    "test:browser:refinements": "node tests/browser/workspace-refinements.mjs",
+    "test:browser:phase2": "node tests/browser/phase-2.mjs",
+    "test:browser:branding": "node tests/browser/branding.mjs",
+    "validate:curriculum": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/validate-curriculum.mjs",
+    "curriculum:generate": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/validate-curriculum.mjs --write",
+    "format:shell": "node scripts/format-shell.mjs --write",
+    "format:check": "node scripts/format-shell.mjs"
+  },
+  "engines": {
+    "node": "^22.18.0 || >=24.0.0"
   },
   "dependencies": {
+    "@base-ui/react": "^1.8.0",
     "@tailwindcss/postcss": "^4.3.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.23.0",
-    "next": "16.2.10",
-    "postcss": "^8.5.16",
-    "radix-ui": "^1.6.1",
+    "next": "16.3.5",
+    "postcss": "^8.5.28",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "tailwind-merge": "^3.6.0",
@@ -27,7 +42,9 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.10",
+    "eslint-config-next": "16.3.5",
+    "playwright": "^1.63.0",
+    "prettier": "^3.9.6",
     "typescript": "^5"
   }
 }

@@ -10,9 +10,8 @@ interface LaunchStore {
   ordersToday: number;
 }
 
-const g = globalThis as unknown as { __s2Launch?: LaunchStore };
-if (!g.__s2Launch) {
-  g.__s2Launch = {
+function createStore(): LaunchStore {
+  return {
     products: [
       { id: 'nimbus-one', name: 'Nimbus One Brewer', price: 249, stock: 40 },
       { id: 'nimbus-mini', name: 'Nimbus Mini', price: 129, stock: 65 },
@@ -21,7 +20,14 @@ if (!g.__s2Launch) {
     ordersToday: 0,
   };
 }
+const g = globalThis as unknown as { __s2Launch?: LaunchStore };
+g.__s2Launch ??= createStore();
 const store = g.__s2Launch;
+
+/** Explicit maintenance action only; ordinary checks never reset preview data. */
+export function resetLaunchStore(): void {
+  Object.assign(store, createStore());
+}
 
 /** Returns a defensive copy — callers can't mutate inventory by accident. */
 export function getProducts(): LaunchProduct[] {

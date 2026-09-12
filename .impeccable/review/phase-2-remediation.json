@@ -1,0 +1,13 @@
+{
+  "screenshots": [
+    "phase2-reset-1166.png",
+    "phase2-reset-390.png"
+  ],
+  "checks": [
+    "Register does not download the sampled executable lesson checks",
+    "Missing beacon/capture/navigation fail; delayed content waits explicitly; frames disposed",
+    "First lesson loads its checks; locked capstone does not load executable content",
+    "Live fixture API rejects cross-origin and unknown-fixture requests without resetting data",
+    "Desktop/mobile reset: cancel focused, dismissal non-mutating, failed request retry, success feedback, saved progress unchanged (mock reset transport)"
+  ]
+}

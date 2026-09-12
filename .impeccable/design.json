@@ -1,0 +1,702 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-06T02:17:28.452Z",
+  "title": "Design System: Bugbound Season 2",
+  "extensions": {
+    "colorMeta": {
+      "amber-index": {
+        "role": "primary",
+        "displayName": "Amber Index",
+        "tonalRamp": [
+          "oklch(15% 0.0974 85.39)",
+          "oklch(26.43% 0.0974 85.39)",
+          "oklch(37.86% 0.0974 85.39)",
+          "oklch(49.29% 0.0974 85.39)",
+          "oklch(60.71% 0.0974 85.39)",
+          "oklch(72.14% 0.0974 85.39)",
+          "oklch(83.57% 0.0974 85.39)",
+          "oklch(95% 0.0974 85.39)"
+        ]
+      },
+      "primary-ink": {
+        "role": "neutral",
+        "displayName": "Primary Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0058 121.87)",
+          "oklch(26.43% 0.0058 121.87)",
+          "oklch(37.86% 0.0058 121.87)",
+          "oklch(49.29% 0.0058 121.87)",
+          "oklch(60.71% 0.0058 121.87)",
+          "oklch(72.14% 0.0058 121.87)",
+          "oklch(83.57% 0.0058 121.87)",
+          "oklch(95% 0.0058 121.87)"
+        ]
+      },
+      "teal-focus": {
+        "role": "secondary",
+        "displayName": "Teal Focus",
+        "tonalRamp": [
+          "oklch(15% 0.0541 194.63)",
+          "oklch(26.43% 0.0541 194.63)",
+          "oklch(37.86% 0.0541 194.63)",
+          "oklch(49.29% 0.0541 194.63)",
+          "oklch(60.71% 0.0541 194.63)",
+          "oklch(72.14% 0.0541 194.63)",
+          "oklch(83.57% 0.0541 194.63)",
+          "oklch(95% 0.0541 194.63)"
+        ]
+      },
+      "teal-tool": {
+        "role": "secondary",
+        "displayName": "Teal Tool",
+        "tonalRamp": [
+          "oklch(15% 0.0408 196.32)",
+          "oklch(26.43% 0.0408 196.32)",
+          "oklch(37.86% 0.0408 196.32)",
+          "oklch(49.29% 0.0408 196.32)",
+          "oklch(60.71% 0.0408 196.32)",
+          "oklch(72.14% 0.0408 196.32)",
+          "oklch(83.57% 0.0408 196.32)",
+          "oklch(95% 0.0408 196.32)"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "tonalRamp": [
+          "oklch(15% 0.0059 236.81)",
+          "oklch(26.43% 0.0059 236.81)",
+          "oklch(37.86% 0.0059 236.81)",
+          "oklch(49.29% 0.0059 236.81)",
+          "oklch(60.71% 0.0059 236.81)",
+          "oklch(72.14% 0.0059 236.81)",
+          "oklch(83.57% 0.0059 236.81)",
+          "oklch(95% 0.0059 236.81)"
+        ]
+      },
+      "deep-graphite": {
+        "role": "neutral",
+        "displayName": "Deep Graphite",
+        "tonalRamp": [
+          "oklch(15% 0.0074 229.28)",
+          "oklch(26.43% 0.0074 229.28)",
+          "oklch(37.86% 0.0074 229.28)",
+          "oklch(49.29% 0.0074 229.28)",
+          "oklch(60.71% 0.0074 229.28)",
+          "oklch(72.14% 0.0074 229.28)",
+          "oklch(83.57% 0.0074 229.28)",
+          "oklch(95% 0.0074 229.28)"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Foreground",
+        "tonalRamp": [
+          "oklch(15% 0.0057 128.53)",
+          "oklch(26.43% 0.0057 128.53)",
+          "oklch(37.86% 0.0057 128.53)",
+          "oklch(49.29% 0.0057 128.53)",
+          "oklch(60.71% 0.0057 128.53)",
+          "oklch(72.14% 0.0057 128.53)",
+          "oklch(83.57% 0.0057 128.53)",
+          "oklch(95% 0.0057 128.53)"
+        ]
+      },
+      "muted-text": {
+        "role": "neutral",
+        "displayName": "Muted Text",
+        "tonalRamp": [
+          "oklch(15% 0.0101 188.99)",
+          "oklch(26.43% 0.0101 188.99)",
+          "oklch(37.86% 0.0101 188.99)",
+          "oklch(49.29% 0.0101 188.99)",
+          "oklch(60.71% 0.0101 188.99)",
+          "oklch(72.14% 0.0101 188.99)",
+          "oklch(83.57% 0.0101 188.99)",
+          "oklch(95% 0.0101 188.99)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0111 214.44)",
+          "oklch(26.43% 0.0111 214.44)",
+          "oklch(37.86% 0.0111 214.44)",
+          "oklch(49.29% 0.0111 214.44)",
+          "oklch(60.71% 0.0111 214.44)",
+          "oklch(72.14% 0.0111 214.44)",
+          "oklch(83.57% 0.0111 214.44)",
+          "oklch(95% 0.0111 214.44)"
+        ]
+      },
+      "input-border": {
+        "role": "neutral",
+        "displayName": "Input Border",
+        "tonalRamp": [
+          "oklch(15% 0.0139 203.33)",
+          "oklch(26.43% 0.0139 203.33)",
+          "oklch(37.86% 0.0139 203.33)",
+          "oklch(49.29% 0.0139 203.33)",
+          "oklch(60.71% 0.0139 203.33)",
+          "oklch(72.14% 0.0139 203.33)",
+          "oklch(83.57% 0.0139 203.33)",
+          "oklch(95% 0.0139 203.33)"
+        ]
+      },
+      "popover": {
+        "role": "neutral",
+        "displayName": "Popover",
+        "tonalRamp": [
+          "oklch(15% 0.0080 223.73)",
+          "oklch(26.43% 0.0080 223.73)",
+          "oklch(37.86% 0.0080 223.73)",
+          "oklch(49.29% 0.0080 223.73)",
+          "oklch(60.71% 0.0080 223.73)",
+          "oklch(72.14% 0.0080 223.73)",
+          "oklch(83.57% 0.0080 223.73)",
+          "oklch(95% 0.0080 223.73)"
+        ]
+      },
+      "hover": {
+        "role": "neutral",
+        "displayName": "Hover",
+        "tonalRamp": [
+          "oklch(15% 0.0125 212.60)",
+          "oklch(26.43% 0.0125 212.60)",
+          "oklch(37.86% 0.0125 212.60)",
+          "oklch(49.29% 0.0125 212.60)",
+          "oklch(60.71% 0.0125 212.60)",
+          "oklch(72.14% 0.0125 212.60)",
+          "oklch(83.57% 0.0125 212.60)",
+          "oklch(95% 0.0125 212.60)"
+        ]
+      },
+      "reference-ink": {
+        "role": "neutral",
+        "displayName": "Reference Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0057 128.53)",
+          "oklch(26.43% 0.0057 128.53)",
+          "oklch(37.86% 0.0057 128.53)",
+          "oklch(49.29% 0.0057 128.53)",
+          "oklch(60.71% 0.0057 128.53)",
+          "oklch(72.14% 0.0057 128.53)",
+          "oklch(83.57% 0.0057 128.53)",
+          "oklch(95% 0.0057 128.53)"
+        ]
+      },
+      "reference-code": {
+        "role": "secondary",
+        "displayName": "Reference Code",
+        "tonalRamp": [
+          "oklch(15% 0.0541 194.63)",
+          "oklch(26.43% 0.0541 194.63)",
+          "oklch(37.86% 0.0541 194.63)",
+          "oklch(49.29% 0.0541 194.63)",
+          "oklch(60.71% 0.0541 194.63)",
+          "oklch(72.14% 0.0541 194.63)",
+          "oklch(83.57% 0.0541 194.63)",
+          "oklch(95% 0.0541 194.63)"
+        ]
+      },
+      "reference-code-bg": {
+        "role": "neutral",
+        "displayName": "Reference Code Background",
+        "tonalRamp": [
+          "oklch(15% 0.0090 219.74)",
+          "oklch(26.43% 0.0090 219.74)",
+          "oklch(37.86% 0.0090 219.74)",
+          "oklch(49.29% 0.0090 219.74)",
+          "oklch(60.71% 0.0090 219.74)",
+          "oklch(72.14% 0.0090 219.74)",
+          "oklch(83.57% 0.0090 219.74)",
+          "oklch(95% 0.0090 219.74)"
+        ]
+      },
+      "pass": {
+        "role": "status",
+        "displayName": "Pass",
+        "tonalRamp": [
+          "oklch(15% 0.0707 156.10)",
+          "oklch(26.43% 0.0707 156.10)",
+          "oklch(37.86% 0.0707 156.10)",
+          "oklch(49.29% 0.0707 156.10)",
+          "oklch(60.71% 0.0707 156.10)",
+          "oklch(72.14% 0.0707 156.10)",
+          "oklch(83.57% 0.0707 156.10)",
+          "oklch(95% 0.0707 156.10)"
+        ]
+      },
+      "fail": {
+        "role": "status",
+        "displayName": "Fail",
+        "tonalRamp": [
+          "oklch(15% 0.1069 17.51)",
+          "oklch(26.43% 0.1069 17.51)",
+          "oklch(37.86% 0.1069 17.51)",
+          "oklch(49.29% 0.1069 17.51)",
+          "oklch(60.71% 0.1069 17.51)",
+          "oklch(72.14% 0.1069 17.51)",
+          "oklch(83.57% 0.1069 17.51)",
+          "oklch(95% 0.1069 17.51)"
+        ]
+      },
+      "destructive": {
+        "role": "status",
+        "displayName": "Destructive",
+        "tonalRamp": [
+          "oklch(15% 0.1525 21.25)",
+          "oklch(26.43% 0.1525 21.25)",
+          "oklch(37.86% 0.1525 21.25)",
+          "oklch(49.29% 0.1525 21.25)",
+          "oklch(60.71% 0.1525 21.25)",
+          "oklch(72.14% 0.1525 21.25)",
+          "oklch(83.57% 0.1525 21.25)",
+          "oklch(95% 0.1525 21.25)"
+        ]
+      },
+      "selection": {
+        "role": "secondary",
+        "displayName": "Selection",
+        "purpose": "Text selection background",
+        "tonalRamp": [
+          "oklch(15% 0.0804 89.53)",
+          "oklch(26.43% 0.0804 89.53)",
+          "oklch(37.86% 0.0804 89.53)",
+          "oklch(49.29% 0.0804 89.53)",
+          "oklch(60.71% 0.0804 89.53)",
+          "oklch(72.14% 0.0804 89.53)",
+          "oklch(83.57% 0.0804 89.53)",
+          "oklch(95% 0.0804 89.53)"
+        ]
+      },
+      "locked-index": {
+        "role": "neutral",
+        "displayName": "Locked Index",
+        "purpose": "Locked incident indices",
+        "tonalRamp": [
+          "oklch(15% 0.0116 189.69)",
+          "oklch(26.43% 0.0116 189.69)",
+          "oklch(37.86% 0.0116 189.69)",
+          "oklch(49.29% 0.0116 189.69)",
+          "oklch(60.71% 0.0116 189.69)",
+          "oklch(72.14% 0.0116 189.69)",
+          "oklch(83.57% 0.0116 189.69)",
+          "oklch(95% 0.0116 189.69)"
+        ]
+      },
+      "rail-footer": {
+        "role": "neutral",
+        "displayName": "Rail Footer",
+        "purpose": "Navigation footer text",
+        "tonalRamp": [
+          "oklch(15% 0.0126 190.31)",
+          "oklch(26.43% 0.0126 190.31)",
+          "oklch(37.86% 0.0126 190.31)",
+          "oklch(49.29% 0.0126 190.31)",
+          "oklch(60.71% 0.0126 190.31)",
+          "oklch(72.14% 0.0126 190.31)",
+          "oklch(83.57% 0.0126 190.31)",
+          "oklch(95% 0.0126 190.31)"
+        ]
+      },
+      "preview-label": {
+        "role": "secondary",
+        "displayName": "Preview Label",
+        "purpose": "Live route label",
+        "tonalRamp": [
+          "oklch(15% 0.0250 187.22)",
+          "oklch(26.43% 0.0250 187.22)",
+          "oklch(37.86% 0.0250 187.22)",
+          "oklch(49.29% 0.0250 187.22)",
+          "oklch(60.71% 0.0250 187.22)",
+          "oklch(72.14% 0.0250 187.22)",
+          "oklch(83.57% 0.0250 187.22)",
+          "oklch(95% 0.0250 187.22)"
+        ]
+      },
+      "preview-address": {
+        "role": "neutral",
+        "displayName": "Preview Address",
+        "purpose": "Preview route address",
+        "tonalRamp": [
+          "oklch(15% 0.0111 196.93)",
+          "oklch(26.43% 0.0111 196.93)",
+          "oklch(37.86% 0.0111 196.93)",
+          "oklch(49.29% 0.0111 196.93)",
+          "oklch(60.71% 0.0111 196.93)",
+          "oklch(72.14% 0.0111 196.93)",
+          "oklch(83.57% 0.0111 196.93)",
+          "oklch(95% 0.0111 196.93)"
+        ]
+      },
+      "failure-detail": {
+        "role": "secondary",
+        "displayName": "Failure Detail",
+        "purpose": "Readable technical failure details",
+        "tonalRamp": [
+          "oklch(15% 0.0736 18.75)",
+          "oklch(26.43% 0.0736 18.75)",
+          "oklch(37.86% 0.0736 18.75)",
+          "oklch(49.29% 0.0736 18.75)",
+          "oklch(60.71% 0.0736 18.75)",
+          "oklch(72.14% 0.0736 18.75)",
+          "oklch(83.57% 0.0736 18.75)",
+          "oklch(95% 0.0736 18.75)"
+        ]
+      },
+      "reference-emphasis": {
+        "role": "neutral",
+        "displayName": "Reference Emphasis",
+        "tonalRamp": [
+          "oklch(15% 0.0057 128.53)",
+          "oklch(26.43% 0.0057 128.53)",
+          "oklch(37.86% 0.0057 128.53)",
+          "oklch(49.29% 0.0057 128.53)",
+          "oklch(60.71% 0.0057 128.53)",
+          "oklch(72.14% 0.0057 128.53)",
+          "oklch(83.57% 0.0057 128.53)",
+          "oklch(95% 0.0057 128.53)"
+        ],
+        "purpose": "Strong emphasis in the graphite Concept column."
+      },
+      "completion-surface": {
+        "role": "neutral",
+        "displayName": "Completion Surface",
+        "purpose": "Saved completion band",
+        "tonalRamp": [
+          "oklch(15% 0.0230 173.44)",
+          "oklch(26.43% 0.0230 173.44)",
+          "oklch(37.86% 0.0230 173.44)",
+          "oklch(49.29% 0.0230 173.44)",
+          "oklch(60.71% 0.0230 173.44)",
+          "oklch(72.14% 0.0230 173.44)",
+          "oklch(83.57% 0.0230 173.44)",
+          "oklch(95% 0.0230 173.44)"
+        ]
+      },
+      "completion-detail": {
+        "role": "neutral",
+        "displayName": "Completion Detail",
+        "purpose": "Supporting completion text",
+        "tonalRamp": [
+          "oklch(15% 0.0164 166.63)",
+          "oklch(26.43% 0.0164 166.63)",
+          "oklch(37.86% 0.0164 166.63)",
+          "oklch(49.29% 0.0164 166.63)",
+          "oklch(60.71% 0.0164 166.63)",
+          "oklch(72.14% 0.0164 166.63)",
+          "oklch(83.57% 0.0164 166.63)",
+          "oklch(95% 0.0164 166.63)"
+        ]
+      },
+      "recovery-surface": {
+        "role": "neutral",
+        "displayName": "Recovery Surface",
+        "purpose": "Storage recovery band",
+        "tonalRamp": [
+          "oklch(15% 0.0150 71.49)",
+          "oklch(26.43% 0.0150 71.49)",
+          "oklch(37.86% 0.0150 71.49)",
+          "oklch(49.29% 0.0150 71.49)",
+          "oklch(60.71% 0.0150 71.49)",
+          "oklch(72.14% 0.0150 71.49)",
+          "oklch(83.57% 0.0150 71.49)",
+          "oklch(95% 0.0150 71.49)"
+        ]
+      },
+      "notice-surface": {
+        "role": "neutral",
+        "displayName": "Notice Surface",
+        "purpose": "Desktop-use notice background",
+        "tonalRamp": [
+          "oklch(15% 0.0126 93.85)",
+          "oklch(26.43% 0.0126 93.85)",
+          "oklch(37.86% 0.0126 93.85)",
+          "oklch(49.29% 0.0126 93.85)",
+          "oklch(60.71% 0.0126 93.85)",
+          "oklch(72.14% 0.0126 93.85)",
+          "oklch(83.57% 0.0126 93.85)",
+          "oklch(95% 0.0126 93.85)"
+        ]
+      },
+      "notice-rule": {
+        "role": "neutral",
+        "displayName": "Notice Rule",
+        "purpose": "Desktop-use notice separator",
+        "tonalRamp": [
+          "oklch(15% 0.0291 91.80)",
+          "oklch(26.43% 0.0291 91.80)",
+          "oklch(37.86% 0.0291 91.80)",
+          "oklch(49.29% 0.0291 91.80)",
+          "oklch(60.71% 0.0291 91.80)",
+          "oklch(72.14% 0.0291 91.80)",
+          "oklch(83.57% 0.0291 91.80)",
+          "oklch(95% 0.0291 91.80)"
+        ]
+      },
+      "notice-text": {
+        "role": "neutral",
+        "displayName": "Notice Text",
+        "purpose": "Desktop-use explanation",
+        "tonalRamp": [
+          "oklch(15% 0.0137 102.05)",
+          "oklch(26.43% 0.0137 102.05)",
+          "oklch(37.86% 0.0137 102.05)",
+          "oklch(49.29% 0.0137 102.05)",
+          "oklch(60.71% 0.0137 102.05)",
+          "oklch(72.14% 0.0137 102.05)",
+          "oklch(83.57% 0.0137 102.05)",
+          "oklch(95% 0.0137 102.05)"
+        ]
+      },
+      "notice-reassurance": {
+        "role": "neutral",
+        "displayName": "Notice Reassurance",
+        "purpose": "Lesson browsing reassurance",
+        "tonalRamp": [
+          "oklch(15% 0.0178 92.69)",
+          "oklch(26.43% 0.0178 92.69)",
+          "oklch(37.86% 0.0178 92.69)",
+          "oklch(49.29% 0.0178 92.69)",
+          "oklch(60.71% 0.0178 92.69)",
+          "oklch(72.14% 0.0178 92.69)",
+          "oklch(83.57% 0.0178 92.69)",
+          "oklch(95% 0.0178 92.69)"
+        ]
+      },
+      "section-link": {
+        "role": "secondary",
+        "displayName": "Section Link",
+        "purpose": "Mobile section links",
+        "tonalRamp": [
+          "oklch(15% 0.0273 185.07)",
+          "oklch(26.43% 0.0273 185.07)",
+          "oklch(37.86% 0.0273 185.07)",
+          "oklch(49.29% 0.0273 185.07)",
+          "oklch(60.71% 0.0273 185.07)",
+          "oklch(72.14% 0.0273 185.07)",
+          "oklch(83.57% 0.0273 185.07)",
+          "oklch(95% 0.0273 185.07)"
+        ]
+      },
+      "reference-surface": {
+        "role": "neutral",
+        "displayName": "Reference Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0080 223.73)",
+          "oklch(26.43% 0.0080 223.73)",
+          "oklch(37.86% 0.0080 223.73)",
+          "oklch(49.29% 0.0080 223.73)",
+          "oklch(60.71% 0.0080 223.73)",
+          "oklch(72.14% 0.0080 223.73)",
+          "oklch(83.57% 0.0080 223.73)",
+          "oklch(95% 0.0080 223.73)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Incident Title",
+        "purpose": "Current investigation title; reduces at narrow breakpoints."
+      },
+      "reference-body": {
+        "displayName": "Concept Reading",
+        "purpose": "Expanded reference paragraphs at 1.8 line height."
+      },
+      "incident-number": {
+        "displayName": "Incident Index",
+        "purpose": "Large amber monospace identifier."
+      },
+      "metadata": {
+        "displayName": "Metadata",
+        "purpose": "Supporting labels, indices, and state text; essential prose uses larger roles."
+      },
+      "navigation": {
+        "displayName": "Navigation",
+        "purpose": "Incident navigation and compact supporting text."
+      },
+      "source-code": {
+        "displayName": "Source Code",
+        "purpose": "Source paths and inline technical notation."
+      },
+      "incident-prose": {
+        "displayName": "Incident Prose",
+        "purpose": "Incident report reading, up to 75ch."
+      },
+      "incident-prose-narrow": {
+        "displayName": "Incident Prose Narrow",
+        "purpose": "Incident report at widths up to 420px."
+      },
+      "evidence-heading": {
+        "displayName": "Evidence Heading",
+        "purpose": "Compact Evidence tool heading."
+      },
+      "brand": {
+        "displayName": "Brand",
+        "purpose": "Desktop Bugbound brand."
+      },
+      "brand-narrow": {
+        "displayName": "Brand Narrow",
+        "purpose": "Bugbound brand at widths up to 420px."
+      },
+      "next-incident-title": {
+        "displayName": "Next Incident Title",
+        "purpose": "Next incident in the register."
+      },
+      "headline-mobile": {
+        "displayName": "Headline Mobile",
+        "purpose": "Incident title at widths up to 760px."
+      },
+      "headline-narrow": {
+        "displayName": "Headline Narrow",
+        "purpose": "Incident title at widths up to 420px."
+      },
+      "register-title-mobile": {
+        "displayName": "Register Title Mobile",
+        "purpose": "Register title at widths up to 760px."
+      },
+      "incident-number-mobile": {
+        "displayName": "Incident Number Mobile",
+        "purpose": "Incident index at widths up to 760px."
+      },
+      "compact-state": {
+        "displayName": "Compact State",
+        "purpose": "Register state at widths up to 420px; never body prose."
+      },
+      "sidebar-heading": {
+        "displayName": "Sidebar Heading",
+        "purpose": "Semibold Incident register heading-link, left-aligned with the group headings and lesson numbers, without an underline; single line with separate collapse button."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "disclosure-and-overlay-duration",
+        "value": "200ms",
+        "purpose": "Installed coss accordion, Sheet, and AlertDialog transitions."
+      },
+      {
+        "name": "disclosure-and-overlay-easing",
+        "value": "ease-in-out",
+        "purpose": "Accordion height/indicator and overlay transitions."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "none",
+        "purpose": "Shell and desk overlays suppress animation and transitions under prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-reference",
+        "value": "1600px"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "1199px"
+      },
+      {
+        "name": "sheet-navigation",
+        "value": "1100px"
+      },
+      {
+        "name": "stacked-reference",
+        "value": "760px"
+      },
+      {
+        "name": "narrow-mobile",
+        "value": "420px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Amber command for opening an investigation or running checks.",
+      "html": "<button class=\"ds-button ds-primary\">Run checks</button>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:36px;padding:0 11px;border:1px solid transparent;border-radius:5px;font:500 13px Geist,sans-serif;letter-spacing:0;cursor:pointer;box-shadow:none}.ds-button:focus-visible{outline:2px solid #95c9c8;outline-offset:3px}.ds-button:disabled{opacity:.64;pointer-events:none}@media(max-width:1100px),(hover:none) and (pointer:coarse){.ds-button{min-height:44px}}.ds-primary{background:#dfbe77;color:#20211e;border-color:#dfbe77}.ds-primary:hover,.ds-primary:active{background:rgb(223 190 119 / 90%)}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary commands such as cancel, retry, and keep progress.",
+      "html": "<button class=\"ds-button ds-outline\">Keep progress</button>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:36px;padding:0 11px;border:1px solid transparent;border-radius:5px;font:500 13px Geist,sans-serif;letter-spacing:0;cursor:pointer;box-shadow:none}.ds-button:focus-visible{outline:2px solid #95c9c8;outline-offset:3px}.ds-button:disabled{opacity:.64;pointer-events:none}@media(max-width:1100px),(hover:none) and (pointer:coarse){.ds-button{min-height:44px}}.ds-outline{background:rgb(78 89 90 / 32%);color:#eceeea;border-color:#4e595a}.ds-outline:hover,.ds-outline:active{background:rgb(78 89 90 / 64%)}"
+    },
+    {
+      "name": "Ghost Icon Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Reload, copy, and navigation controls use accessible names and Tooltip composition.",
+      "html": "<button class=\"ds-button ds-ghost\" aria-label=\"Reload preview\" title=\"Reload preview\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/></svg></button>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:36px;padding:0 11px;border:1px solid transparent;border-radius:5px;font:500 13px Geist,sans-serif;letter-spacing:0;cursor:pointer;box-shadow:none}.ds-button:focus-visible{outline:2px solid #95c9c8;outline-offset:3px}.ds-button:disabled{opacity:.64;pointer-events:none}@media(max-width:1100px),(hover:none) and (pointer:coarse){.ds-button{min-height:44px}}.ds-ghost{width:36px;height:36px;padding:0;background:transparent;color:#eceeea}.ds-ghost:hover,.ds-ghost:active{background:#353e40}@media(max-width:1100px),(hover:none) and (pointer:coarse){.ds-ghost{width:44px;height:44px}}"
+    },
+    {
+      "name": "Destructive Button",
+      "kind": "button",
+      "refersTo": "button-destructive",
+      "description": "The reset confirmation's destructive action.",
+      "html": "<button class=\"ds-button ds-destructive\">Reset progress</button>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:36px;padding:0 11px;border:1px solid transparent;border-radius:5px;font:500 13px Geist,sans-serif;letter-spacing:0;cursor:pointer;box-shadow:none}.ds-button:focus-visible{outline:2px solid #95c9c8;outline-offset:3px}.ds-button:disabled{opacity:.64;pointer-events:none}@media(max-width:1100px),(hover:none) and (pointer:coarse){.ds-button{min-height:44px}}.ds-destructive{background:#b94348;color:#fff;border-color:#b94348}.ds-destructive:hover,.ds-destructive:active{background:rgb(185 67 72 / 90%)}"
+    },
+    {
+      "name": "Incident Navigation",
+      "kind": "nav",
+      "refersTo": "incident-navigation",
+      "description": "Expanded rail is 260px; the register link is a left-aligned 16px semibold h2 without an underline, above amber act headings. The heading row has one divider. Collapse retains a 64px rail and the same focused toggle. This sample shows the numbered active and locked lesson rows.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Incidents\"><a class=\"ds-nav-row\" href=\"#incident\" aria-current=\"page\"><span class=\"ds-index\">01</span><span>The Vanishing Venue</span></a><span class=\"ds-nav-row ds-locked\" aria-disabled=\"true\"><span>02</span><span>The Forgetful Cart</span><span aria-label=\"Locked\">-</span></span></nav>",
+      "css": ".ds-nav{background:#131719;color:#eceeea;padding:12px;font:12px/1.4 Geist,sans-serif}.ds-nav-row{display:grid;grid-template-columns:22px minmax(0,1fr) 14px;align-items:center;gap:7px;padding:8px 9px;min-height:44px;border-radius:4px;color:inherit;text-decoration:none}.ds-nav-row[aria-current]{background:#2d383a;color:#eef5f2}.ds-nav-row:hover{background:#242c2e}.ds-nav-row:focus-visible{outline:2px solid #95c9c8;outline-offset:3px}.ds-index{color:#dfbe77;font:11px 'Geist Mono',monospace}.ds-locked{color:#a0aaa9}"
+    },
+    {
+      "name": "Concept Reference",
+      "kind": "custom",
+      "refersTo": "concept-reference",
+      "description": "Light, continuous reference surface; text remains fully expanded.",
+      "html": "<aside class=\"ds-concept\"><h2 class=\"ds-concept-title\">Concept reference</h2><p class=\"ds-concept-label\">Concept reference</p><p class=\"ds-concept-body\">The full lesson remains available beside the investigation, including inline <code class=\"ds-concept-code\">src/app</code> references.</p></aside>",
+      "css": ".ds-concept{background:#24292b;color:#eceeea;padding:29px 27px 40px;border-left:1px solid #566263;font-family:Geist,sans-serif}.ds-concept-title{font-size:22px;font-weight:550;line-height:1.25;margin:0}.ds-concept-label{color:#aeb7b6;font-size:11px;margin:10px 0 24px}.ds-concept-body{font-size:14px;line-height:1.8;margin:0}.ds-concept-code{font:12px 'Geist Mono',monospace;color:#95c9c8;background:#303638;padding:1px 3px;border-radius:2px;white-space:normal;overflow-wrap:anywhere}"
+    },
+    {
+      "name": "Live Route Frame",
+      "kind": "custom",
+      "description": "A true frame around the live product under test, distinct from unframed page sections.",
+      "html": "<section class=\"ds-preview\" aria-label=\"Live route preview\"><div class=\"ds-address\"><span class=\"ds-address-label\">Live route</span><code class=\"ds-address-code\">/lab/01-vanishing-venue</code></div><div class=\"ds-route-space\" aria-label=\"Route viewport\"></div></section>",
+      "css": ".ds-preview{border:1px solid #536062;border-radius:6px;overflow:hidden}.ds-address{display:flex;gap:12px;align-items:center;padding:3px 5px 3px 12px;background:#282f31;min-height:44px;font-family:Geist,sans-serif}.ds-address-label{color:#bed5d2;font-size:11px}.ds-address-code{color:#b6c0c0;font:11px 'Geist Mono',monospace;overflow-wrap:anywhere}.ds-route-space{height:360px;background:#0a0d12}@media(min-width:1600px){.ds-route-space{height:420px}}@media(max-width:420px){.ds-address-label{display:none}.ds-route-space{height:350px}}"
+    },
+    {
+      "name": "Hint Disclosure",
+      "kind": "custom",
+      "description": "Visual translation of the coss Accordion; actual application uses Base UI semantics and multiple independent disclosures.",
+      "html": "<details class=\"ds-hint\"><summary class=\"ds-hint-trigger\"><span class=\"ds-hint-index\">01</span> Gentle nudge</summary><p class=\"ds-hint-panel\">Optional guidance appears after deliberate disclosure.</p></details>",
+      "css": ".ds-hint{background:#1b1e20;color:#eceeea;border-bottom:1px solid #394143;font:13px/1.7 Geist,sans-serif}.ds-hint-trigger{padding:16px 0;cursor:pointer;font-weight:500}.ds-hint-trigger:hover{color:#fff}.ds-hint-trigger:focus-visible{outline:2px solid #95c9c8;outline-offset:3px}.ds-hint-index{font:11px 'Geist Mono',monospace;color:#dfbe77;margin-right:14px}.ds-hint-panel{color:#aeb7b6;margin:0;padding-bottom:16px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Investigation Desk",
+    "overview": "Investigation Desk is Bugbound Season 2's code-led visual world: a graphite working environment with amber incident indexing, restrained teal tool details, and a subtly lifted graphite Concept reference surface. It carries the Bugbound naming and incident notation forward with warm, readable typography and purposeful detail.\n\nThe system is flat and task-focused. Persistent navigation, ruled information, a framed live route, and a dedicated reference surface establish hierarchy without turning every section into a card. The current implementation and approved PRODUCT.md commitment are the authority; no approved generated comp or quality-bar card is recorded.",
+    "keyCharacteristics": [
+      "Graphite working surfaces and a graphite reference surface.",
+      "Amber indexing and primary commands; teal focus and tool details.",
+      "Readable Geist prose with selective Geist Mono incident notation.",
+      "Ruled sections, compact native controls, and explicit progress states."
+    ],
+    "rules": [],
+    "dos": [
+      "Do keep the full Concept reference expanded beside the investigation on desktop.",
+      "Do use coss UI controls with Base UI render composition and stable data-size/data-variant styling.",
+      "Do preserve readable wrapping, visible focus, reduced-motion behavior, and labeled icon actions.",
+      "Do distinguish earned completion, saved completion, and the latest verification result.",
+      "Do keep design changes scoped to the workspace; the lab retains its independent visual world."
+    ],
+    "donts": [
+      "Don't restore colored side-border cards, decorative dot grids, terminal costume, or decorative dashboard metrics.",
+      "Don't promote retained legacy Card or Badge primitives into the Investigation Desk's visual authority.",
+      "Don't collapse the Concept reference or turn optional hints into automatically revealed guidance.",
+      "Don't treat code-led direction as evidence of an approved generated comp or quality-bar card."
+    ]
+  }
+}

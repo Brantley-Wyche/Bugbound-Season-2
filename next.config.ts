@@ -1,9 +1,8 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // StrictMode double-invokes renders and effects in dev, which would make the
-  // in-app check harness report false failures. Off, deliberately — same call
-  // as Season 1.
+  // Preserve the established lab runtime. Season 2 checks do not count renders;
+  // globally enabling StrictMode still needs a full curriculum compatibility run.
   reactStrictMode: false,
 };
 
