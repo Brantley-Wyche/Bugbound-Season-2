@@ -2,7 +2,7 @@
 
 > **Learn Next.js by fixing it.** A level-based debugging game where every lesson ships with a real, intentionally planted bug in a real App Router route — and you're the engineer on call. Again.
 
-Season 2 is the sibling of [Bugbound Season 1](https://github.com/Brantley-Wyche/React-Practice-Site) (core React + TypeScript). Same game, new territory: **13 escalating levels** of Next.js App Router failure modes — routing, the server/client boundary, hydration, caching, Server Actions, streaming, route handlers, metadata, and the proxy — each one modeled on bugs you'll actually meet in production.
+Season 2 is the sibling of [Bugbound Season 1](https://github.com/Brantley-Wyche/Bugbound-Season-1) (core React + TypeScript). Same game, new territory: **13 escalating levels** of Next.js App Router failure modes — routing, the server/client boundary, hydration, caching, Server Actions, streaming, route handlers, metadata, and the proxy — each one modeled on bugs you'll actually meet in production.
 
 No embedded editor, no sandbox. You read a QA ticket, open the file in your own editor, fix the code, watch HMR reload it, and run the in-app checks. All green → next level unlocks.
 
@@ -155,7 +155,7 @@ in-flight server request. This is lifecycle isolation, not a security sandbox.
 
 ## Roadmap
 
-- **Season 1** — Core React + TypeScript, 15 levels ([here](https://github.com/Brantley-Wyche/React-Practice-Site))
+- **Season 1** — Core React + TypeScript, 15 levels ([here](https://github.com/Brantley-Wyche/Bugbound-Season-1))
 - **Season 2** *(this repo)* — Next.js App Router, 13 levels
 - **Season 3** — Bring-your-own-agent: your AI coding agent generates fresh, personalized levels via a bundled skill
 
