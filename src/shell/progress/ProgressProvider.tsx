@@ -13,29 +13,36 @@ import {
   LEGACY_KEY,
   PROGRESS_PREFIX,
 } from './progress-store';
+import { createCaseLog, LOG_PREFIX } from './case-log';
 
-const ProgressContext = createContext<ReturnType<
-  typeof createProgressStore
-> | null>(null);
+type Stores = {
+  progress: ReturnType<typeof createProgressStore>;
+  caseLog: ReturnType<typeof createCaseLog>;
+};
+const ProgressContext = createContext<Stores | null>(null);
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
-  const [store] = useState(() =>
-    createProgressStore(
-      levels.map((level) => level.id),
-      () => window.localStorage,
-    ),
-  );
+  const [stores] = useState<Stores>(() => {
+    const ids = levels.map((level) => level.id);
+    return {
+      progress: createProgressStore(ids, () => window.localStorage),
+      caseLog: createCaseLog(ids, () => window.localStorage),
+    };
+  });
   useEffect(() => {
+    const { progress, caseLog } = stores;
     const sync = (event: StorageEvent) => {
       if (
         event.key === null ||
         event.key === LEGACY_KEY ||
         event.key.startsWith(PROGRESS_PREFIX)
       )
-        store.refresh();
+        progress.refresh();
+      if (event.key === null || event.key.startsWith(LOG_PREFIX))
+        caseLog.refresh();
     };
     const refresh = () => {
-      store.refresh();
+      progress.refresh();
     };
     window.addEventListener('storage', sync);
     window.addEventListener('focus', refresh);
@@ -43,18 +50,23 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       window.removeEventListener('storage', sync);
       window.removeEventListener('focus', refresh);
     };
-  }, [store]);
+  }, [stores]);
 
   return (
-    <ProgressContext.Provider value={store}>
+    <ProgressContext.Provider value={stores}>
       {children}
     </ProgressContext.Provider>
   );
 }
 
+function useStores() {
+  const stores = useContext(ProgressContext);
+  if (!stores) throw new Error('ProgressProvider is required');
+  return stores;
+}
+
 export function useProgress() {
-  const store = useContext(ProgressContext);
-  if (!store) throw new Error('ProgressProvider is required');
+  const { progress: store, caseLog } = useStores();
   const snapshot = useSyncExternalStore(
     store.subscribe,
     store.getSnapshot,
@@ -64,8 +76,28 @@ export function useProgress() {
     ...snapshot,
     captureRun: store.captureRun,
     markComplete: store.markComplete,
-    resetProgress: store.reset,
+    resetProgress() {
+      store.reset();
+      // The log is kept through a reset and notes that it happened.
+      if (!store.getSnapshot().resetError) caseLog.recordReset();
+    },
     retrySave: store.retrySave,
     retryLoad: store.refresh,
+  };
+}
+
+export function useCaseLog() {
+  const { caseLog: store } = useStores();
+  const snapshot = useSyncExternalStore(
+    store.subscribe,
+    store.getSnapshot,
+    store.getServerSnapshot,
+  );
+  return {
+    ...snapshot,
+    recordOpened: store.recordOpened,
+    startRun: store.startRun,
+    recordRun: store.recordRun,
+    recordHint: store.recordHint,
   };
 }

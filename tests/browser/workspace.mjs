@@ -107,7 +107,14 @@ try {
   // A failing run on an open case records the run and never a Closed entry or completion band.
   assert.equal(await page.locator('.closed-entry').count(), 0);
   assert.equal(await page.locator('.record-entry').textContent().then(text => /^Run 2/.test(text)), true, 'The latest run is numbered in the record');
-  assert.equal(await page.locator('.record-earlier li').count(), 1, 'The cancelled run folds into the earlier list');
+  // The case log holds the history, newest first: both runs, the hint tier (never its text), and the first visit.
+  const log = await page.locator('.case-log li').allTextContents();
+  assert.equal(log.length, 4, 'Case log has the first visit, one hint tier and two runs');
+  assert.match(log[0], /Run 2.*of 4 passed/, 'Newest entry is the latest run');
+  assert.match(log[1], /Run 1.*Cancelled/, 'The cancelled run stays in the log');
+  assert.match(log[2], /Hint 01.*Gentle nudge opened/, 'Hint tier is logged by name');
+  assert.match(log[3], /Opened.*BUG-001/, 'The first visit starts the log');
+  assert.equal(await page.locator('.case-record dt', { hasText: 'Runs' }).locator('+ dd').textContent(), '2', 'The record row counts runs');
   await page.goto(baseURL + '/level/02-forgetful-cart');
   await page.getByRole('heading', { name: 'Incident locked' }).waitFor();
   await page.goto(baseURL + '/level/missing-incident');

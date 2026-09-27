@@ -267,7 +267,7 @@ export default function Workspace({ children }: { children: ReactNode }) {
                     <AlertDialogDescription>
                       Closed incidents will reopen and every incident after the
                       first will lock again. Active checks will be cancelled.
-                      Your source files will not change.
+                      Your source files and case logs are kept.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>

@@ -1,16 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ExternalLink, RotateCw, BookOpen, Check } from 'lucide-react';
 import { levels } from '@/levels';
 import type { LevelManifest } from '../types';
 import Prose from './Prose';
 import ChecksRunner from '../checks/ChecksRunner';
 import HintBox from './HintBox';
+import CaseLog from './CaseLog';
 import SourceFiles from './SourceFiles';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipTrigger, TooltipPopup } from '@/components/ui/tooltip';
-import { useProgress } from '../progress/ProgressProvider';
+import { useCaseLog, useProgress } from '../progress/ProgressProvider';
 import type { ClosedInfo, RunToken } from '../progress/progress-store';
 import { bugId, folio, formatDay, formatTime } from '../format';
 
@@ -27,10 +28,30 @@ export default function LevelPage({
 }) {
   const [frameKey, setFrameKey] = useState(0);
   const { completed, closedInfo } = useProgress();
+  const { logs, recordOpened } = useCaseLog();
   const closed = closedInfo.get(level.id);
   const next = levels.find((item) => item.number === level.number + 1);
   // Only someone with nothing closed yet sees the loop spelled out.
   const firstCase = !isComplete && completed !== null && completed.size === 0;
+  const log = logs.get(level.id);
+  const hintTiers = [
+    ...new Set(
+      log?.events.flatMap((event) =>
+        event.type === 'hint' ? [event.tier] : [],
+      ),
+    ),
+  ].sort();
+  const lastWorked = Math.max(
+    0,
+    ...(log?.events ?? [])
+      .filter((event) => event.type !== 'opened')
+      .map((event) => event.at),
+  );
+
+  // The case log's first entry: this incident was opened.
+  useEffect(() => {
+    recordOpened(level.id);
+  }, [level.id, recordOpened]);
   return (
     <main id="main-content" tabIndex={-1} className="case-workspace">
       <header className="case-header">
@@ -72,6 +93,28 @@ export default function LevelPage({
                 <dt>Closing run</dt>
                 <dd className="mono">
                   Run {closed.run} · {formatTime(closed.at)}
+                </dd>
+              </div>
+            )}
+            {log && log.runs > 0 && (
+              <div>
+                <dt>Runs</dt>
+                <dd className="mono">{log.runs}</dd>
+              </div>
+            )}
+            {hintTiers.length > 0 && (
+              <div>
+                <dt>Hints opened</dt>
+                <dd className="mono">
+                  {hintTiers.map((tier) => folio(tier + 1)).join(' ')}
+                </dd>
+              </div>
+            )}
+            {lastWorked > 0 && (
+              <div>
+                <dt>Last worked</dt>
+                <dd>
+                  {formatDay(lastWorked)} {formatTime(lastWorked)}
                 </dd>
               </div>
             )}
@@ -165,6 +208,7 @@ export default function LevelPage({
               />
             </section>
           </ChecksRunner>
+          <CaseLog levelId={level.id} number={level.number} />
           <HintBox levelId={level.id} />
         </div>
         <aside className="concept-column" aria-labelledby="concept-title">
