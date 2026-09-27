@@ -841,21 +841,61 @@ html:has(.game-shell) {
   font-size: 14px;
   line-height: 1.6;
 }
-.record-earlier {
-  margin-top: 18px;
-  padding-top: 12px;
-  border-top: 1px solid var(--desk-rule);
-  color: var(--desk-muted);
+.case-log {
+  padding: 6px 28px 30px;
+}
+.case-log .section-heading {
+  margin-bottom: 10px;
+}
+.case-log-date {
+  padding: 14px 0 6px;
   font-size: 12px;
+  color: var(--desk-muted);
 }
-.record-earlier > p {
-  margin-bottom: 6px;
+.case-log-day:first-of-type .case-log-date {
+  padding-top: 8px;
+  border-top: 1px solid var(--desk-rule);
 }
-.record-earlier li {
+.case-log li {
+  display: grid;
+  grid-template-columns: 76px 76px minmax(0, 1fr);
+  gap: 2px 12px;
+  align-items: baseline;
+  padding: 9px 0;
+  border-top: 1px solid var(--desk-source-rule);
+  font-size: 13px;
+}
+.case-log-time {
   font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  color: var(--desk-muted);
+  font-variant-numeric: tabular-nums;
 }
-.record-earlier li + li {
-  margin-top: 3px;
+.case-log-event {
+  font-family: var(--font-geist-mono), monospace;
+  font-weight: 500;
+}
+.case-log-event[data-kind='hint'] {
+  color: var(--desk-accent);
+}
+.case-log-detail {
+  color: var(--desk-muted);
+}
+.case-log-detail :is(.result-pass, .result-fail) svg {
+  display: inline;
+  width: 13px;
+  height: 13px;
+  vertical-align: -1px;
+}
+.case-log-note {
+  max-width: 60ch;
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--desk-muted);
+}
+.case-log > [data-slot='button'] {
+  margin-top: 10px;
 }
 .case-hints {
   padding: 26px 28px 35px;
@@ -1064,7 +1104,8 @@ html:has(.game-shell) {
   .case-hints {
     padding-inline: 22px;
   }
-  .evidence-section {
+  .evidence-section,
+  .case-log {
     padding-inline: 22px;
   }
   .register-title > span {
@@ -1247,10 +1288,15 @@ html:has(.game-shell) {
   .incident-report,
   .case-hints,
   .evidence-section,
+  .case-log,
   .concept-column,
   .incident-register {
     padding-left: 16px;
     padding-right: 16px;
+  }
+  .case-log li {
+    grid-template-columns: 64px auto minmax(0, 1fr);
+    gap: 2px 10px;
   }
   .incident-symptom {
     font-size: 15px;

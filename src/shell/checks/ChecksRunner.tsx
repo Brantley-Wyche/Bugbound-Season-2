@@ -7,7 +7,7 @@ import { runCheck, LabCleanupError, type CheckResult } from './harness';
 import type { LevelManifest } from '../types';
 import { Button } from '@/components/ui/button';
 import { Toolbar, ToolbarButton, ToolbarLink } from '@/components/ui/toolbar';
-import { useProgress } from '../progress/ProgressProvider';
+import { useCaseLog, useProgress } from '../progress/ProgressProvider';
 import type { ClosedInfo, RunToken } from '../progress/progress-store';
 import { bugId, folio, formatDay, formatTime } from '../format';
 import LabDataReset from './LabDataReset';
@@ -58,6 +58,7 @@ export default function ChecksRunner({
   const closedHeading = useRef<HTMLHeadingElement>(null);
   const sentinel = useRef<HTMLDivElement>(null);
   const { captureRun } = useProgress();
+  const { startRun, recordRun } = useCaseLog();
 
   const total = level.checks.length;
   const id = bugId(level.number);
@@ -108,7 +109,8 @@ export default function ChecksRunner({
     active.current = controller;
     const token = captureRun();
     const wasComplete = isComplete;
-    const n = (runs.at(-1)?.n ?? 0) + 1;
+    // Runs are numbered across every visit to this incident.
+    const n = startRun(level.id);
     const waiting = level.checks.map((check) => ({
       name: check.name,
       pending: true as const,
@@ -136,6 +138,13 @@ export default function ChecksRunner({
       const allPass = finished.length > 0 && passed === finished.length;
       const closedAt = allPass && !wasComplete ? Date.now() : undefined;
       update({ status: allPass ? 'passed' : 'failed', passed, closedAt });
+      recordRun(level.id, {
+        run: n,
+        status: allPass ? 'passed' : 'failed',
+        passed,
+        total,
+        ...(closedAt ? { closed: true } : {}),
+      });
       if (allPass) onAllPass(token, { at: Date.now(), run: n });
       setAnnouncement(
         closedAt
@@ -145,16 +154,26 @@ export default function ChecksRunner({
     } catch (error) {
       cleanupFailed = error instanceof LabCleanupError;
       if (!controller.signal.aborted) {
+        const passed = finished.filter((result) => result.pass).length;
         update({
           status: 'error',
-          passed: finished.filter((result) => result.pass).length,
+          passed,
           error: error instanceof Error ? error.message : String(error),
         });
+        recordRun(level.id, { run: n, status: 'error', passed, total });
         setAnnouncement(
           'The check runner could not finish. Retry the checks. If it happens again, restart the dev server.',
         );
       }
     } finally {
+      // A cancelled run (including one abandoned by leaving the page) stays in the log.
+      if (controller.signal.aborted)
+        recordRun(level.id, {
+          run: n,
+          status: 'cancelled',
+          passed: finished.filter((result) => result.pass).length,
+          total,
+        });
       if (active.current === controller) {
         active.current = null;
         if (controller.signal.aborted) {
@@ -196,7 +215,6 @@ export default function ChecksRunner({
     (firstPending === -1 ? rows.length : firstPending) + 1,
     total,
   );
-  const earlier = runs.slice(0, -1).reverse();
 
   return (
     <section className="evidence-section" aria-labelledby="checks-title">
@@ -402,20 +420,6 @@ export default function ChecksRunner({
             </div>
           )
         )}
-        {earlier.length > 0 && (
-          <div className="record-earlier">
-            <p>Earlier this visit</p>
-            <ol>
-              {earlier.map((run) => (
-                <li key={run.n}>
-                  Run {run.n} · {formatTime(run.at)} ·{' '}
-                  <RunResult run={run} total={total} withClosed={false} plain />
-                  {run.closedAt ? ' · Closed' : ''}
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
       </div>
     </section>
   );
@@ -425,12 +429,10 @@ function RunResult({
   run,
   total,
   withClosed,
-  plain = false,
 }: {
   run: Run;
   total: number;
   withClosed: boolean;
-  plain?: boolean;
 }) {
   const text =
     run.status === 'running'
@@ -440,7 +442,6 @@ function RunResult({
         : run.status === 'error'
           ? 'Could not finish'
           : `${run.passed} of ${total} passed`;
-  if (plain) return <>{text}</>;
   const tone =
     run.status === 'passed'
       ? 'result-pass'
