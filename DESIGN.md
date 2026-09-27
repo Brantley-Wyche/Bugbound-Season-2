@@ -23,7 +23,6 @@ colors:
   destructive: "#b94348"
   selection: "#c0aa70"
   locked-index: "#929c9b"
-  rail-footer: "#949f9e"
   preview-label: "#bed5d2"
   preview-address: "#b6c0c0"
   failure-detail: "#f4b5b5"
@@ -54,15 +53,9 @@ typography:
     fontWeight: 600
     lineHeight: 1.5
     letterSpacing: "0"
-  compact-state:
-    fontFamily: "Geist, sans-serif"
-    fontSize: "10px"
-    fontWeight: 400
-    lineHeight: 1.5
-    letterSpacing: "0"
   metadata:
     fontFamily: "Geist, sans-serif"
-    fontSize: "11px"
+    fontSize: "12px"
     fontWeight: 400
     lineHeight: 1.5
     letterSpacing: "0"
@@ -110,7 +103,7 @@ typography:
     letterSpacing: "0"
   next-incident-title:
     fontFamily: "Geist, sans-serif"
-    fontSize: "23px"
+    fontSize: "22px"
     fontWeight: 500
     lineHeight: 1.4
     letterSpacing: "0"
@@ -275,17 +268,19 @@ Amber identifies incidents and primary commands; teal makes tools and focus disc
 
 Pass and fail tints identify verification results alongside icons and words. `pass` also carries the Closed state: the sage rule and heading of the Closed entry, closed marks in the rail and header strip, and "Closed" in the case record. Destructive red is reserved for the explicit reset action. Storage recovery uses a localized warm-brown band; there is no completion band.
 
-Supporting roles are explicit in the frontmatter: `locked-index`, `locked-text`, `rail-footer`, `nav-hover`, `active-row` and `active-row-text` for navigation; `register-hover` for register rows; `source-rule` between source files; `preview-border`, `preview-bar`, `preview-ground`, `preview-label` and `preview-address` for the live route; `check-idle` and `failure-detail` for verification; `reference-emphasis` for Concept emphasis; `recovery-surface` for persistence recovery; and the notice's surface, rule, text and reassurance roles. These are component states, not general-purpose brand accents. In CSS every role is a `--desk-<role>` custom property declared once on `.game-shell, .desk-overlay`; component rules never use raw color literals.
+Supporting roles are explicit in the frontmatter: `locked-index`, `locked-text`, `nav-hover`, `active-row` and `active-row-text` for navigation; `register-hover` for register rows; `source-rule` between source files; `preview-border`, `preview-bar`, `preview-ground`, `preview-label` and `preview-address` for the live route; `check-idle` and `failure-detail` for verification; `reference-emphasis` for Concept emphasis; `recovery-surface` for persistence recovery; and the notice's surface, rule, text and reassurance roles. These are component states, not general-purpose brand accents. In CSS every role is a `--desk-<role>` custom property declared once on `.game-shell, .desk-overlay`; component rules never use raw color literals.
 
 ## Typography
 
 Geist is loaded with `next/font/google` into `--font-geist-sans`; Geist Mono is loaded into `--font-geist-mono`. The workspace uses sans-serif fallbacks and selective monospace for incident numbering, source paths, and technical details. Letter spacing is zero throughout the shell and its overlays.
 
-The frontmatter records desktop, supporting, and responsive roles. Incident report prose uses a larger reading size (16px, line-height 1.65, maximum 75ch), reducing to 15px only at the narrow breakpoint. Metadata is generally 11-12px, navigation titles 12px, and command text 13px. The 10px step is reserved for narrow register states, never reading prose. Component-specific brand, next-incident, and responsive title roles are not interchangeable body sizes. The interface has no marketing-scale display heading.
+The frontmatter records desktop, supporting, and responsive roles. Incident report prose uses a larger reading size (16px, line-height 1.65, maximum 75ch), reducing to 15px only at the narrow breakpoint. **The 12px floor:** no shell text is smaller than 12px at any width, including labels, metadata, rail numerals, state words, the season label and the footer. Metadata, navigation titles and captions are 12px; command, record and check text is 13px. On phones, register states move under the title instead of shrinking. Component-specific brand, next-incident, and responsive title roles are not interchangeable body sizes. The interface has no marketing-scale display heading.
 
 Concept prose is set in **Source Serif 4** (15px, line-height 1.75, optical sizing on, roman and italic), loaded with `next/font/google` into `--font-concept-serif` by the incident layout only, so the register never downloads it. The serif marks the Concept as the reference binder beside the sans tools; the Concept heading, labels and inline code stay in Geist and Geist Mono. Paragraphs keep their full content and 20px separation. Strong emphasis uses weight 650. Inline code is 12px mono and wraps; source paths remain selectable. The Incident label is horizontally centered over its number with an 8px gap.
 
-Geist Mono is the record voice: the folio, `BUG-###` IDs, run numbers and times, counts in the workbench verdict, paths, routes and failure detail. Labels and prose never use it. New components hold a 12px floor; the remaining 10–11px roles (season label, rail numerals, sidebar footnote, footer, register act index and narrow register states) are older roles awaiting the family floor.
+Geist Mono is the record voice: the folio, `BUG-###` IDs, run numbers and times, counts in the workbench verdict, paths, routes and failure detail. Labels and prose never use it.
+
+The scale keeps a small set of steps: 12 · 13 · 14 · 15 · 16 for interface and reading text, then 20 · 22 · 30 · 32 · 42 for brand, headings, titles and the folio, plus the documented responsive title steps (18, 24, 26, 28, 36). Don't add an in-between size; pick the neighbouring step.
 
 ## Layout
 
