@@ -48,7 +48,7 @@ export default function LoadedLevel({
         <p role="status">
           {error
             ? 'The incident could not load. Check the dev server and retry.'
-            : 'Loading incident...'}
+            : 'Loading incident…'}
         </p>
         {error && (
           <Button

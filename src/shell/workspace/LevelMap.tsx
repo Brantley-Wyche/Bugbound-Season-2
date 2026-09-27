@@ -7,6 +7,9 @@ import { useProgress } from '../progress/ProgressProvider';
 import { acts, isUnlocked } from '@/levels/progression';
 import { Button } from '@/components/ui/button';
 
+// Before progress loads, only Incident 01 is known to be open; states stay blank until then.
+const NO_PROGRESS: ReadonlySet<string> = new Set();
+
 export default function LevelMap() {
   const { completed, saved } = useProgress();
   const next =
@@ -24,7 +27,7 @@ export default function LevelMap() {
         </p>
       </header>
       {completed === null ? (
-        <p role="status">Loading progress...</p>
+        <p role="status">Loading progress…</p>
       ) : next ? (
         <section className="next-incident">
           <div>
@@ -53,6 +56,7 @@ export default function LevelMap() {
         <section className="register-act" key={act.from}>
           <h2>
             <span>Act 0{index + 1}</span>
+            <span className="sr-only">: </span>
             {act.name}
           </h2>
           <ol>
@@ -61,8 +65,7 @@ export default function LevelMap() {
                 (level) => level.number >= act.from && level.number <= act.to,
               )
               .map((level) => {
-                const unlocked =
-                  completed !== null && isUnlocked(level, completed);
+                const unlocked = isUnlocked(level, completed ?? NO_PROGRESS);
                 const done = completed?.has(level.id);
                 const content = (
                   <>
@@ -79,7 +82,7 @@ export default function LevelMap() {
                           <Check size={15} aria-hidden="true" />
                           {saved.has(level.id) ? 'Saved' : 'This visit'}
                         </>
-                      ) : unlocked ? (
+                      ) : completed === null ? null : unlocked ? (
                         <>
                           Open
                           <ArrowRight size={15} aria-hidden="true" />
@@ -98,7 +101,7 @@ export default function LevelMap() {
                     {unlocked ? (
                       <Link href={`/level/${level.id}`}>{content}</Link>
                     ) : (
-                      <div aria-disabled="true">{content}</div>
+                      <div>{content}</div>
                     )}
                   </li>
                 );

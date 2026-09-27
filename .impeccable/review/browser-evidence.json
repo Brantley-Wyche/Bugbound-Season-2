@@ -30,7 +30,7 @@
       "height": 900,
       "viewport": 1024,
       "documentWidth": 1024,
-      "noticeVisible": true,
+      "noticeVisible": false,
       "referenceVisible": true,
       "openHints": 0,
       "overflowingButtons": [],
@@ -92,6 +92,7 @@
     "copy feedback",
     "hints disclosure",
     "cancel cleanup",
+    "run keeps keyboard focus",
     "real check run with expected failures",
     "locked route",
     "unknown route"

@@ -22,7 +22,7 @@ async function capture(name, width, height, path = lesson) {
   await page.setViewportSize({ width, height });
   await page.goto(baseURL + path);
   await page.getByRole('heading', { name: path === '/' ? 'Incident register' : 'The Vanishing Venue', level: 1, exact: true }).waitFor();
-  await page.locator('.desk-progress').filter({ hasText: 'Loading progress...' }).waitFor({ state: 'hidden' });
+  await page.locator('.desk-progress').filter({ hasText: 'Loading progress…' }).waitFor({ state: 'hidden' });
   await page.evaluate(() => document.fonts.ready);
   if (path !== '/') await page.frameLocator('.route-preview iframe').getByRole('heading', { name: 'Driftwood Conf 2026', exact: true }).waitFor();
   const metrics = await page.evaluate(() => ({
@@ -39,7 +39,8 @@ async function capture(name, width, height, path = lesson) {
     }).map(element => element.getAttribute('aria-label') || element.textContent.trim()),
   }));
   assert.ok(metrics.documentWidth <= width, `${name}: horizontal overflow`);
-  assert.equal(metrics.noticeVisible, width <= 1100, `${name}: desktop notice visibility`);
+  // Fine-pointer desktops beside an editor keep a clean desk; phones and touch devices see the notice.
+  assert.equal(metrics.noticeVisible, width <= 760, `${name}: desktop notice visibility`);
   assert.equal(metrics.openHints, 0, `${name}: hints must start concealed`);
   assert.deepEqual(metrics.overflowingButtons, [], `${name}: button content overflow`);
   assert.deepEqual(metrics.undersizedControls, [], `${name}: composed control size`);
@@ -70,7 +71,7 @@ try {
   await capture('register-desktop', 1440, 1000, '/');
   await capture('register-mobile', 390, 844, '/');
   await page.goto(baseURL + lesson);
-  await page.locator('.desk-progress').filter({ hasText: 'Loading progress...' }).waitFor({ state: 'hidden' });
+  await page.locator('.desk-progress').filter({ hasText: 'Loading progress…' }).waitFor({ state: 'hidden' });
   await page.getByRole('button', { name: 'Reset progress', exact: true }).click();
   const dialog = page.getByRole('alertdialog', { name: 'Reset all progress?' });
   await dialog.waitFor();
@@ -92,9 +93,15 @@ try {
   await page.getByRole('button', { name: 'Cancel', exact: true }).click();
   await page.getByRole('status').filter({ hasText: 'Check run cancelled. No completion was recorded.' }).waitFor();
   assert.equal(await page.locator('body > iframe').count(), 0);
+  const runHasFocus = () => page.evaluate(() => document.activeElement?.closest('.verification-toolbar') !== null && /run checks/i.test(document.activeElement.textContent));
+  assert.equal(await runHasFocus(), true, 'Cancel returns keyboard focus to Run');
   await page.unrouteAll({ behavior: 'wait' });
-  await page.getByRole('button', { name: 'Re-run checks', exact: true }).click();
+  await page.getByRole('button', { name: 'Re-run checks', exact: true }).focus();
+  await page.keyboard.press('Enter');
+  await page.getByRole('button', { name: 'Running…', exact: true }).waitFor();
+  assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('aria-disabled')), 'true', 'Run stays focused while disabled');
   await page.getByRole('status').filter({ hasText: /Last run:/ }).waitFor({ timeout: 65000 });
+  assert.equal(await runHasFocus(), true, 'Run keeps keyboard focus after a run');
   assert.equal(await page.locator('.check-results li').count(), 4);
   assert.ok(await page.locator('.check-fail').count() > 0, 'Original exercise should remain unsolved');
   assert.equal(await page.locator('.completion-record').count(), 0);
@@ -105,8 +112,8 @@ try {
   assert.deepEqual(errors, [], 'Unexpected browser runtime errors');
   // Persist captures only after interactions so source watchers cannot interrupt a run.
   for (const [name, bytes] of captures) await writeFile(`${output}/${name}.png`, bytes);
-  await writeFile(`${output}/browser-evidence.json`, JSON.stringify({ evidence, errors, interactions: ['sheet and focus return', 'reset dismissal and safe initial focus', 'copy feedback', 'hints disclosure', 'cancel cleanup', 'real check run with expected failures', 'locked route', 'unknown route'] }, null, 2));
-  console.log(`PASS: ${evidence.length} viewport captures; 8 interaction checks; no runtime errors.`);
+  await writeFile(`${output}/browser-evidence.json`, JSON.stringify({ evidence, errors, interactions: ['sheet and focus return', 'reset dismissal and safe initial focus', 'copy feedback', 'hints disclosure', 'cancel cleanup', 'run keeps keyboard focus', 'real check run with expected failures', 'locked route', 'unknown route'] }, null, 2));
+  console.log(`PASS: ${evidence.length} viewport captures; 9 interaction checks; no runtime errors.`);
 } catch (error) {
   console.error(JSON.stringify({ errors, browserLog, url: page.url() }, null, 2));
   throw error;

@@ -29,7 +29,7 @@ The mobile navigation Sheet replaces the rail. At the narrow layout, section anc
 
 ## Required Notice
 
-Show when the viewport is at most 1100px wide, or when both hover is unavailable and the primary pointer is coarse. Preserve the Season 1 wording adapted to Next.js exactly:
+Show when the viewport is at most 760px wide, or when both hover is unavailable and the primary pointer is coarse. A fine-pointer desktop window beside an editor does not show it (owner decision, 2026-09-26, following Season 1). Preserve the Season 1 wording adapted to Next.js exactly:
 
 **Use a desktop to work on the exercises.**
 

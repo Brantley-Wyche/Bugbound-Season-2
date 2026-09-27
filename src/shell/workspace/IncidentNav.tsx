@@ -14,6 +14,9 @@ import { levels } from '@/levels';
 import { useProgress } from '../progress/ProgressProvider';
 import { acts, isUnlocked } from '@/levels/progression';
 
+// Before progress loads, only Incident 01 is known to be open; show no lock marks yet.
+const NO_PROGRESS: ReadonlySet<string> = new Set();
+
 export default function IncidentNav({
   onNavigate,
   collapseControl,
@@ -67,8 +70,10 @@ export default function IncidentNav({
                       level.number >= act.from && level.number <= act.to,
                   )
                   .map((level) => {
-                    const unlocked =
-                      completed !== null && isUnlocked(level, completed);
+                    const unlocked = isUnlocked(
+                      level,
+                      completed ?? NO_PROGRESS,
+                    );
                     const done = completed?.has(level.id);
                     const content = (
                       <>
@@ -79,14 +84,19 @@ export default function IncidentNav({
                         {done ? (
                           <Check
                             size={14}
+                            role="img"
                             aria-label={
                               saved.has(level.id)
                                 ? 'Completion saved'
                                 : 'Completed this visit, not saved'
                             }
                           />
-                        ) : !unlocked ? (
-                          <LockKeyhole size={12} aria-label="Locked" />
+                        ) : completed !== null && !unlocked ? (
+                          <LockKeyhole
+                            size={12}
+                            role="img"
+                            aria-label="Locked"
+                          />
                         ) : null}
                       </>
                     );
@@ -105,9 +115,7 @@ export default function IncidentNav({
                             {content}
                           </Link>
                         ) : (
-                          <span className="nav-locked" aria-disabled="true">
-                            {content}
-                          </span>
+                          <span className="nav-locked">{content}</span>
                         )}
                       </li>
                     );
