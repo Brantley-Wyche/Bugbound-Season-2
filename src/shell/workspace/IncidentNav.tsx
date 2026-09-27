@@ -10,9 +10,11 @@ import {
   AccordionTrigger,
   AccordionPanel,
 } from '@/components/ui/accordion';
+import { Tooltip, TooltipTrigger, TooltipPopup } from '@/components/ui/tooltip';
 import { levels } from '@/levels';
 import { useProgress } from '../progress/ProgressProvider';
 import { acts, isUnlocked } from '@/levels/progression';
+import { folio } from '../format';
 
 // Before progress loads, only Incident 01 is known to be open; show no lock marks yet.
 const NO_PROGRESS: ReadonlySet<string> = new Set();
@@ -21,10 +23,13 @@ export default function IncidentNav({
   onNavigate,
   collapseControl,
   groupsId,
+  showIndex = false,
 }: {
   onNavigate?: () => void;
   collapseControl?: ReactNode;
   groupsId?: string;
+  /** The numbered index the collapsed desktop rail shows instead of the groups. */
+  showIndex?: boolean;
 }) {
   const pathname = usePathname();
   const { completed, saved } = useProgress();
@@ -35,6 +40,16 @@ export default function IncidentNav({
       activeLevel.number >= act.from &&
       activeLevel.number <= act.to,
   );
+  const stateOf = (level: (typeof levels)[number]) =>
+    completed?.has(level.id)
+      ? saved.has(level.id)
+        ? 'Closed'
+        : 'Closed, not saved yet'
+      : completed === null
+        ? null
+        : isUnlocked(level, completed)
+          ? 'Open'
+          : 'Locked';
   return (
     <nav className="incident-nav" aria-label="Incidents">
       <div className="nav-register-row">
@@ -78,18 +93,14 @@ export default function IncidentNav({
                     const content = (
                       <>
                         <span className="nav-number">
-                          {String(level.number).padStart(2, '0')}
+                          {folio(level.number)}
                         </span>
                         <span className="nav-title">{level.title}</span>
                         {done ? (
                           <Check
                             size={14}
                             role="img"
-                            aria-label={
-                              saved.has(level.id)
-                                ? 'Completion saved'
-                                : 'Completed this visit, not saved'
-                            }
+                            aria-label={stateOf(level) ?? 'Closed'}
                           />
                         ) : completed !== null && !unlocked ? (
                           <LockKeyhole
@@ -125,6 +136,66 @@ export default function IncidentNav({
           </AccordionItem>
         ))}
       </Accordion>
+      {showIndex && (
+        <div className="nav-index">
+          {acts.map((act) => (
+            <ol key={act.from} aria-label={act.name}>
+              {levels
+                .filter(
+                  (level) => level.number >= act.from && level.number <= act.to,
+                )
+                .map((level) => {
+                  const state = stateOf(level);
+                  const done = completed?.has(level.id);
+                  const unlocked = isUnlocked(level, completed ?? NO_PROGRESS);
+                  const label = `${folio(level.number)} ${level.title}${state ? `, ${state.toLowerCase()}` : ''}`;
+                  return (
+                    <li key={level.id}>
+                      {unlocked ? (
+                        <Tooltip>
+                          <TooltipTrigger
+                            render={
+                              <Link
+                                href={`/level/${level.id}`}
+                                aria-label={label}
+                                aria-current={
+                                  pathname === `/level/${level.id}`
+                                    ? 'page'
+                                    : undefined
+                                }
+                                data-state={done ? 'closed' : 'open'}
+                              />
+                            }
+                          >
+                            {folio(level.number)}
+                            {done && <Check aria-hidden="true" />}
+                          </TooltipTrigger>
+                          <TooltipPopup
+                            side="right"
+                            className="desk-overlay dark"
+                          >
+                            <span className="mono">{folio(level.number)}</span>{' '}
+                            {level.title}
+                            {state ? ` · ${state}` : ''}
+                          </TooltipPopup>
+                        </Tooltip>
+                      ) : (
+                        <span className="nav-index-locked">
+                          {folio(level.number)}
+                          <span className="sr-only">
+                            {' '}
+                            {level.title}
+                            {state ? `, ${state.toLowerCase()}` : ''}
+                          </span>
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+            </ol>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }

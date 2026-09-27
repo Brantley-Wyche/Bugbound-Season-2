@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Bugbound — Season 2',
   description:
-    'Learn Next.js by fixing it. A level-based debugging game: every lesson ships with a real, intentionally planted bug.',
+    'Learn Next.js by fixing it. A debugging game: every incident ships with a real, intentionally planted bug.',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

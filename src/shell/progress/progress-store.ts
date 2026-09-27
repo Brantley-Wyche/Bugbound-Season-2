@@ -5,9 +5,12 @@ const INITIAL_GENERATION = 'initial';
 
 type StorageAccess = Pick<Storage, 'getItem' | 'setItem'>;
 export type RunToken = { generation: string; version: number };
+/** When an incident was closed and on which run of that visit. */
+export type ClosedInfo = { at: number; run: number };
 type Snapshot = RunToken & {
   completed: ReadonlySet<string> | null;
   saved: ReadonlySet<string>;
+  closedInfo: ReadonlyMap<string, ClosedInfo>;
   loadError: boolean;
   saveError: boolean;
   resetError: boolean;
@@ -15,6 +18,7 @@ type Snapshot = RunToken & {
 const SERVER_SNAPSHOT: Snapshot = {
   completed: null,
   saved: new Set(),
+  closedInfo: new Map(),
   generation: INITIAL_GENERATION,
   version: 0,
   loadError: false,
@@ -29,13 +33,37 @@ export function createProgressStore(
   const known = new Set(ids);
   const listeners = new Set<() => void>();
   const pending = new Set<string>();
+  // Close records: read from storage for saved closes, and kept in memory for
+  // closes made in this tab so an unsaved close still shows when it happened.
+  let stored = new Map<string, ClosedInfo>();
+  const recorded = new Map<string, ClosedInfo>();
   let snapshot = SERVER_SNAPSHOT;
   const key = (generation: string, id: string) =>
     `${PROGRESS_PREFIX}done:${generation}:${id}`;
+  const closedKey = (generation: string, id: string) =>
+    `${PROGRESS_PREFIX}closed:${generation}:${id}`;
   const publish = (fields: Partial<Snapshot>) => {
     const next = { ...snapshot, ...fields };
-    snapshot = { ...next, completed: new Set([...next.saved, ...pending]) };
+    const completed = new Set([...next.saved, ...pending]);
+    const closedInfo = new Map(
+      [...stored, ...recorded].filter(([id]) => completed.has(id)),
+    );
+    snapshot = { ...next, completed, closedInfo };
     listeners.forEach((listener) => listener());
+  };
+  const parseClosed = (raw: string | null): ClosedInfo | undefined => {
+    if (!raw) return undefined;
+    try {
+      const value: unknown = JSON.parse(raw);
+      if (typeof value !== 'object' || value === null) return undefined;
+      const { at, run } = value as Record<string, unknown>;
+      if (typeof at === 'number' && Number.isFinite(at) && at > 0)
+        if (typeof run === 'number' && Number.isInteger(run) && run > 0)
+          return { at, run };
+    } catch {
+      // A malformed record only loses the date, never the close itself.
+    }
+    return undefined;
   };
   const generationOf = (storage: StorageAccess) => {
     const value = storage.getItem(GENERATION_KEY) ?? INITIAL_GENERATION;
@@ -67,10 +95,19 @@ export function createProgressStore(
           }
         }
       }
+      const storedInfo = new Map<string, ClosedInfo>();
+      for (const id of saved) {
+        const info = parseClosed(storage.getItem(closedKey(generation, id)));
+        if (info) storedInfo.set(id, info);
+      }
       if (generationOf(storage) !== generation)
         throw new Error('Progress changed while reading');
       const changed = generation !== snapshot.generation;
-      if (changed) pending.clear();
+      if (changed) {
+        pending.clear();
+        recorded.clear();
+      }
+      stored = storedInfo;
       let migrationFailed = false;
       for (const id of legacy) {
         try {
@@ -106,7 +143,12 @@ export function createProgressStore(
         return;
       }
       // Separate additive keys avoid read/modify/write races between tabs.
-      for (const id of pending) storage.setItem(key(generation, id), '1');
+      for (const id of pending) {
+        const info = recorded.get(id);
+        if (info)
+          storage.setItem(closedKey(generation, id), JSON.stringify(info));
+        storage.setItem(key(generation, id), '1');
+      }
       refresh();
     } catch {
       publish({ saveError: true });
@@ -128,13 +170,15 @@ export function createProgressStore(
       refresh();
       return { generation: snapshot.generation, version: snapshot.version };
     },
-    markComplete(id: string, token: RunToken) {
+    markComplete(id: string, token: RunToken, info?: ClosedInfo) {
       const current = () =>
         token.generation === snapshot.generation &&
         token.version === snapshot.version;
       if (!known.has(id) || !current()) return;
       const readable = refresh();
+      // The first close stands; a later passing run never rewrites it.
       if (!current() || snapshot.saved.has(id)) return;
+      if (info && !recorded.has(id)) recorded.set(id, info);
       pending.add(id);
       if (readable) persistPending();
       else publish({ saveError: true });
@@ -148,6 +192,8 @@ export function createProgressStore(
         const generation = crypto.randomUUID();
         getStorage().setItem(GENERATION_KEY, generation);
         pending.clear();
+        recorded.clear();
+        stored = new Map();
         publish({
           generation,
           saved: new Set(),

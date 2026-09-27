@@ -5,7 +5,7 @@ import { loaders } from '@/levels/generated/loaders';
 import { Button } from '@/components/ui/button';
 import LevelPage from './LevelPage';
 import type { LevelManifest } from '../types';
-import type { RunToken } from '../progress/progress-store';
+import type { ClosedInfo, RunToken } from '../progress/progress-store';
 
 export default function LoadedLevel({
   id,
@@ -16,7 +16,7 @@ export default function LoadedLevel({
   id: string;
   isComplete: boolean;
   isSaved: boolean;
-  onComplete: (token: RunToken) => void;
+  onComplete: (token: RunToken, info: ClosedInfo) => void;
 }) {
   const [level, setLevel] = useState<LevelManifest | null>(null);
   const [error, setError] = useState(false);

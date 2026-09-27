@@ -1,8 +1,8 @@
 ---
 version: 1
 slug: "src-shell-levelpage-tsx"
-primary_target: "src/shell/LevelPage.tsx"
-related_targets: ["src/shell/Workspace.tsx","src/shell/IncidentNav.tsx","src/shell/LevelMap.tsx","src/shell/ChecksRunner.tsx","src/shell/HintBox.tsx","src/shell/SourceFiles.tsx","src/shell/Prose.tsx","src/shell/workspace.css"]
+primary_target: "src/shell/lesson/LevelPage.tsx"
+related_targets: ["src/shell/workspace/Workspace.tsx","src/shell/workspace/IncidentNav.tsx","src/shell/workspace/LevelMap.tsx","src/shell/checks/ChecksRunner.tsx","src/shell/lesson/HintBox.tsx","src/shell/lesson/SourceFiles.tsx","src/shell/lesson/Prose.tsx","src/shell/workspace/workspace.css"]
 ---
 
 # Investigation Desk
@@ -31,11 +31,11 @@ The mobile navigation Sheet replaces the rail. At the narrow layout, section anc
 
 Show when the viewport is at most 760px wide, or when both hover is unavailable and the primary pointer is coarse. A fine-pointer desktop window beside an editor does not show it (owner decision, 2026-09-26, following Season 1). Preserve the Season 1 wording adapted to Next.js exactly:
 
-**Use a desktop to work on the exercises.**
+**Use a desktop to work on the incidents.**
 
 Bugbound is a desktop-first project. To fix bugs, edit the actual source files in a local code editor, let Next.js recompile the app, then run the checks in a desktop browser.
 
-You can still browse the lessons here.
+You can still read the register and any open incident here.
 
 ## State and Content Constraints
 

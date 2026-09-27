@@ -28,8 +28,19 @@ colors:
   preview-address: "#b6c0c0"
   failure-detail: "#f4b5b5"
   reference-emphasis: "#eceeea"
-  completion-surface: "#23332e"
-  completion-detail: "#bcc9c3"
+  selection-ink: "#171e1e"
+  nav-hover: "#242c2e"
+  active-row: "#2d383a"
+  active-row-text: "#eef5f2"
+  locked-text: "#a0aaa9"
+  register-hover: "#273133"
+  source-rule: "#30383a"
+  preview-border: "#536062"
+  preview-bar: "#282f31"
+  preview-ground: "#0a0d12"
+  check-idle: "#a2adac"
+  scrollbar-thumb: "#626f6e"
+  scrollbar-track: "#181d1f"
   recovery-surface: "#332d26"
   notice-surface: "#302e27"
   notice-rule: "#5a5442"
@@ -245,7 +256,7 @@ Amber identifies incidents and primary commands; teal makes tools and focus disc
 
 ### Primary
 
-- **Amber Index** (`amber-index`): incident numbers, navigation group labels, register act indices, saved count, brand icon, and primary command fill.
+- **Amber Index** (`amber-index`): incident numbers, navigation group labels, register act indices, the closed count, the current mark in the header strip, the Open state, brand icon, and primary command fill. Amber marks the next thing to do: Run checks while a case is open or a later run fails, Next once it is closed.
 - **Primary Ink** (`primary-ink`): text on amber commands.
 
 ### Secondary
@@ -262,9 +273,9 @@ Amber identifies incidents and primary commands; teal makes tools and focus disc
 - **Reference Surface / Reference Ink**: the expanded Concept surface.
 - **Reference Code / Reference Code Background**: inline code within Concept prose.
 
-Pass and fail tints identify verification results alongside icons and words. Destructive red is reserved for the explicit reset action. Completion and storage recovery use localized green and warm-brown bands; they do not recolor the whole workspace.
+Pass and fail tints identify verification results alongside icons and words. `pass` also carries the Closed state: the sage rule and heading of the Closed entry, closed marks in the rail and header strip, and "Closed" in the case record. Destructive red is reserved for the explicit reset action. Storage recovery uses a localized warm-brown band; there is no completion band.
 
-Supporting roles are explicit in the frontmatter: `locked-index` and `rail-footer` for navigation, `preview-address` for the route, `failure-detail` for technical results, and `reference-emphasis` for Concept emphasis. Completion uses `completion-surface` and `completion-detail`; persistence recovery uses `recovery-surface`. The desktop-use notice has its own surface, rule, text, and reassurance roles. These are existing component states, not additional general-purpose brand accents.
+Supporting roles are explicit in the frontmatter: `locked-index`, `locked-text`, `rail-footer`, `nav-hover`, `active-row` and `active-row-text` for navigation; `register-hover` for register rows; `source-rule` between source files; `preview-border`, `preview-bar`, `preview-ground`, `preview-label` and `preview-address` for the live route; `check-idle` and `failure-detail` for verification; `reference-emphasis` for Concept emphasis; `recovery-surface` for persistence recovery; and the notice's surface, rule, text and reassurance roles. These are component states, not general-purpose brand accents. In CSS every role is a `--desk-<role>` custom property declared once on `.game-shell, .desk-overlay`; component rules never use raw color literals.
 
 ## Typography
 
@@ -272,13 +283,15 @@ Geist is loaded with `next/font/google` into `--font-geist-sans`; Geist Mono is 
 
 The frontmatter records desktop, supporting, and responsive roles. Incident report prose uses a larger reading size (16px, line-height 1.65, maximum 75ch), reducing to 15px only at the narrow breakpoint. Metadata is generally 11-12px, navigation titles 12px, and command text 13px. The 10px step is reserved for narrow register states, never reading prose. Component-specific brand, next-incident, and responsive title roles are not interchangeable body sizes. The interface has no marketing-scale display heading.
 
-Concept paragraphs retain their full content, generous line-height, and 20px paragraph separation. Strong emphasis uses weight 650. Inline code is 12px and wraps; source paths remain selectable. The Incident label is horizontally centered over its number with an 8px gap.
+Concept prose is set in **Source Serif 4** (15px, line-height 1.75, optical sizing on, roman and italic), loaded with `next/font/google` into `--font-concept-serif` by the incident layout only, so the register never downloads it. The serif marks the Concept as the reference binder beside the sans tools; the Concept heading, labels and inline code stay in Geist and Geist Mono. Paragraphs keep their full content and 20px separation. Strong emphasis uses weight 650. Inline code is 12px mono and wraps; source paths remain selectable. The Incident label is horizontally centered over its number with an 8px gap.
+
+Geist Mono is the record voice: the folio, `BUG-###` IDs, run numbers and times, counts in the workbench verdict, paths, routes and failure detail. Labels and prose never use it. New components hold a 12px floor; the remaining 10–11px roles (season label, rail numerals, sidebar footnote, footer, register act index and narrow register states) are older roles awaiting the family floor.
 
 ## Layout
 
 The spatial grammar uses persistent context around unframed work. Sections are separated by rules and whitespace; only the actual route preview and overlays need enclosing boundaries. The desktop workspace fills the available width. The register alone is constrained to 1300px.
 
-The header is sticky with a 66px minimum height and contains the Bugbound brand and saved progress, without a static Investigation desk / Next.js label. The desktop navigation rail is 260px wide, sticky below the header, and independently scrollable. A labeled collapse icon beside the register link reduces it to a 64px rail. The same button remains mounted and focused in the rail's top row, changing to Expand; it never relocates to the header. Hidden navigation content leaves both the visual layout and keyboard order, while its disclosure state is retained. The brand and header stay fixed. This preference lasts within the mounted workspace, without writing progress or storage. The investigation and its Concept reference share the remaining width, with the reference at 350px. The reference is a continuous column, not a floating card. The Evidence toolbar sticks below the header.
+The header is sticky with a 66px minimum height and contains the Bugbound brand and the season's progress, without a static Investigation desk / Next.js label. Progress is a strip of 13 small marks grouped by act (5 · 5 · 3), sage for closed incidents, amber for the next open one and `input` for the rest, beside "NN / 13 closed" (plus "N not saved yet" when a close could not be stored). The strip is decorative for assistive technology because the count carries the meaning, and it is hidden at 760px and below. The desktop navigation rail is 260px wide, sticky below the header, and independently scrollable. A labeled collapse icon beside the register link reduces it to a 64px rail. The same button remains mounted and focused in the rail's top row, changing to Expand; it never relocates to the header. Hidden navigation content leaves both the visual layout and keyboard order, while its disclosure state is retained. The brand and header stay fixed. This preference lasts within the mounted workspace, without writing progress or storage. The investigation and its Concept reference share the remaining width, with the reference at 350px. The reference is a continuous column, not a floating card. The Evidence workbench sticks below the header on desktop and tablet widths (it gains a lower rule only while content scrolls under it) and sits in flow at 760px and below, where solving isn't possible anyway.
 
 Responsive behavior is exact:
 
@@ -319,13 +332,23 @@ Default buttons are amber; outline buttons use a faint input-colored fill; ghost
 
 ### Incident Navigation and Register
 
-Navigation is a grouped coss Accordion with amber single-line group names, no group-number prefix, amber lesson indices, muted locked items, and an active background. The register link is text-only and stays on one line; no decorative list icon competes with the collapse control. Groups expand independently; the current lesson group starts open and other groups closed. On the register, all groups start open. Route changes reset this disclosure to reveal the destination group. Links use `aria-current="page"`; unavailable incidents are inert labeled items. The register presents a next-incident band followed by three acts of rows, not a card grid. Saved completion and completion during this visit have different labels.
+Navigation is a grouped coss Accordion with amber single-line group names, no group-number prefix, amber lesson indices, muted locked items, and an active background. The register link is text-only and stays on one line; no decorative list icon competes with the collapse control. Groups expand independently; the current lesson group starts open and other groups closed. On the register, all groups start open. Route changes reset this disclosure to reveal the destination group. Links use `aria-current="page"`; unavailable incidents are inert labeled items. Closed incidents carry a sage check exposed as an image labelled "Closed" (or "Closed, not saved yet"); locked ones a lock labelled "Locked". Until progress loads, only Incident 01 is a link and no lock marks render. The register presents a next-incident band ("Start Incident NN") followed by three acts of rows, not a card grid. Row states read Closed, Closed · not saved yet, Open, or Locked.
+
+When the desktop rail is collapsed to 64px it shows a numbered index instead of the groups: the 13 folios grouped by act with a rule between acts, each at least 40px tall (44px with a coarse pointer). Open incidents show an amber numeral, closed ones a numeral with a small sage check, locked ones a muted numeral. Links carry an accessible name with title and state, and a right-hand tooltip shows "NN Title · State".
 
 Incident register is the sidebar's visible h2 and a real navigation link. It uses the 16px semibold sidebar-heading role, left-aligned with the group headings and lesson numbers, with no underline, and a tonal background on hover or keyboard focus. The heading link uses the same 9px horizontal inset as the group triggers and lesson rows; the collapse control stays in its separate right-hand track. A single rule below its row separates it from the act accordions; their coss h3 headings follow this visible heading. The collapse control remains a separate button. The row has a stable 57px minimum including its 12px bottom inset and 1px rule, so hiding the heading does not move the toggle vertically.
 
 ### Investigation and Reference
 
-Incident report and source-file rows lead directly into Evidence with one shared divider: the last source row has no bottom border, the report has no bottom padding, and the Evidence toolbar supplies the rule. Source rows provide a copy icon, an inline success checkmark and Copied tooltip, and a persistent live region for announcements. Empty and successful feedback takes no extra layout height. Copy failures reveal a readable manual-copy fallback below the paths. The real route has a framed address bar with open-in-tab and reload controls. Verification rows expose their name and state before a run; results use icon, word, and color together. Running can be cancelled. Engine errors provide recovery text and optional technical details.
+Incident report and source-file rows lead directly into Evidence with one shared divider: the last source row has no bottom border, the report has no bottom padding, and the Evidence toolbar supplies the rule. Source rows provide a copy icon, an inline success checkmark and Copied tooltip, and a persistent live region for announcements. Empty and successful feedback takes no extra layout height. Copy failures reveal a readable manual-copy fallback below the paths. The real route has a framed address bar with open-in-tab and reload controls.
+
+The case header pairs the amber folio with the title and a ruled record row of fields: Case (`BUG-###`), Concept, Severity, Status (Open in amber, or a sage check with "Closed Sep 24" and a "not saved yet" qualifier when needed), and Closing run ("Run 4 · 2:31 PM") once the close is recorded. A learner with nothing closed yet also sees one line under it: "New here? Reproduce the report in the live route, repair the source files in your editor, then run the checks."
+
+**Workbench.** The sticky Evidence bar holds the heading, the latest verdict and the controls. The verdict reads "4 checks to pass · Not run this visit", "Closed Sep 24 · Not run this visit", "Running check 2 of 4…", or, after a run, a dotted-underlined button such as "Run 2 · 2 of 4 passed" that scrolls to and focuses that run's entry. Run checks keeps focus while busy (`aria-disabled`, 64% opacity) and Cancel returns focus to it. Once the incident is closed, a Next link names the next case ("Next: 02 The Forgetful Cart"; "Season record" after 13). Amber marks the next thing to do: Next while the latest run isn't failing, Run checks when a later run fails.
+
+**Verification record.** Each run of the visit is an entry: a mono header (Run N · time · result) over ruled check rows with icon, name, state word, and 12px mono failure detail. Earlier runs from the visit fold into a muted "Earlier this visit" list. The run that first passes every check ends with the **Closed entry**: a 1px sage rule that draws across once (250ms, instant with reduced motion), a "Closed" heading that the page scrolls to and focuses, "BUG-001 closed today at 2:31 PM on run 4. Saved in this browser.", and the note that a new run never reopens the case. On later visits the same entry stands at the top of the record. A later run on a closed case adds "Closed Sep 24 still stands." with the current pass or fail count. There is no completion banner. A polite live region announces runs, cancellation and the close.
+
+The close's time and run number are stored beside the saved flag (`bugbound:s2:progress:v2:closed:<generation>:<id>`), kept in memory when the save fails, and cleared by a reset. Running can be cancelled. Engine errors provide recovery text and optional technical details.
 
 The full Concept remains expanded in its graphite reference column. Soft off-white prose, muted labels, and teal inline code maintain readable contrast. `Prose` renders inline code, emphasis, and strong emphasis without changing the supplied lesson text.
 
@@ -333,7 +356,7 @@ The full Concept remains expanded in its graphite reference column. Soft off-whi
 
 Hints use the coss Base UI Accordion with multiple independently open items; all start closed. The navigation Sheet opens from the left and closes on incident navigation. Reset uses a coss Base UI AlertDialog with Keep progress and Reset progress actions, plus a description of the effect on completion and active checks. Its `bottomStickOnMobile` is false.
 
-The active workspace does not use an editable input, chip, or Card component. Retained `card.tsx`, `badge.tsx`, and other legacy files are inventory, not authority for this surface. No replacement primitive has been invented for documentation.
+The active workspace does not use an editable input, chip, or Card component. The coss UI inventory in `src/components/ui/` is Button, Accordion, Tooltip, AlertDialog, Sheet and Toolbar, plus Spinner and ScrollArea as their support components; the Card, Badge, Alert and Separator wrappers were removed. No replacement primitive has been invented for documentation.
 
 ## Do's and Don'ts
 
@@ -343,11 +366,14 @@ The active workspace does not use an editable input, chip, or Card component. Re
 - Do use coss UI controls with Base UI render composition and stable data-size/data-variant styling.
 - Do preserve readable wrapping, visible focus, reduced-motion behavior, and labeled icon actions.
 - Do distinguish earned completion, saved completion, and the latest verification result.
+- Do use "Closed" as the one finished state word everywhere, with "not saved yet" as its only qualifier, and "incident" as the unit.
+- Do record the close in the verification record; never a banner.
 - Do keep design changes scoped to the workspace; the lab retains its independent visual world.
 
 ### Don't:
 
 - Don't restore colored side-border cards, decorative dot grids, terminal costume, or decorative dashboard metrics.
-- Don't promote retained legacy Card or Badge primitives into the Investigation Desk's visual authority.
+- Don't reintroduce Card or Badge primitives into the Investigation Desk.
+- Don't add raw color literals to component rules; add a named `--desk-*` role instead.
 - Don't collapse the Concept reference or turn optional hints into automatically revealed guidance.
 - Don't treat code-led direction as evidence of an approved generated comp or quality-bar card.

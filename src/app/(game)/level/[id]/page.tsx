@@ -41,11 +41,14 @@ export default function LevelRoute({
     );
 
   if (!isUnlocked(level, loaded)) {
+    const previous = levels.find((l) => l.number === level.number - 1);
     return (
       <main id="main-content" tabIndex={-1} className="route-message">
         <h1 className="text-2xl font-semibold">Incident locked</h1>
         <p className="text-muted-foreground">
-          This incident is still locked — resolve the previous one first.
+          {previous
+            ? `Close ${String(previous.number).padStart(2, '0')} ${previous.title} to open this incident.`
+            : 'This incident is still locked.'}
         </p>
         <Button variant="outline" render={<Link href="/" />}>
           <ArrowLeft aria-hidden="true" /> Incident register
@@ -60,7 +63,7 @@ export default function LevelRoute({
       id={level.id}
       isComplete={loaded.has(level.id)}
       isSaved={saved.has(level.id)}
-      onComplete={(token) => markComplete(level.id, token)}
+      onComplete={(token, info) => markComplete(level.id, token, info)}
     />
   );
 }

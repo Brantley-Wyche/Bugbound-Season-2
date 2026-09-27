@@ -100,11 +100,14 @@ try {
   await page.keyboard.press('Enter');
   await page.getByRole('button', { name: 'Running…', exact: true }).waitFor();
   assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('aria-disabled')), 'true', 'Run stays focused while disabled');
-  await page.getByRole('status').filter({ hasText: /Last run:/ }).waitFor({ timeout: 65000 });
+  await page.getByRole('status').filter({ hasText: /Run \d+: \d+ of \d+ checks passed/ }).waitFor({ timeout: 65000 });
   assert.equal(await runHasFocus(), true, 'Run keeps keyboard focus after a run');
-  assert.equal(await page.locator('.check-results li').count(), 4);
+  assert.equal(await page.locator('.check-list li').count(), 4);
   assert.ok(await page.locator('.check-fail').count() > 0, 'Original exercise should remain unsolved');
-  assert.equal(await page.locator('.completion-record').count(), 0);
+  // A failing run on an open case records the run and never a Closed entry or completion band.
+  assert.equal(await page.locator('.closed-entry').count(), 0);
+  assert.equal(await page.locator('.record-entry').textContent().then(text => /^Run 2/.test(text)), true, 'The latest run is numbered in the record');
+  assert.equal(await page.locator('.record-earlier li').count(), 1, 'The cancelled run folds into the earlier list');
   await page.goto(baseURL + '/level/02-forgetful-cart');
   await page.getByRole('heading', { name: 'Incident locked' }).waitFor();
   await page.goto(baseURL + '/level/missing-incident');
