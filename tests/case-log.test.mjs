@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createCaseLog, entriesFor, LOG_PREFIX } from '../src/shell/progress/case-log.ts';
+import { createCaseLog, entriesFor, latestReset, LOG_PREFIX, summarize } from '../src/shell/progress/case-log.ts';
 
 function setup() {
   const values = new Map();
@@ -89,4 +89,30 @@ test('a failed write keeps the entry for this visit and says it was not saved', 
   log.recordHint('one', 0);
   assert.equal(log.getSnapshot().writeError, false);
   assert.equal(log.getSnapshot().logs.get('one').events.length, 2);
+});
+
+test('a summary counts lifetime runs, hint tiers and the last real work', () => {
+  const { make } = setup();
+  const log = make(); log.refresh();
+  assert.deepEqual(summarize(undefined), { runs: 0, hintTiers: [], lastWorked: null });
+  log.recordOpened('one');
+  assert.equal(summarize(log.getSnapshot().logs.get('one')).lastWorked, null, 'Opening alone is not work');
+  log.recordHint('one', 1); log.recordHint('one', 0);
+  log.recordRun('one', { run: log.startRun('one'), status: 'failed', passed: 1, total: 4 });
+  const summary = summarize(log.getSnapshot().logs.get('one'));
+  assert.equal(summary.runs, 1);
+  assert.deepEqual(summary.hintTiers, [0, 1]);
+  assert.equal(summary.lastWorked, Math.max(...log.getSnapshot().logs.get('one').events.map(e => e.at)));
+});
+
+test('the latest reset counts only when real work came before it', () => {
+  const { make } = setup();
+  const log = make(); log.refresh();
+  log.recordOpened('one');
+  log.recordReset();
+  assert.equal(latestReset(log.getSnapshot()), null, 'A reset after only opening an incident is not news');
+  log.recordHint('one', 0);
+  log.recordReset();
+  const { resets } = log.getSnapshot();
+  assert.equal(latestReset(log.getSnapshot()), resets[resets.length - 1]);
 });

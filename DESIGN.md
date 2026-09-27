@@ -101,11 +101,17 @@ typography:
     fontWeight: 650
     lineHeight: 1.15
     letterSpacing: "0"
-  next-incident-title:
+  desk-case-title:
+    fontFamily: "Geist, sans-serif"
+    fontSize: "26px"
+    fontWeight: 550
+    lineHeight: 1.25
+    letterSpacing: "0"
+  desk-case-title-mobile:
     fontFamily: "Geist, sans-serif"
     fontSize: "22px"
-    fontWeight: 500
-    lineHeight: 1.4
+    fontWeight: 550
+    lineHeight: 1.25
     letterSpacing: "0"
   headline-mobile:
     fontFamily: "Geist, sans-serif"
@@ -274,7 +280,7 @@ Supporting roles are explicit in the frontmatter: `locked-index`, `locked-text`,
 
 Geist is loaded with `next/font/google` into `--font-geist-sans`; Geist Mono is loaded into `--font-geist-mono`. The workspace uses sans-serif fallbacks and selective monospace for incident numbering, source paths, and technical details. Letter spacing is zero throughout the shell and its overlays.
 
-The frontmatter records desktop, supporting, and responsive roles. Incident report prose uses a larger reading size (16px, line-height 1.65, maximum 75ch), reducing to 15px only at the narrow breakpoint. **The 12px floor:** no shell text is smaller than 12px at any width, including labels, metadata, rail numerals, state words, the season label and the footer. Metadata, navigation titles and captions are 12px; command, record and check text is 13px. On phones, register states move under the title instead of shrinking. Component-specific brand, next-incident, and responsive title roles are not interchangeable body sizes. The interface has no marketing-scale display heading.
+The frontmatter records desktop, supporting, and responsive roles. Incident report prose uses a larger reading size (16px, line-height 1.65, maximum 75ch), reducing to 15px only at the narrow breakpoint. **The 12px floor:** no shell text is smaller than 12px at any width, including labels, metadata, rail numerals, state words, the season label and the footer. Metadata, navigation titles and captions are 12px; command, record and check text is 13px. On phones, docket rows restack instead of shrinking. Component-specific brand, desk-case, and responsive title roles are not interchangeable body sizes. The interface has no marketing-scale display heading.
 
 Concept prose is set in **Source Serif 4** (15px, line-height 1.75, optical sizing on, roman and italic), loaded with `next/font/google` into `--font-concept-serif` by the incident layout only, so the register never downloads it. The serif marks the Concept as the reference binder beside the sans tools; the Concept heading, labels and inline code stay in Geist and Geist Mono. Paragraphs keep their full content and 20px separation. Strong emphasis uses weight 650. Inline code is 12px mono and wraps; source paths remain selectable. The Incident label is horizontally centered over its number with an 8px gap.
 
@@ -286,13 +292,13 @@ The scale keeps a small set of steps: 12 · 13 · 14 · 15 · 16 for interface a
 
 The spatial grammar uses persistent context around unframed work. Sections are separated by rules and whitespace; only the actual route preview and overlays need enclosing boundaries. The desktop workspace fills the available width. The register alone is constrained to 1300px.
 
-The header is sticky with a 66px minimum height and contains the Bugbound brand and the season's progress, without a static Investigation desk / Next.js label. Progress is a strip of 13 small marks grouped by act (5 · 5 · 3), sage for closed incidents, amber for the next open one and `input` for the rest, beside "NN / 13 closed" (plus "N not saved yet" when a close could not be stored). The strip is decorative for assistive technology because the count carries the meaning, and it is hidden at 760px and below. The desktop navigation rail is 260px wide, sticky below the header, and independently scrollable. A labeled collapse icon beside the register link reduces it to a 64px rail. The same button remains mounted and focused in the rail's top row, changing to Expand; it never relocates to the header. Hidden navigation content leaves both the visual layout and keyboard order, while its disclosure state is retained. The brand and header stay fixed. This preference lasts within the mounted workspace, without writing progress or storage. The investigation and its Concept reference share the remaining width, with the reference at 350px. The reference is a continuous column, not a floating card. The Evidence workbench sticks below the header on desktop and tablet widths (it gains a lower rule only while content scrolls under it) and sits in flow at 760px and below, where solving isn't possible anyway.
+The header is sticky with a 66px minimum height and contains the Bugbound brand and the season's progress, without a static Investigation desk / Next.js label. Progress is a strip of 13 small marks grouped by act (5 · 5 · 3), sage for closed incidents, amber for the next open one and `input` for the rest, beside "NN / 13 closed" (plus "N not saved yet" when a close could not be stored). The strip is decorative for assistive technology because the count carries the meaning, and it is hidden at 760px and below. The desktop navigation rail is 260px wide, sticky below the header, and independently scrollable. A labeled collapse icon beside the register link reduces it to a 64px rail. The same button remains mounted and focused in the rail's top row, changing to Expand; it never relocates to the header. Hidden navigation content leaves both the visual layout and keyboard order, while its disclosure state is retained. The brand and header stay fixed. On the register the rail starts collapsed to its numbered index, because the docket lists every incident itself; incident pages start with it open. Once the learner toggles it, that choice holds on every route for the rest of the visit, without writing progress or storage. The investigation and its Concept reference share the remaining width, with the reference at 350px. The reference is a continuous column, not a floating card. The Evidence workbench sticks below the header on desktop and tablet widths (it gains a lower rule only while content scrolls under it) and sits in flow at 760px and below, where solving isn't possible anyway.
 
 Responsive behavior is exact:
 
 - At widths below 1200px: reference 310px; selected content gutters 22px. The expanded desktop rail remains 260px to keep group names and the register link on one line.
 - At widths up to 1100px: rail becomes a left navigation Sheet; header becomes a flex row; the content retains a 340px reference column until the next breakpoint.
-- At widths up to 760px: investigation and full Concept stack; Report, Evidence, Concept, and Hints anchor links appear. The reference follows the investigation in source order. Incident titles become 26px and register titles 28px.
+- At widths up to 760px: investigation and full Concept stack; Report, Evidence, Concept, and Hints anchor links appear. The reference follows the investigation in source order. Incident titles become 26px, register titles 28px and the desk case title 22px; the desk case command moves under its report.
 - At widths up to 420px: main gutters become 16px; incident title becomes 24px; the preview label is hidden to conserve space. The 32px Bugbound mark remains visible beside the wordmark.
 
 The header uses the user-supplied vector mark at `public/bugbound-icon.svg`, with an amber silhouette and deep-graphite code details. The simplified mark at `src/app/icon.svg` supplies the favicon through Next.js metadata. Both retain transparent backgrounds and the existing palette; the wordmark stays live text.
@@ -327,11 +333,23 @@ Default buttons are amber; outline buttons use a faint input-colored fill; ghost
 
 ### Incident Navigation and Register
 
-Navigation is a grouped coss Accordion with amber single-line group names, no group-number prefix, amber lesson indices, muted locked items, and an active background. The register link is text-only and stays on one line; no decorative list icon competes with the collapse control. Groups expand independently; the current lesson group starts open and other groups closed. On the register, all groups start open. Route changes reset this disclosure to reveal the destination group. Links use `aria-current="page"`; unavailable incidents are inert labeled items. Closed incidents carry a sage check exposed as an image labelled "Closed" (or "Closed, not saved yet"); locked ones a lock labelled "Locked". Until progress loads, only Incident 01 is a link and no lock marks render. The register presents a next-incident band ("Start Incident NN") followed by three acts of rows, not a card grid. Row states read Closed, Closed · not saved yet, Open, or Locked.
+Navigation is a grouped coss Accordion with amber single-line group names, no group-number prefix, amber lesson indices, muted locked items, and an active background. The register link is text-only and stays on one line; no decorative list icon competes with the collapse control. Groups expand independently; the current lesson group starts open and other groups closed. On the register, all groups start open. Route changes reset this disclosure to reveal the destination group. Links use `aria-current="page"`; unavailable incidents are inert labeled items. Closed incidents carry a sage check exposed as an image labelled "Closed" (or "Closed, not saved yet"); locked ones a lock labelled "Locked". Until progress loads, only Incident 01 is a link and no lock marks render. The register is a docket (see Docket register), not a card grid.
 
 When the desktop rail is collapsed to 64px it shows a numbered index instead of the groups: the 13 folios grouped by act with a rule between acts, each at least 40px tall (44px with a coarse pointer). Open incidents show an amber numeral, closed ones a numeral with a small sage check, locked ones a muted numeral. Links carry an accessible name with title and state, and a right-hand tooltip shows "NN Title · State".
 
 Incident register is the sidebar's visible h2 and a real navigation link. It uses the 16px semibold sidebar-heading role, left-aligned with the group headings and lesson numbers, with no underline, and a tonal background on hover or keyboard focus. The heading link uses the same 9px horizontal inset as the group triggers and lesson rows; the collapse control stays in its separate right-hand track. A single rule below its row separates it from the act accordions; their coss h3 headings follow this visible heading. The collapse control remains a separate button. The row has a stable 57px minimum including its 12px bottom inset and 1px rule, so hiding the heading does not move the toggle vertically.
+
+### Docket register
+
+The register is a docket. Under the heading, **the incident on the desk** borrows the case header: the amber folio, the incident title (`desk-case-title`, an h2), its report in muted 14px prose (75ch), and the same record row as the incident page (Case, Concept, Severity, Status, then Runs, Hints opened and Last worked once there is work). Its command reads Start Incident NN until the learner has run checks or opened a hint there, then Continue Incident NN. The "New here?" loop line shows only while nothing is closed and that incident is untouched. There is no label above the title.
+
+When every incident is closed the band becomes the **season record**, drawn like a Closed entry rather than a banner: a sage top rule, a sage "Season 2 complete" heading with a check, "All thirteen incidents closed. Revisit any incident to check your current source.", and a record row of the closing dates (first – last), total runs and total hints opened, read from the closes and the case logs. There is no big-number display.
+
+After a progress reset that followed real work, a muted line with a reset icon sits under the register heading ("Progress reset today at 11:05 AM. Closes were cleared; case logs were kept.") until the next close.
+
+Each act is a heading ("Act 01" in amber mono, the act name, and a muted "N of M closed" on the right) over a real table named by that heading. Columns: Case (`BUG-###` in mono), Incident (the row header and the row's link), Concept, Severity, Activity ("4 runs · 2 hints" in 12px mono from the case log, or a muted dash read as "No activity yet"), and Status. Status reads "Closed Sep 24" in sage with a check (plus "Not saved yet" beneath when the close is unsaved, or plain "Closed" when no date was recorded), Open in amber, or "Opens after NN" with a lock. Only the open incident gets amber: its ID, a 550-weight title and its status. Locked titles use `locked-text` and stay visible, not linked; their activity from before a reset stays visible. Column heads are 12px muted over a `rule`, rows are separated by `source-rule`, and each table ends on a `rule`. Linked rows take `register-hover` on hover or while their title has keyboard focus. A plain click anywhere in a linked row opens it; the title stays the real link for keyboard, modified clicks and assistive technology.
+
+Columns follow the docket's own width through a container query, so an open rail and a narrow window behave alike. At 1000px and wider all six columns show, with Concept taking a quarter. Narrower, the concept moves under the title. Below 600px (phones), each row restacks into ID and status, title, concept · severity, and activity, with the column heads visually hidden. The table elements carry explicit ARIA roles so restacked rows stay a table for assistive technology.
 
 ### Investigation and Reference
 

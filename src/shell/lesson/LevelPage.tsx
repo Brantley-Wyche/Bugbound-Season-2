@@ -1,19 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ExternalLink, RotateCw, BookOpen, Check } from 'lucide-react';
+import { ExternalLink, RotateCw, BookOpen } from 'lucide-react';
 import { levels } from '@/levels';
 import type { LevelManifest } from '../types';
 import Prose from './Prose';
 import ChecksRunner from '../checks/ChecksRunner';
 import HintBox from './HintBox';
 import CaseLog from './CaseLog';
+import CaseRecord from './CaseRecord';
 import SourceFiles from './SourceFiles';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipTrigger, TooltipPopup } from '@/components/ui/tooltip';
 import { useCaseLog, useProgress } from '../progress/ProgressProvider';
+import { summarize } from '../progress/case-log';
 import type { ClosedInfo, RunToken } from '../progress/progress-store';
-import { bugId, folio, formatDay, formatTime } from '../format';
+import { folio } from '../format';
 
 export default function LevelPage({
   level,
@@ -33,20 +35,7 @@ export default function LevelPage({
   const next = levels.find((item) => item.number === level.number + 1);
   // Only someone with nothing closed yet sees the loop spelled out.
   const firstCase = !isComplete && completed !== null && completed.size === 0;
-  const log = logs.get(level.id);
-  const hintTiers = [
-    ...new Set(
-      log?.events.flatMap((event) =>
-        event.type === 'hint' ? [event.tier] : [],
-      ),
-    ),
-  ].sort();
-  const lastWorked = Math.max(
-    0,
-    ...(log?.events ?? [])
-      .filter((event) => event.type !== 'opened')
-      .map((event) => event.at),
-  );
+  const summary = summarize(logs.get(level.id));
 
   // The case log's first entry: this incident was opened.
   useEffect(() => {
@@ -61,64 +50,13 @@ export default function LevelPage({
         </div>
         <div className="case-heading">
           <h1>{level.title}</h1>
-          <dl className="case-record">
-            <div>
-              <dt>Case</dt>
-              <dd className="mono">{bugId(level.number)}</dd>
-            </div>
-            <div>
-              <dt>Concept</dt>
-              <dd>{level.concept}</dd>
-            </div>
-            <div>
-              <dt>Severity</dt>
-              <dd>{level.severity}</dd>
-            </div>
-            <div>
-              <dt>Status</dt>
-              {isComplete ? (
-                <dd className="state-closed">
-                  <Check aria-hidden="true" />
-                  {closed ? `Closed ${formatDay(closed.at)}` : 'Closed'}
-                  {!isSaved && (
-                    <span className="state-qualifier"> · not saved yet</span>
-                  )}
-                </dd>
-              ) : (
-                <dd className="state-open">Open</dd>
-              )}
-            </div>
-            {closed && (
-              <div>
-                <dt>Closing run</dt>
-                <dd className="mono">
-                  Run {closed.run} · {formatTime(closed.at)}
-                </dd>
-              </div>
-            )}
-            {log && log.runs > 0 && (
-              <div>
-                <dt>Runs</dt>
-                <dd className="mono">{log.runs}</dd>
-              </div>
-            )}
-            {hintTiers.length > 0 && (
-              <div>
-                <dt>Hints opened</dt>
-                <dd className="mono">
-                  {hintTiers.map((tier) => folio(tier + 1)).join(' ')}
-                </dd>
-              </div>
-            )}
-            {lastWorked > 0 && (
-              <div>
-                <dt>Last worked</dt>
-                <dd>
-                  {formatDay(lastWorked)} {formatTime(lastWorked)}
-                </dd>
-              </div>
-            )}
-          </dl>
+          <CaseRecord
+            level={level}
+            isComplete={isComplete}
+            isSaved={isSaved}
+            closed={closed}
+            summary={summary}
+          />
           {firstCase && (
             <p className="case-orientation">
               <span>New here?</span> Reproduce the report in the live route,

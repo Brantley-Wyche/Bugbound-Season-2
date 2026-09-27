@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import {
   Menu,
   Monitor,
@@ -44,9 +45,13 @@ import IncidentNav from './IncidentNav';
 
 export default function Workspace({ children }: { children: ReactNode }) {
   const [navOpen, setNavOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const pathname = usePathname();
+  // The register lists every incident itself, so there the rail starts as the
+  // numbered index. Once the learner toggles it, their choice holds everywhere.
+  const [sidebarChoice, setSidebarChoice] = useState<boolean | null>(null);
+  const sidebarCollapsed = sidebarChoice ?? pathname === '/';
   function toggleSidebar() {
-    setSidebarCollapsed((collapsed) => !collapsed);
+    setSidebarChoice(!sidebarCollapsed);
   }
   const {
     completed,
