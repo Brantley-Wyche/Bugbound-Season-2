@@ -13,7 +13,7 @@ Operate, with a Read companion surface. Covers the incident register, investigat
 
 ## Audience and Task
 
-A developer moves from incident selection to report, source files, real-route reproduction, source editing, and verification. The register foregrounds the next available investigation. The workspace keeps the selected incident identifiable while the developer switches between the browser and source editor.
+A developer moves from incident selection to report, source files, real-route reproduction, source editing, and verification. The register is a docket: the incident on the desk (folio, report, record row, Start or Continue), then one table per act with case IDs, severity, activity from the case log, and dated status. The workspace keeps the selected incident identifiable while the developer switches between the browser and source editor.
 
 ## Built Direction
 
@@ -21,7 +21,7 @@ User-approved, pinned Investigation Desk direction implemented code-led. No appr
 
 On desktop, the persistent incident rail, central report/evidence flow, and muted graphite expanded Concept reference form the first-viewport composition. The signature is the simultaneous presence of real route evidence and readable reference material. Evidence groups verification controls, the live route, and result rows. Source paths are directly copyable. See DESIGN.md for measured tokens and responsive thresholds.
 
-The desktop sidebar is 260px wide and collapses to a 64px rail with its same toggle remaining in the top row. It never relocates to the header. The text-only register link and amber, unnumbered coss Accordion group names remain on one line; lesson numbers remain. The current act starts expanded. Clipboard success stays within the copy control, while failures reveal manual-copy guidance. Source files meet Evidence at one shared divider with no empty gap.
+The desktop sidebar is 260px wide and collapses to a 64px rail with its same toggle remaining in the top row. It never relocates to the header. The text-only register link and amber, unnumbered coss Accordion group names remain on one line; lesson numbers remain. The current act starts expanded. On the register the rail starts collapsed to its numbered index until the learner opens it. Clipboard success stays within the copy control, while failures reveal manual-copy guidance. Source files meet Evidence at one shared divider with no empty gap.
 
 The register link is also the visible sidebar heading: 16px semibold, left-aligned with the group headings and lesson numbers, without an underline, and separated from the groups by one rule. Its native navigation behavior and distinct hover/focus treatment make the action explicit. The global header contains only the brand and saved progress; the static Investigation desk / Next.js label is removed.
 

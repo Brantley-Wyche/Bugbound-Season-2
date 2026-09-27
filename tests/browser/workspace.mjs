@@ -69,7 +69,19 @@ try {
   await sheet.waitFor({ state: 'hidden' });
   assert.equal(await page.getByRole('button', { name: 'Open incident navigation' }).evaluate(element => element === document.activeElement), true);
   await capture('register-desktop', 1440, 1000, '/');
+  assert.equal(Math.round((await page.locator('.desk-sidebar').boundingBox()).width), 64, 'The register starts with the rail as its numbered index');
+  const firstAct = page.getByRole('table', { name: /^Act 01\s*:\s*Routes & server boundary$/ });
+  assert.equal(await firstAct.getByRole('columnheader').count(), 6, 'Docket column heads');
+  assert.equal(await firstAct.getByRole('rowheader').count(), 5, 'Each incident title heads its row');
+  assert.equal((await firstAct.getByRole('row').nth(1).getByRole('cell').last().textContent()).trim(), 'Open');
+  assert.equal((await firstAct.getByRole('row').nth(2).getByRole('cell').last().textContent()).trim(), 'Opens after 01');
+  await page.getByRole('link', { name: 'Start Incident 01', exact: true }).waitFor();
+  // The whole row is a pointer target for its title link.
+  await firstAct.getByRole('row').nth(1).getByRole('cell', { name: 'Low', exact: true }).click();
+  await page.getByRole('heading', { name: 'The Vanishing Venue', level: 1, exact: true }).waitFor();
+  assert.equal(Math.round((await page.locator('.desk-sidebar').boundingBox()).width), 260, 'Incident pages keep the full rail');
   await capture('register-mobile', 390, 844, '/');
+  assert.equal(await page.getByRole('table', { name: /^Act 01\s*:\s*Routes & server boundary$/ }).getByRole('row').count(), 6, 'Restacked phone rows stay table rows');
   await page.goto(baseURL + lesson);
   await page.locator('.desk-progress').filter({ hasText: 'Loading progress…' }).waitFor({ state: 'hidden' });
   await page.getByRole('button', { name: 'Reset progress', exact: true }).click();

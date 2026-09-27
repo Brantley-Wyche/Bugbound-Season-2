@@ -106,6 +106,42 @@ export function entriesFor(snapshot: Snapshot, id: string): LogEntry[] {
   return [...events, ...resets].sort((a, b) => b.at - a.at);
 }
 
+export type IncidentSummary = {
+  runs: number;
+  /** Hint tiers opened, lowest first (0 is the first tier). */
+  hintTiers: number[];
+  /** The latest run or hint, or null before any work. */
+  lastWorked: number | null;
+};
+
+/** What the learner has done on one incident, read from its log. */
+export function summarize(log: IncidentLog | undefined): IncidentSummary {
+  const tiers = new Set<number>();
+  let lastWorked: number | null = null;
+  for (const event of log?.events ?? []) {
+    if (event.type === 'opened') continue;
+    if (event.type === 'hint') tiers.add(event.tier);
+    if (lastWorked === null || event.at > lastWorked) lastWorked = event.at;
+  }
+  return {
+    runs: log?.runs ?? 0,
+    hintTiers: [...tiers].sort((a, b) => a - b),
+    lastWorked,
+  };
+}
+
+/** The latest progress reset that followed real work, or null. */
+export function latestReset(
+  snapshot: Pick<Snapshot, 'logs' | 'resets'>,
+): number | null {
+  if (snapshot.resets.length === 0) return null;
+  const at = Math.max(...snapshot.resets);
+  for (const log of snapshot.logs.values())
+    if (log.events.some((event) => event.type !== 'opened' && event.at < at))
+      return at;
+  return null;
+}
+
 export function createCaseLog(
   ids: readonly string[],
   getStorage: () => StorageAccess,

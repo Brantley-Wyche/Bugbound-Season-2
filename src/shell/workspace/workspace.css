@@ -980,89 +980,327 @@ html:has(.game-shell) {
   font-weight: 550;
   line-height: 1.2;
 }
-.register-heading > p:last-child {
+.register-heading > p {
   margin-top: 12px;
   color: var(--desk-muted);
   font-size: 14px;
 }
-.next-incident {
+.register-heading > .register-reset {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 13px;
+}
+.register-reset svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.register-loading {
+  margin: 28px 0 40px;
   padding: 28px 0;
-  margin: 26px 0 30px;
-  border-top: 1px solid var(--desk-rule);
+  border-block: 1px solid var(--desk-rule);
+  color: var(--desk-muted);
+}
+/* The incident on the desk borrows the case header: folio, title, record row. */
+.desk-case {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+  margin: 28px 0 40px;
+  padding: 28px 0 30px;
+  border-block: 1px solid var(--desk-rule);
+}
+.desk-case > .case-index {
+  width: 56px;
+}
+.desk-case-body {
+  flex: 1;
+  min-width: 0;
+}
+.desk-case-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+}
+.desk-case-head > div {
+  min-width: 0;
+}
+.desk-case-head > [data-slot='button'] {
+  flex-shrink: 0;
+}
+.desk-case h2 {
+  font-size: 26px;
+  font-weight: 550;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+.desk-case-report {
+  max-width: 75ch;
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--desk-muted);
+}
+.desk-case .case-record {
+  margin-top: 16px;
+}
+/* A finished season reads like a Closed entry: a sage rule, never a banner. */
+.season-record {
+  margin: 28px 0 40px;
+  padding: 22px 0 28px;
+  border-top: 1px solid var(--desk-pass);
   border-bottom: 1px solid var(--desk-rule);
 }
-.next-incident h2 {
+.season-record h2 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
   font-size: 22px;
-  line-height: 1.4;
-  font-weight: 500;
-  margin-top: 8px;
+  font-weight: 550;
+  line-height: 1.3;
+  color: var(--desk-pass);
 }
-.next-incident h2 > span {
-  font-family: var(--font-geist-mono), monospace;
-  color: var(--desk-accent);
-  margin-right: 10px;
+.season-record h2 svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
-.next-incident p {
-  max-width: 65ch;
-  margin-top: 9px;
-  color: var(--desk-muted);
-  font-size: 13px;
-  line-height: 1.7;
+.season-record > p {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
 }
-.register-act + .register-act {
-  margin-top: 30px;
+/* The docket: one ruled table per act. Its columns follow the docket's own
+   width, so an open rail and a narrow window restack the same way. */
+.docket {
+  container-type: inline-size;
 }
-.register-act > h2 {
+.docket-act + .docket-act {
+  margin-top: 38px;
+}
+.docket-act-head {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
   align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 20px;
+  margin-bottom: 12px;
+  padding-right: 12px;
+}
+.docket-act-head h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 20px;
   font-size: 14px;
   font-weight: 550;
-  margin-bottom: 13px;
 }
-.register-act > h2 > span {
-  font-size: 12px;
-  color: var(--desk-accent);
+.docket-act-number {
   font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--desk-accent);
 }
-.register-act li {
-  border-top: 1px solid var(--desk-rule);
+.docket-act-head p {
+  font-size: 12px;
+  color: var(--desk-muted);
+  font-variant-numeric: tabular-nums;
 }
-.register-act li > :is(a, div) {
-  display: grid;
-  grid-template-columns: 38px 1fr auto;
-  align-items: center;
-  gap: 18px;
-  padding: 13px 12px;
-  min-height: 62px;
+.docket-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-bottom: 1px solid var(--desk-rule);
 }
-.register-act li > a:hover {
+.docket-table :is(th, td) {
+  padding: 14px 12px;
+  text-align: left;
+  vertical-align: baseline;
+  font-weight: 400;
+}
+.docket-table thead th {
+  padding-top: 0;
+  padding-bottom: 9px;
+  font-size: 12px;
+  font-weight: 450;
+  color: var(--desk-muted);
+  border-bottom: 1px solid var(--desk-rule);
+}
+.docket-table tbody tr + tr {
+  border-top: 1px solid var(--desk-source-rule);
+}
+.docket-table tbody tr:has(a) {
+  cursor: pointer;
+}
+.docket-table tbody tr:has(a):hover,
+.docket-table tbody tr:has(a:focus-visible) {
   background: var(--desk-register-hover);
 }
-.register-number {
-  color: var(--desk-muted);
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 13px;
+.docket-table tbody tr:has(a):hover a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
-.register-title {
+.docket-case {
+  width: 104px;
+}
+.docket-concept {
+  width: 25%;
+}
+.docket-severity {
+  width: 96px;
+}
+.docket-activity {
+  width: 152px;
+}
+.docket-status {
+  width: 160px;
+}
+tbody .docket-case {
+  font-size: 13px;
+  color: var(--desk-muted);
+}
+tbody .docket-incident {
   font-size: 14px;
 }
-.register-title > span {
-  color: var(--desk-muted);
-  font-size: 12px;
-  margin-left: 20px;
+[data-state='open'] .docket-case {
+  color: var(--desk-accent);
 }
-.register-state {
-  display: flex;
+[data-state='open'] .docket-incident a {
+  font-weight: 550;
+}
+[data-state='locked'] .docket-case {
+  color: var(--desk-locked-index);
+}
+[data-state='locked'] .docket-incident {
+  color: var(--desk-locked-text);
+}
+tbody :is(.docket-concept, .docket-severity) {
+  font-size: 13px;
+  color: var(--desk-muted);
+}
+.docket-concept-inline {
+  display: none;
+}
+tbody .docket-activity {
+  font-size: 12px;
+  color: var(--desk-muted);
+  font-variant-numeric: tabular-nums;
+}
+tbody .docket-status {
+  font-size: 13px;
+}
+.docket-status svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+.docket-locked {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  color: var(--desk-muted);
+}
+.docket-qualifier {
+  display: block;
+  margin-top: 2px;
   font-size: 12px;
   color: var(--desk-muted);
+}
+/* A narrow docket (an open rail or a small window) puts the concept under the title. */
+@container (max-width: 999px) {
+  .docket-table :is(th, td) {
+    padding-inline: 10px;
+  }
+  .docket-table .docket-concept {
+    display: none;
+  }
+  .docket-concept-inline {
+    display: block;
+    margin-top: 3px;
+    font-size: 12px;
+    color: var(--desk-muted);
+  }
+  .docket-case {
+    width: 92px;
+  }
+  .docket-severity {
+    width: 84px;
+  }
+  .docket-activity {
+    width: 136px;
+  }
+  .docket-status {
+    width: 156px;
+  }
+}
+/* Phones only browse: each row restacks, and its explicit roles keep it a table. */
+@container (max-width: 599px) {
+  .docket-table,
+  .docket-table tbody {
+    display: block;
+  }
+  .docket-table tbody {
+    border-top: 1px solid var(--desk-rule);
+  }
+  .docket-table thead,
+  .docket-table tbody .docket-activity:has(> [aria-hidden='true']) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .docket-table tbody tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    row-gap: 4px;
+    padding: 14px 2px;
+  }
+  .docket-table tbody :is(th, td) {
+    width: auto;
+    padding: 0;
+  }
+  .docket-table .docket-concept {
+    display: revert;
+  }
+  .docket-table .docket-concept-inline {
+    display: none;
+  }
+  .docket-table tbody .docket-case {
+    font-size: 12px;
+  }
+  .docket-table tbody .docket-status {
+    order: 1;
+    margin-left: auto;
+    padding-left: 12px;
+  }
+  .docket-table tbody .docket-incident {
+    order: 2;
+    flex-basis: 100%;
+    font-size: 15px;
+  }
+  .docket-table tbody .docket-concept {
+    order: 3;
+    font-size: 12px;
+  }
+  .docket-table tbody .docket-severity {
+    order: 4;
+    font-size: 12px;
+  }
+  .docket-table tbody .docket-severity::before {
+    content: '·';
+    content: '·' / '';
+    margin: 0 6px;
+  }
+  .docket-table tbody .docket-activity {
+    order: 5;
+    flex-basis: 100%;
+  }
 }
 .desk-dialog {
   border-radius: 8px;
@@ -1107,10 +1345,6 @@ html:has(.game-shell) {
   .evidence-section,
   .case-log {
     padding-inline: 22px;
-  }
-  .register-title > span {
-    display: block;
-    margin: 3px 0 0;
   }
 }
 @media (max-width: 760px), (hover: none) and (pointer: coarse) {
@@ -1248,10 +1482,23 @@ html:has(.game-shell) {
   .incident-register {
     padding: 28px 22px 36px;
   }
-  .next-incident {
+  .desk-case {
+    gap: 20px;
+    margin: 24px 0 32px;
+    padding: 24px 0 26px;
+  }
+  .desk-case > .case-index {
+    width: auto;
+  }
+  .desk-case-head {
     flex-direction: column;
-    align-items: flex-start;
     gap: 18px;
+  }
+  .desk-case h2 {
+    font-size: 22px;
+  }
+  .desk-case-report {
+    font-size: 13px;
   }
   .register-heading h1 {
     font-size: 28px;
@@ -1307,17 +1554,8 @@ html:has(.game-shell) {
   .route-preview iframe {
     height: 350px;
   }
-  /* Phones: the state moves under the title instead of shrinking beside it. */
-  .register-act li > :is(a, div) {
-    grid-template-columns: 24px minmax(0, 1fr);
-    gap: 4px 9px;
-    padding-inline: 2px;
-  }
-  .register-state {
-    grid-column: 2;
-  }
-  .register-title {
-    font-size: 13px;
+  .desk-case {
+    gap: 15px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
