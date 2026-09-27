@@ -208,10 +208,6 @@ export default function Workspace({ children }: { children: ReactNode }) {
                 </Tooltip>
               }
             />
-            <div className="sidebar-end">
-              <span>Next.js App Router</span>
-              <span>13 incidents / 3 acts</span>
-            </div>
           </aside>
           <div className="desk-content">
             {(loadError || saveError || resetError) && (

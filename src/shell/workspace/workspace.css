@@ -34,7 +34,6 @@
   --desk-active-row-text: #eef5f2;
   --desk-locked-text: #a0aaa9;
   --desk-locked-index: #929c9b;
-  --desk-rail-footer: #949f9e;
   --desk-register-hover: #273133;
   --desk-source-rule: #30383a;
   --desk-preview-border: #536062;
@@ -192,8 +191,8 @@ html:has(.game-shell) {
 }
 .brand-season {
   display: block;
-  margin-top: 4px;
-  font-size: 11px;
+  margin-top: 3px;
+  font-size: 12px;
   font-weight: 450;
   color: var(--desk-muted);
 }
@@ -238,9 +237,7 @@ html:has(.game-shell) {
 .sidebar-collapsed .desk-body {
   grid-template-columns: 64px minmax(0, 1fr);
 }
-.sidebar-collapsed
-  .desk-sidebar
-  :is(.nav-register-heading, .nav-groups, .sidebar-end) {
+.sidebar-collapsed .desk-sidebar :is(.nav-register-heading, .nav-groups) {
   display: none;
 }
 .sidebar-collapsed .nav-register-row:has(> button) {
@@ -363,7 +360,7 @@ html:has(.game-shell) {
 }
 .nav-number {
   color: var(--desk-accent);
-  font-size: 11px;
+  font-size: 12px;
   font-family: var(--font-geist-mono), monospace;
 }
 .nav-locked {
@@ -415,15 +412,6 @@ html:has(.game-shell) {
 .nav-index-locked {
   color: var(--desk-locked-index);
 }
-.sidebar-end {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 36px 10px 0;
-  margin-top: auto;
-  color: var(--desk-rail-footer);
-  font-size: 11px;
-}
 .desk-content {
   min-width: 0;
 }
@@ -443,7 +431,7 @@ html:has(.game-shell) {
   border-top: 1px solid var(--desk-rule);
   padding: 16px 28px;
   color: var(--desk-muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 .desktop-notice {
   display: none;
@@ -467,7 +455,7 @@ html:has(.game-shell) {
   flex-shrink: 0;
 }
 .case-index > span {
-  font-size: 11px;
+  font-size: 12px;
 }
 .case-index > strong {
   font-family: var(--font-geist-mono), monospace;
@@ -820,7 +808,7 @@ html:has(.game-shell) {
   scroll-margin-top: 150px;
 }
 .closed-entry[data-standing] .closed-heading {
-  font-size: 17px;
+  font-size: 16px;
 }
 .closed-heading svg {
   width: 20px;
@@ -968,7 +956,7 @@ html:has(.game-shell) {
   border-bottom: 1px solid var(--desk-rule);
 }
 .next-incident h2 {
-  font-size: 23px;
+  font-size: 22px;
   line-height: 1.4;
   font-weight: 500;
   margin-top: 8px;
@@ -998,7 +986,7 @@ html:has(.game-shell) {
   margin-bottom: 13px;
 }
 .register-act > h2 > span {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--desk-accent);
   font-family: var(--font-geist-mono), monospace;
 }
@@ -1033,7 +1021,7 @@ html:has(.game-shell) {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--desk-muted);
 }
 .desk-dialog {
@@ -1242,9 +1230,6 @@ html:has(.game-shell) {
     font-size: 18px;
     gap: 7px;
   }
-  .desk-progress {
-    font-size: 11px;
-  }
   .desktop-notice {
     padding: 16px;
     gap: 10px;
@@ -1276,19 +1261,17 @@ html:has(.game-shell) {
   .route-preview iframe {
     height: 350px;
   }
+  /* Phones: the state moves under the title instead of shrinking beside it. */
   .register-act li > :is(a, div) {
-    grid-template-columns: 24px 1fr auto;
-    gap: 9px;
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 4px 9px;
     padding-inline: 2px;
   }
   .register-state {
-    font-size: 10px;
+    grid-column: 2;
   }
   .register-title {
     font-size: 13px;
-  }
-  .register-title > span {
-    font-size: 11px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
