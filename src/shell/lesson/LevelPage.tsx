@@ -1,14 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import {
-  ArrowRight,
-  ExternalLink,
-  RotateCw,
-  BookOpen,
-  Check,
-} from 'lucide-react';
+import { ExternalLink, RotateCw, BookOpen, Check } from 'lucide-react';
 import { levels } from '@/levels';
 import type { LevelManifest } from '../types';
 import Prose from './Prose';
@@ -17,7 +10,9 @@ import HintBox from './HintBox';
 import SourceFiles from './SourceFiles';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipTrigger, TooltipPopup } from '@/components/ui/tooltip';
-import type { RunToken } from '../progress/progress-store';
+import { useProgress } from '../progress/ProgressProvider';
+import type { ClosedInfo, RunToken } from '../progress/progress-store';
+import { bugId, folio, formatDay, formatTime } from '../format';
 
 export default function LevelPage({
   level,
@@ -28,30 +23,65 @@ export default function LevelPage({
   level: LevelManifest;
   isComplete: boolean;
   isSaved: boolean;
-  onComplete: (token: RunToken) => void;
+  onComplete: (token: RunToken, info: ClosedInfo) => void;
 }) {
   const [frameKey, setFrameKey] = useState(0);
+  const { completed, closedInfo } = useProgress();
+  const closed = closedInfo.get(level.id);
   const next = levels.find((item) => item.number === level.number + 1);
+  // Only someone with nothing closed yet sees the loop spelled out.
+  const firstCase = !isComplete && completed !== null && completed.size === 0;
   return (
     <main id="main-content" tabIndex={-1} className="case-workspace">
       <header className="case-header">
         <div className="case-index">
           <span>Incident</span>
-          <strong>{String(level.number).padStart(2, '0')}</strong>
+          <strong>{folio(level.number)}</strong>
         </div>
         <div className="case-heading">
           <h1>{level.title}</h1>
-          <div className="case-meta">
-            <span>{level.concept}</span>
-            <span>Severity: {level.severity}</span>
-            <span>
-              {isComplete
-                ? isSaved
-                  ? 'Completion saved'
-                  : 'Completed this visit, not saved'
-                : 'Open investigation'}
-            </span>
-          </div>
+          <dl className="case-record">
+            <div>
+              <dt>Case</dt>
+              <dd className="mono">{bugId(level.number)}</dd>
+            </div>
+            <div>
+              <dt>Concept</dt>
+              <dd>{level.concept}</dd>
+            </div>
+            <div>
+              <dt>Severity</dt>
+              <dd>{level.severity}</dd>
+            </div>
+            <div>
+              <dt>Status</dt>
+              {isComplete ? (
+                <dd className="state-closed">
+                  <Check aria-hidden="true" />
+                  {closed ? `Closed ${formatDay(closed.at)}` : 'Closed'}
+                  {!isSaved && (
+                    <span className="state-qualifier"> · not saved yet</span>
+                  )}
+                </dd>
+              ) : (
+                <dd className="state-open">Open</dd>
+              )}
+            </div>
+            {closed && (
+              <div>
+                <dt>Closing run</dt>
+                <dd className="mono">
+                  Run {closed.run} · {formatTime(closed.at)}
+                </dd>
+              </div>
+            )}
+          </dl>
+          {firstCase && (
+            <p className="case-orientation">
+              <span>New here?</span> Reproduce the report in the live route,
+              repair the source files in your editor, then run the checks.
+            </p>
+          )}
         </div>
       </header>
       <nav className="case-jumps" aria-label="Investigation sections">
@@ -63,43 +93,28 @@ export default function LevelPage({
         </a>
         <a href="#hints-title">Hints</a>
       </nav>
-      {isComplete && (
-        <div className="completion-record">
-          <Check size={18} aria-hidden="true" />
-          <p>
-            {isSaved ? 'Completion saved.' : 'Completed this visit, not saved.'}{' '}
-            <span>
-              Current source is verified only when you run the checks.
-            </span>
-          </p>
-          <Button
-            variant="outline"
-            render={<Link href={next ? `/level/${next.id}` : '/'} />}
-          >
-            {next ? 'Next incident' : 'Season complete'}
-            <ArrowRight aria-hidden="true" />
-          </Button>
-        </div>
-      )}
       <div className="case-columns">
         <div className="investigation-column">
           <section className="incident-report" aria-labelledby="report-title">
             <div className="section-heading">
               <h2 id="report-title">Incident report</h2>
-              <span>BUG-{String(level.number).padStart(3, '0')}</span>
             </div>
             <p className="incident-symptom">{level.symptom}</p>
             <SourceFiles files={level.files} vague={level.vague} />
           </section>
           <ChecksRunner
             level={level}
+            isComplete={isComplete}
+            isSaved={isSaved}
+            closedInfo={closed}
+            next={next}
             onAllPass={onComplete}
             onFixtureReset={() => setFrameKey((key) => key + 1)}
           >
             <section className="route-preview" aria-label="Live route preview">
               <div className="preview-address">
                 <span className="preview-label">Live route</span>
-                <code>{level.route}</code>
+                <code translate="no">{level.route}</code>
                 <div className="preview-actions">
                   <Tooltip>
                     <TooltipTrigger

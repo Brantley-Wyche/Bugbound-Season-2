@@ -11,6 +11,7 @@ import {
   RotateCcw,
 } from 'lucide-react';
 import { levels } from '@/levels';
+import { acts, isUnlocked } from '@/levels/progression';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -38,6 +39,7 @@ import {
   AlertDialogClose,
 } from '@/components/ui/alert-dialog';
 import { useProgress } from '../progress/ProgressProvider';
+import { folio } from '../format';
 import IncidentNav from './IncidentNav';
 
 export default function Workspace({ children }: { children: ReactNode }) {
@@ -56,6 +58,12 @@ export default function Workspace({ children }: { children: ReactNode }) {
     retryLoad,
     retrySave,
   } = useProgress();
+  // The amber mark is the next open incident: the case currently on the desk.
+  const nextOpen =
+    completed &&
+    levels.find(
+      (level) => !completed.has(level.id) && isUnlocked(level, completed),
+    );
   return (
     <TooltipProvider>
       <div
@@ -105,19 +113,46 @@ export default function Workspace({ children }: { children: ReactNode }) {
               </span>
             </Link>
           </div>
-          <span className="desk-progress">
-            {completed === null ? (
-              'Loading progress…'
-            ) : (
-              <>
-                <strong>{String(saved.size).padStart(2, '0')}</strong> /{' '}
-                {levels.length} saved
-                {completed.size > saved.size && (
-                  <span> +{completed.size - saved.size} this visit</span>
-                )}
-              </>
+          <div className="desk-progress">
+            {completed !== null && (
+              <span className="progress-strip" aria-hidden="true">
+                {acts.map((act) => (
+                  <span key={act.from} className="progress-act">
+                    {levels
+                      .filter(
+                        (level) =>
+                          level.number >= act.from && level.number <= act.to,
+                      )
+                      .map((level) => (
+                        <span
+                          key={level.id}
+                          data-state={
+                            completed.has(level.id)
+                              ? 'closed'
+                              : level.id === nextOpen?.id
+                                ? 'current'
+                                : undefined
+                          }
+                        />
+                      ))}
+                  </span>
+                ))}
+              </span>
             )}
-          </span>
+            <span className="progress-count">
+              {completed === null ? (
+                'Loading progress…'
+              ) : (
+                <>
+                  <strong>{folio(completed.size)}</strong> / {levels.length}{' '}
+                  closed
+                  {completed.size > saved.size && (
+                    <span> · {completed.size - saved.size} not saved yet</span>
+                  )}
+                </>
+              )}
+            </span>
+          </div>
         </header>
         <aside
           className="desktop-notice"
@@ -126,7 +161,7 @@ export default function Workspace({ children }: { children: ReactNode }) {
           <Monitor size={22} aria-hidden="true" />
           <div>
             <h2 id="desktop-notice-title">
-              Use a desktop to work on the exercises.
+              Use a desktop to work on the incidents.
             </h2>
             <p>
               Bugbound is a desktop-first project. To fix bugs, edit the actual
@@ -134,7 +169,7 @@ export default function Workspace({ children }: { children: ReactNode }) {
               app, then run the checks in a desktop browser.
             </p>
             <p className="desktop-notice-browse">
-              You can still browse the lessons here.
+              You can still read the register and any open incident here.
             </p>
           </div>
         </aside>
@@ -142,6 +177,7 @@ export default function Workspace({ children }: { children: ReactNode }) {
           <aside className="desk-sidebar" id="desktop-incident-sidebar">
             <IncidentNav
               groupsId="desktop-incident-groups"
+              showIndex={sidebarCollapsed}
               collapseControl={
                 <Tooltip>
                   <TooltipTrigger
@@ -183,8 +219,8 @@ export default function Workspace({ children }: { children: ReactNode }) {
                 {loadError && (
                   <div>
                     <p>
-                      Saved progress could not be read. Previously unlocked
-                      lessons may be unavailable.
+                      Saved progress could not be read. Incidents you closed
+                      before may show as locked.
                     </p>
                     <Button variant="outline" onClick={retryLoad}>
                       <RotateCcw aria-hidden="true" /> Retry loading
@@ -193,9 +229,7 @@ export default function Workspace({ children }: { children: ReactNode }) {
                 )}
                 {saveError && (
                   <div>
-                    <p>
-                      Completion is available this visit but has not been saved.
-                    </p>
+                    <p>Closed this visit, but not saved in this browser.</p>
                     <Button variant="outline" onClick={retrySave}>
                       <RotateCcw aria-hidden="true" /> Retry saving
                     </Button>
@@ -204,7 +238,7 @@ export default function Workspace({ children }: { children: ReactNode }) {
                 {resetError && (
                   <div>
                     <p>
-                      Progress was not reset. Your saved completion is
+                      Progress was not reset. Your closed incidents are
                       unchanged.
                     </p>
                     <Button variant="outline" onClick={resetProgress}>
@@ -219,7 +253,7 @@ export default function Workspace({ children }: { children: ReactNode }) {
               <span>
                 Bugbound / Season 2{' '}
                 <span className="footer-credit">
-                  / Levels &amp; bugs by Claude
+                  / Incidents &amp; bugs by Claude
                 </span>
               </span>
               <AlertDialog>
@@ -235,9 +269,9 @@ export default function Workspace({ children }: { children: ReactNode }) {
                   <AlertDialogHeader>
                     <AlertDialogTitle>Reset all progress?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      Saved completions will be cleared and all incidents after
-                      the first will lock again. Active checks will be
-                      cancelled. Your source files will not change.
+                      Closed incidents will reopen and every incident after the
+                      first will lock again. Active checks will be cancelled.
+                      Your source files will not change.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>

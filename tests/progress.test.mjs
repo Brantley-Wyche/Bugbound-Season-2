@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createProgressStore, LEGACY_KEY } from '../src/shell/progress/progress-store.ts';
+import { createProgressStore, LEGACY_KEY, PROGRESS_PREFIX } from '../src/shell/progress/progress-store.ts';
 
 function setup() {
   const values = new Map();
@@ -141,6 +141,51 @@ test('a denied legacy read is not mistaken for malformed optional data', () => {
   };
   const store = make(); store.refresh();
   assert.equal(store.getSnapshot().loadError, true);
+});
+
+test('a close records when and on which run it happened, and other tabs read it', () => {
+  const { make } = setup();
+  const store = make(); store.refresh();
+  store.markComplete('one', store.captureRun(), { at: 1790000000000, run: 4 });
+  assert.deepEqual(store.getSnapshot().closedInfo.get('one'), { at: 1790000000000, run: 4 });
+  const other = make(); other.refresh();
+  assert.deepEqual(other.getSnapshot().closedInfo.get('one'), { at: 1790000000000, run: 4 });
+});
+
+test('an unsaved close keeps its record for this visit', () => {
+  const { make, storage } = setup();
+  const store = make(); store.refresh();
+  const write = storage.setItem;
+  storage.setItem = () => { throw new Error('quota'); };
+  store.markComplete('one', store.captureRun(), { at: 1790000000000, run: 2 });
+  assert.equal(store.getSnapshot().saved.has('one'), false);
+  assert.deepEqual(store.getSnapshot().closedInfo.get('one'), { at: 1790000000000, run: 2 });
+  storage.setItem = write; store.retrySave();
+  const other = make(); other.refresh();
+  assert.deepEqual(other.getSnapshot().closedInfo.get('one'), { at: 1790000000000, run: 2 });
+});
+
+test('malformed or missing close records are ignored without losing the close', () => {
+  const { values, make } = setup();
+  values.set(`${PROGRESS_PREFIX}done:initial:one`, '1');
+  values.set(`${PROGRESS_PREFIX}closed:initial:one`, '{broken');
+  values.set(`${PROGRESS_PREFIX}done:initial:two`, '1');
+  values.set(`${PROGRESS_PREFIX}closed:initial:two`, JSON.stringify({ at: 'soon', run: -1 }));
+  values.set(`${PROGRESS_PREFIX}done:initial:three`, '1');
+  const store = make(); store.refresh();
+  assert.deepEqual([...store.getSnapshot().saved].sort(), ['one', 'three', 'two']);
+  assert.equal(store.getSnapshot().closedInfo.size, 0);
+  assert.equal(store.getSnapshot().loadError, false);
+});
+
+test('a reset drops close records along with the closes', () => {
+  const { make } = setup();
+  const store = make(); store.refresh();
+  store.markComplete('one', store.captureRun(), { at: 1790000000000, run: 1 });
+  store.reset();
+  assert.equal(store.getSnapshot().closedInfo.size, 0);
+  const other = make(); other.refresh();
+  assert.equal(other.getSnapshot().closedInfo.size, 0);
 });
 
 test('rechecking an already saved milestone does not attempt another save', () => {

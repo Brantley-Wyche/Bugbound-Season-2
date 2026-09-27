@@ -22,8 +22,7 @@ export default function LevelMap() {
       <header className="register-heading">
         <h1>Incident register</h1>
         <p>
-          Season 2 / Next.js App Router. Thirteen investigations in real source
-          code.
+          Season 2 / Next.js App Router. Thirteen incidents in real source code.
         </p>
       </header>
       {completed === null ? (
@@ -37,7 +36,8 @@ export default function LevelMap() {
             <p>{next.symptom}</p>
           </div>
           <Button render={<Link href={`/level/${next.id}`} />}>
-            Open investigation <ArrowRight aria-hidden="true" />
+            Start Incident {String(next.number).padStart(2, '0')}{' '}
+            <ArrowRight aria-hidden="true" />
           </Button>
         </section>
       ) : (
@@ -45,8 +45,8 @@ export default function LevelMap() {
           <div>
             <h2>Season 2 complete</h2>
             <p>
-              All thirteen incidents completed. Revisit any incident to check
-              your current source.
+              All thirteen incidents closed. Revisit any incident to check your
+              current source.
             </p>
           </div>
           <Check aria-hidden="true" />
@@ -80,7 +80,9 @@ export default function LevelMap() {
                       {done ? (
                         <>
                           <Check size={15} aria-hidden="true" />
-                          {saved.has(level.id) ? 'Saved' : 'This visit'}
+                          {saved.has(level.id)
+                            ? 'Closed'
+                            : 'Closed · not saved yet'}
                         </>
                       ) : completed === null ? null : unlocked ? (
                         <>

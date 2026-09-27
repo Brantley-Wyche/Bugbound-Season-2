@@ -1,5 +1,14 @@
 import type { Metadata } from 'next';
+import { Source_Serif_4 } from 'next/font/google';
 import { levels } from '@/levels';
+
+// The Concept reference reads in a text serif; only incident routes load it.
+const conceptSerif = Source_Serif_4({
+  variable: '--font-concept-serif',
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  axes: ['opsz'],
+});
 
 export async function generateMetadata({
   params,
@@ -20,5 +29,7 @@ export default function IncidentLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <div className={`${conceptSerif.variable} incident-fonts`}>{children}</div>
+  );
 }

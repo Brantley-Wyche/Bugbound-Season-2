@@ -21,7 +21,7 @@ try {
     if (response.request().resourceType() === 'script') scripts.push(response.text().catch(() => ''));
   });
   await page.goto(baseURL);
-  await page.getByRole('link', { name: 'Open investigation', exact: true }).waitFor();
+  await page.getByRole('link', { name: 'Start Incident 01', exact: true }).waitFor();
   const registerScripts = (await Promise.all(scripts)).join('\n');
   assert.ok(!registerScripts.includes('The launch page is live'));
   assert.ok(!registerScripts.includes('The conference home page responds'));
@@ -62,7 +62,7 @@ try {
   assert.equal(streamed.pass, true, streamed.message);
   evidence.checks.push('Missing beacon/capture/navigation fail; delayed content waits explicitly; frames disposed');
 
-  await page.getByRole('link', { name: 'Open investigation', exact: true }).click();
+  await page.getByRole('link', { name: 'Start Incident 01', exact: true }).click();
   await page.waitForURL('**/level/01-vanishing-venue');
   await page.getByRole('heading', { name: 'The Vanishing Venue' }).waitFor();
   await page.locator('.check-name').first().waitFor();
