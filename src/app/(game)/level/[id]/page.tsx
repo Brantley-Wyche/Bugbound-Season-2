@@ -35,8 +35,8 @@ export default function LevelRoute({
   // Progress not loaded yet — render nothing gate-dependent to avoid a flash.
   if (loaded === null)
     return (
-      <main id="main-content" tabIndex={-1} className="pt-10">
-        <p role="status">Loading progress...</p>
+      <main id="main-content" tabIndex={-1} className="route-message">
+        <p role="status">Loading progress…</p>
       </main>
     );
 

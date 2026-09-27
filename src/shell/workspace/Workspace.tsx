@@ -107,7 +107,7 @@ export default function Workspace({ children }: { children: ReactNode }) {
           </div>
           <span className="desk-progress">
             {completed === null ? (
-              'Loading progress...'
+              'Loading progress…'
             ) : (
               <>
                 <strong>{String(saved.size).padStart(2, '0')}</strong> /{' '}

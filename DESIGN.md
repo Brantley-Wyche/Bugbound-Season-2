@@ -290,7 +290,8 @@ Responsive behavior is exact:
 The header uses the user-supplied vector mark at `public/bugbound-icon.svg`, with an amber silhouette and deep-graphite code details. The simplified mark at `src/app/icon.svg` supplies the favicon through Next.js metadata. Both retain transparent backgrounds and the existing palette; the wordmark stays live text.
 - At widths from 1600px: reference expands to 400px with 34px inline padding; preview height grows from 360px to 420px.
 - The preview is 350px tall at widths up to 420px.
-- At widths up to 1100px **or** with both `hover: none` and `pointer: coarse`: show the desktop notice and enlarge workspace/overlay buttons from a 36px minimum height to 44px. Icon buttons use matching square dimensions. Coarse input alone does not replace the rail; that change is width-based.
+- At widths up to 1100px **or** with both `hover: none` and `pointer: coarse`: enlarge workspace/overlay buttons from a 36px minimum height to 44px. Icon buttons use matching square dimensions. Coarse input alone does not replace the rail; that change is width-based.
+- At widths up to 760px **or** with both `hover: none` and `pointer: coarse`: show the desktop notice. A narrow fine-pointer desktop window beside an editor does not get it, matching Season 1's rule (owner decision, 2026-09-26).
 
 The notice's exact copy and route composition are recorded in the surface brief. Header safe-area padding, wrapping paths, and minimum-width-zero grid children protect constrained layouts.
 

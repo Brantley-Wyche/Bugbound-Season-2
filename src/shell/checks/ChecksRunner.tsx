@@ -28,6 +28,7 @@ export default function ChecksRunner({
   const [status, setStatus] = useState('Not checked this visit.');
   const [runError, setRunError] = useState<string | null>(null);
   const active = useRef<AbortController | null>(null);
+  const runButton = useRef<HTMLButtonElement>(null);
   const { captureRun } = useProgress();
 
   useEffect(
@@ -93,7 +94,9 @@ export default function ChecksRunner({
   function cancel() {
     active.current?.abort();
     setResults((rows) => rows?.filter((row) => !('pending' in row)) ?? null);
-    setStatus('Cancelling checks and cleaning up the lab session...');
+    setStatus('Cancelling checks and cleaning up the lab session…');
+    // Cancel unmounts when the run settles; keep keyboard focus in the toolbar.
+    runButton.current?.focus();
   }
 
   return (
@@ -104,12 +107,14 @@ export default function ChecksRunner({
           aria-label="Verification controls"
           className="verification-toolbar"
         >
+          {/* Focusable while disabled (aria-disabled), so a keyboard run keeps focus. */}
           <ToolbarButton
-            render={<Button disabled={running} />}
+            disabled={running}
+            render={<Button ref={runButton} />}
             onClick={runAll}
           >
             <Play aria-hidden="true" />
-            {running ? 'Running...' : results ? 'Re-run checks' : 'Run checks'}
+            {running ? 'Running…' : results ? 'Re-run checks' : 'Run checks'}
           </ToolbarButton>
           {running && (
             <ToolbarButton

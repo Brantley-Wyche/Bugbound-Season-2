@@ -98,7 +98,7 @@ export default function LabDataReset({
           </AlertDialogClose>
           <Button onClick={reset} disabled={pending}>
             {pending
-              ? 'Resetting...'
+              ? 'Resetting…'
               : error
                 ? 'Retry lab reset'
                 : 'Reset lab data'}

@@ -17,7 +17,7 @@ async function ready(width, height) {
   await page.setViewportSize({ width, height });
   await page.goto(`${baseURL}/level/01-vanishing-venue`);
   await page.getByRole('heading', { name: 'The Vanishing Venue', exact: true }).waitFor();
-  await page.locator('.desk-progress').filter({ hasText: 'Loading progress...' }).waitFor({ state: 'hidden' });
+  await page.locator('.desk-progress').filter({ hasText: 'Loading progress…' }).waitFor({ state: 'hidden' });
   await page.evaluate(() => document.fonts.ready);
   await page.frameLocator('.route-preview iframe').getByRole('heading', { name: 'Driftwood Conf 2026', exact: true }).waitFor();
 }
