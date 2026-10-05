@@ -94,7 +94,7 @@ export default function Workspace({ children }: { children: ReactNode }) {
               </SheetTrigger>
               <SheetPopup side="left" className="desk-overlay dark desk-sheet">
                 <SheetHeader>
-                  <SheetTitle>Incident register</SheetTitle>
+                  <SheetTitle>Incidents</SheetTitle>
                   <SheetDescription>Season 2 / Next.js</SheetDescription>
                 </SheetHeader>
                 <SheetPanel>
