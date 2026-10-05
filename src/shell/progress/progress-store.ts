@@ -26,6 +26,27 @@ const SERVER_SNAPSHOT: Snapshot = {
   resetError: false,
 };
 
+const sameSet = (a: ReadonlySet<string>, b: ReadonlySet<string>) =>
+  a.size === b.size && [...a].every((id) => b.has(id));
+
+function sameSnapshot(a: Snapshot, b: Snapshot) {
+  if (a.completed === null || b.completed === null) return false;
+  return (
+    a.generation === b.generation &&
+    a.version === b.version &&
+    a.loadError === b.loadError &&
+    a.saveError === b.saveError &&
+    a.resetError === b.resetError &&
+    sameSet(a.completed, b.completed) &&
+    sameSet(a.saved, b.saved) &&
+    a.closedInfo.size === b.closedInfo.size &&
+    [...a.closedInfo].every(([id, info]) => {
+      const other = b.closedInfo.get(id);
+      return other?.at === info.at && other.run === info.run;
+    })
+  );
+}
+
 export function createProgressStore(
   ids: readonly string[],
   getStorage: () => StorageAccess,
@@ -48,7 +69,11 @@ export function createProgressStore(
     const closedInfo = new Map(
       [...stored, ...recorded].filter(([id]) => completed.has(id)),
     );
-    snapshot = { ...next, completed, closedInfo };
+    const candidate = { ...next, completed, closedInfo };
+    // A refresh that finds nothing new (the learner returning from the editor)
+    // keeps the same snapshot, so subscribers do not re-render.
+    if (sameSnapshot(snapshot, candidate)) return;
+    snapshot = candidate;
     listeners.forEach((listener) => listener());
   };
   const parseClosed = (raw: string | null): ClosedInfo | undefined => {
