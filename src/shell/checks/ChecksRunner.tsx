@@ -1,6 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState, type ReactNode, type Ref } from 'react';
+import {
+  useEffect,
+  useEffectEvent,
+  useRef,
+  useState,
+  type ReactNode,
+  type Ref,
+} from 'react';
 import Link from 'next/link';
 import { ArrowRight, Check, Circle, Play, Square, X } from 'lucide-react';
 import { runCheck, LabCleanupError, type CheckResult } from './harness';
@@ -87,6 +94,27 @@ export default function ChecksRunner({
     heading.scrollIntoView({ block: 'center' });
     heading.focus({ preventScroll: true });
   }, [closingRun]);
+
+  // Ctrl/⌘+Enter runs the checks from anywhere on the page but a text field,
+  // as in Season 1; a press during a run is ignored like a second click.
+  const runFromShortcut = useEffectEvent((event: KeyboardEvent) => {
+    if (event.key !== 'Enter' || !(event.ctrlKey || event.metaKey)) return;
+    if (event.defaultPrevented || event.repeat || event.altKey || event.shiftKey)
+      return;
+    const target = event.target instanceof Element ? event.target : null;
+    if (target?.closest('input, textarea, select, [contenteditable="true"]'))
+      return;
+    // Not behind the reset dialog or the navigation sheet.
+    const openDialog = '[role="dialog"][data-open], [role="alertdialog"][data-open]';
+    if (document.querySelector(openDialog)) return;
+    event.preventDefault();
+    void runAll();
+  });
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => runFromShortcut(event);
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   // The sticky workbench gains its lower rule only while content scrolls under it.
   useEffect(() => {
@@ -259,6 +287,7 @@ export default function ChecksRunner({
                 variant={nextIsPrimary ? 'outline' : 'default'}
               />
             }
+            aria-keyshortcuts="Control+Enter Meta+Enter"
             onClick={runAll}
           >
             <Play aria-hidden="true" />

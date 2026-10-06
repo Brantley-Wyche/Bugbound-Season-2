@@ -197,3 +197,19 @@ test('rechecking an already saved milestone does not attempt another save', () =
   assert.equal(store.getSnapshot().saved.has('one'), true);
   assert.equal(store.getSnapshot().saveError, false);
 });
+
+test('a refresh that finds nothing new keeps the snapshot and notifies no one', () => {
+  const { make } = setup();
+  const store = make(); store.refresh();
+  store.markComplete('one', store.captureRun(), { at: 1000, run: 2 });
+  let calls = 0;
+  const unsubscribe = store.subscribe(() => { calls += 1; });
+  const before = store.getSnapshot();
+  store.refresh(); store.refresh();
+  assert.equal(store.getSnapshot(), before);
+  assert.equal(calls, 0);
+  store.markComplete('two', store.captureRun());
+  assert.equal(calls, 1);
+  assert.notEqual(store.getSnapshot(), before);
+  unsubscribe();
+});
