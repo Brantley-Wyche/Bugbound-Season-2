@@ -62,7 +62,7 @@ try {
   await capture('mobile', 390, 844);
   await capture('mobile-320', 320, 740);
   await page.getByRole('button', { name: 'Open incident navigation' }).click();
-  const sheet = page.getByRole('dialog', { name: 'Incident register' });
+  const sheet = page.getByRole('dialog', { name: 'Incidents', exact: true });
   await sheet.waitFor();
   captures.set('mobile-navigation', await page.screenshot({ animations: 'disabled' }));
   await sheet.getByRole('button', { name: 'Close', exact: true }).press('Escape');

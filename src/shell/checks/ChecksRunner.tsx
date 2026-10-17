@@ -99,13 +99,19 @@ export default function ChecksRunner({
   // as in Season 1; a press during a run is ignored like a second click.
   const runFromShortcut = useEffectEvent((event: KeyboardEvent) => {
     if (event.key !== 'Enter' || !(event.ctrlKey || event.metaKey)) return;
-    if (event.defaultPrevented || event.repeat || event.altKey || event.shiftKey)
+    if (
+      event.defaultPrevented ||
+      event.repeat ||
+      event.altKey ||
+      event.shiftKey
+    )
       return;
     const target = event.target instanceof Element ? event.target : null;
     if (target?.closest('input, textarea, select, [contenteditable="true"]'))
       return;
     // Not behind the reset dialog or the navigation sheet.
-    const openDialog = '[role="dialog"][data-open], [role="alertdialog"][data-open]';
+    const openDialog =
+      '[role="dialog"][data-open], [role="alertdialog"][data-open]';
     if (document.querySelector(openDialog)) return;
     event.preventDefault();
     void runAll();

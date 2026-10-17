@@ -249,8 +249,8 @@ html:has(.game-shell) {
 }
 .desk-sidebar {
   position: sticky;
-  top: 66px;
-  height: calc(100dvh - 66px);
+  top: var(--desk-sticky-top);
+  height: calc(100dvh - var(--desk-sticky-top));
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -1336,15 +1336,11 @@ tbody .docket-status {
   .case-columns {
     grid-template-columns: minmax(0, 1fr) 310px;
   }
-  .concept-column {
-    padding-inline: 22px;
-  }
   .incident-report,
-  .case-hints {
-    padding-inline: 22px;
-  }
+  .case-hints,
   .evidence-section,
-  .case-log {
+  .case-log,
+  .concept-column {
     padding-inline: 22px;
   }
 }
@@ -1438,9 +1434,6 @@ tbody .docket-status {
     text-decoration: underline;
     text-underline-offset: 4px;
   }
-  .case-header {
-    border-bottom: 0;
-  }
   .case-columns {
     display: flex;
     flex-direction: column;
@@ -1459,6 +1452,7 @@ tbody .docket-status {
   .case-header {
     padding: 25px 22px;
     gap: 20px;
+    border-bottom: 0;
   }
   .case-index > strong {
     font-size: 36px;

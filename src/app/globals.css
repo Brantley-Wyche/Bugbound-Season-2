@@ -31,17 +31,6 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* operational domain palette */
-  --color-ok: var(--ok);
-  --color-warn: var(--warn);
-  --color-err: var(--err);
-  --color-info: var(--info);
-  --color-sev-high: var(--sev-high);
-  --color-faint: var(--faint);
-  --color-panel: var(--panel);
-  --color-panel-2: var(--panel-2);
-  --color-border-strong: var(--border-strong);
-
   --font-sans: var(--font-geist-sans), 'Segoe UI', system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono), 'Cascadia Code', ui-monospace, Consolas, monospace;
 
@@ -75,22 +64,12 @@
   --input: #2b3849;
   --ring: rgba(88, 166, 255, 0.45);
 
-  /* operational status colors */
+  /* Lab status and surface tokens — the lab stylesheet below depends on these. */
   --ok: #3fb950;
   --ok-dim: rgba(63, 185, 80, 0.12);
   --warn: #d29922;
   --warn-dim: rgba(210, 153, 34, 0.12);
-  --err: #f85149;
-  --err-dim: rgba(248, 81, 73, 0.1);
-  --info: #58a6ff;
-  --info-dim: rgba(88, 166, 255, 0.1);
-  --sev-high: #f0883e;
-  --sev-high-dim: rgba(240, 136, 62, 0.12);
   --faint: #55657a;
-
-  /* legacy aliases — the lab stylesheet below and the level
-     components depend on these; do not remove */
-  --bg: #0a0d12;
   --bg-soft: #0d1117;
   --panel: #0f141b;
   --panel-2: #151c26;
@@ -134,7 +113,6 @@
     background: rgba(88, 166, 255, 0.28);
   }
 }
-
 
 /* ============================================================
    Lab environment — the "product under test"
@@ -306,8 +284,4 @@
   color: var(--faint);
   font-size: 13px;
   padding: 14px;
-}
-
-.dark {
-  --destructive-foreground: var(--color-red-400);
 }

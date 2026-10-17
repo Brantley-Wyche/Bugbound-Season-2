@@ -149,7 +149,7 @@ try {
     captures.set(`refinement-${width}`, await page.screenshot({ animations: 'disabled' }));
   }
   await page.getByRole('button', { name: 'Open incident navigation' }).click();
-  const sheet = page.getByRole('dialog', { name: 'Incident register', exact: true });
+  const sheet = page.getByRole('dialog', { name: 'Incidents', exact: true });
   await checkGroups(sheet.locator('.incident-nav'));
   captures.set('refinement-mobile-nav', await page.screenshot({ animations: 'disabled' }));
   await sheet.getByRole('link', { name: '01 The Vanishing Venue', exact: true }).click();
