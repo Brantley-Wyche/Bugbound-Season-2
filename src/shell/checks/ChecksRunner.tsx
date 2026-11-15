@@ -18,6 +18,7 @@ import { useCaseLog, useProgress } from '../progress/ProgressProvider';
 import type { ClosedInfo, RunToken } from '../progress/progress-store';
 import { bugId, folio, formatDay, formatTime } from '../format';
 import LabDataReset from './LabDataReset';
+import { useAnnouncement } from '../use-announcement';
 
 type Row = CheckResult | { name: string; pending: true };
 type RunStatus = 'running' | 'passed' | 'failed' | 'cancelled' | 'error';
@@ -57,7 +58,7 @@ export default function ChecksRunner({
   onFixtureReset?: () => void;
 }) {
   const [runs, setRuns] = useState<Run[]>([]);
-  const [announcement, setAnnouncement] = useState('');
+  const [announcement, announce] = useAnnouncement();
   const [stuck, setStuck] = useState(false);
   const active = useRef<AbortController | null>(null);
   const runButton = useRef<HTMLButtonElement>(null);
@@ -157,7 +158,7 @@ export default function ChecksRunner({
       ...all,
       { n, at: Date.now(), status: 'running', rows: waiting, passed: 0 },
     ]);
-    setAnnouncement(`Run ${n} started.`);
+    announce(`Run ${n} started.`);
 
     const finished: CheckResult[] = [];
     let cleanupFailed = false;
@@ -180,7 +181,7 @@ export default function ChecksRunner({
         ...(closedAt ? { closed: true } : {}),
       });
       if (allPass) onAllPass(token, { at: Date.now(), run: n });
-      setAnnouncement(
+      announce(
         closedAt
           ? `Closed. ${id} closed on run ${n}; all ${total} checks passed.`
           : `Run ${n}: ${passed} of ${finished.length} checks passed.`,
@@ -195,7 +196,7 @@ export default function ChecksRunner({
           error: error instanceof Error ? error.message : String(error),
         });
         recordRun(level.id, { run: n, status: 'error', passed, total });
-        setAnnouncement(
+        announce(
           'The check runner could not finish. Retry the checks. If it happens again, restart the dev server.',
         );
       }
@@ -216,7 +217,7 @@ export default function ChecksRunner({
             rows: finished,
             passed: finished.filter((result) => result.pass).length,
           });
-          setAnnouncement(
+          announce(
             cleanupFailed
               ? 'Check run cancelled. Lab session cleanup failed; stop other lab activity and retry. No completion was recorded.'
               : 'Check run cancelled. No completion was recorded.',
@@ -228,7 +229,7 @@ export default function ChecksRunner({
 
   function cancel() {
     active.current?.abort();
-    setAnnouncement('Cancelling checks and cleaning up the lab session…');
+    announce('Cancelling checks and cleaning up the lab session…');
     // Cancel unmounts when the run settles; keep keyboard focus in the toolbar.
     runButton.current?.focus();
   }
@@ -342,7 +343,7 @@ export default function ChecksRunner({
               disabled={running}
               onReset={() => {
                 setRuns([]);
-                setAnnouncement(
+                announce(
                   'Lab data reset. Run checks to verify the current source.',
                 );
                 onFixtureReset?.();

@@ -101,6 +101,13 @@ html:has(.game-shell) {
   padding: 0;
   list-style: none;
 }
+/* Shell prose avoids one-word last lines; lesson previews are separate documents
+   and keep the browser default. */
+.game-shell p,
+.desk-overlay p,
+.case-hints [data-slot='accordion-panel'] {
+  text-wrap: pretty;
+}
 .game-shell code {
   font-size: 12px;
   background: transparent;
@@ -938,6 +945,7 @@ html:has(.game-shell) {
   font-size: 22px;
   line-height: 1.25;
   font-weight: 550;
+  text-wrap: balance;
 }
 .concept-prose {
   font-family: var(--font-concept-serif), Georgia, serif;
@@ -1551,6 +1559,36 @@ tbody .docket-status {
   }
   .desk-case {
     gap: 15px;
+  }
+}
+/* High Contrast (forced colors) replaces background colors, so state drawn as a fill
+   switches to system colors: closed marks fill, the current one takes the highlight,
+   the rest are outlined. The current incident row keeps the highlight pair; it opts
+   out of forcing, or the browser paints a Canvas backplate behind its text. */
+@media (forced-colors: active) {
+  .progress-act > span {
+    background: Canvas;
+    border: 1px solid CanvasText;
+  }
+  .progress-act > span[data-state='closed'] {
+    background: CanvasText;
+  }
+  .progress-act > span[data-state='current'] {
+    background: Highlight;
+    border-color: Highlight;
+  }
+  .incident-nav a[aria-current='page'],
+  .incident-nav a[aria-current='page']:is(:hover, :focus-visible) {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+    outline-color: CanvasText;
+  }
+  .incident-nav a[aria-current='page'] :is(.nav-number, svg) {
+    color: HighlightText;
+  }
+  .closed-rule {
+    background: CanvasText;
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Copy, Check, FileCode2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipTrigger, TooltipPopup } from '@/components/ui/tooltip';
+import { useAnnouncement } from '../use-announcement';
 
 export default function SourceFiles({
   files,
@@ -13,19 +14,18 @@ export default function SourceFiles({
   vague?: boolean;
 }) {
   const [copied, setCopied] = useState<string | null>(null);
-  const [message, setMessage] = useState('');
+  const [message, announce] = useAnnouncement();
   const [copyError, setCopyError] = useState(false);
   async function copy(file: string) {
-    setMessage('');
     try {
       await navigator.clipboard.writeText(file);
       setCopied(file);
       setCopyError(false);
-      setMessage(`Copied ${file}`);
+      announce(`Copied ${file}`);
     } catch {
       setCopied(null);
       setCopyError(true);
-      setMessage('Could not copy. Select the path and copy it from the page.');
+      announce('Could not copy. Select the path and copy it from the page.');
     }
   }
   return (
