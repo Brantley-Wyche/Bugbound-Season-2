@@ -161,9 +161,9 @@ typography:
     lineHeight: 1.5
     letterSpacing: "0"
   reference-body:
-    fontFamily: "Geist, sans-serif"
-    fontSize: "14px"
-    lineHeight: 1.8
+    fontFamily: "Source Serif 4, Georgia, serif"
+    fontSize: "15px"
+    lineHeight: 1.75
     letterSpacing: "0"
   incident-number:
     fontFamily: "Geist Mono, monospace"
